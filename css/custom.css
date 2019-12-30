@@ -1,0 +1,68 @@
+@font-face {
+    font-family: 'helvetica';
+    src: url('/fonts/eot/iransansdnweb.eot'); /* IE9 Compat Modes */
+    src: url('/fonts/woff2/iransansdnweb.woff2') format('woff2'), /* Super Modern Browsers */
+    url('/fonts/woff/iransansdnweb.woff') format('woff'), /* Pretty Modern Browsers */
+    url('/asset/fonts/normal.ttf') format('truetype'); /* Safari, Android, iOS */
+}
+* {
+    font-family: 'helvetica';
+}
+
+.main-color
+{
+    color: #323233;
+}
+.secondary
+{
+    color: #000000;
+}
+.bg-black-color
+{
+    background-color: #000000;
+}
+.bg-main-color
+{
+    background-color: #323233;
+}
+.white-text-color
+{
+    color: #ffffff;
+}
+.badgeSize {
+    width: 40px;
+    height: 40px;
+  }
+  .iconSize {
+    width: 20px;
+    height: 20px;
+  }
+
+  a:hover, a:focus, a:active {
+    color: #696665;
+  }
+  .social-icons a {
+    display: inline-block;
+    height: 3.5rem;
+    width: 3.5rem;
+    background-color: #495057;
+    color: #fff !important;
+    border-radius: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+    line-height: 3.5rem;
+    margin-right: 1rem;
+  }
+  
+  .social-icons a:last-child {
+    margin-right: 0;
+  }
+  
+  .social-icons a:hover {
+    background-color: #BD5D38;
+  }
+  .transparent
+  {
+      opacity: 90%;
+  }
+  
