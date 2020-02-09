@@ -23,7 +23,7 @@
 }
 .bg-main-color
 {
-    background-color: #323233;
+    background-color: #000000;
 }
 .white-text-color
 {
@@ -38,31 +38,132 @@
     height: 20px;
   }
 
+  
+.pictureSize
+{
+  width: 159px;
+  height: 159px;
+}
   a:hover, a:focus, a:active {
     color: #696665;
   }
-  .social-icons a {
-    display: inline-block;
-    height: 3.5rem;
-    width: 3.5rem;
-    background-color: #495057;
-    color: #fff !important;
-    border-radius: 100%;
-    text-align: center;
-    font-size: 1.5rem;
-    line-height: 3.5rem;
-    margin-right: 1rem;
-  }
   
-  .social-icons a:last-child {
-    margin-right: 0;
-  }
   
-  .social-icons a:hover {
-    background-color: #BD5D38;
-  }
   .transparent
   {
       opacity: 90%;
   }
+
+  .zoom {
+    transition: transform .2s; /* Animation */
+    width: 230px;
+    height: 120px;
+    margin: 0 auto;
+  }
   
+  .zoom:hover {
+    transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  }
+  
+  .google:hover{
+    color:#4286f4;
+  }
+  .linkedin:hover{
+    color:#0073b0;
+  }
+  .github:hover{
+    color:black;
+  }
+  .twitter:hover{
+    color:#1da1f2;
+  }
+  .instagram:hover{
+    color:red;
+  }
+  .facebook:hover{
+    color:rgb(49, 81, 146);
+  }
+  .goodreads:hover{
+    color:black;
+  }
+  .iconColor
+  {
+    color: #999999;
+  }
+  .graduation{
+    background: url("../img/icons/graduation-hat.png") no-repeat;
+  }
+  .graduation:hover{
+    background: url("../img/icons/graduation-hat-hover.png") no-repeat;
+  }
+  .reader{
+    background: url("../img/icons/reader1.png") no-repeat;
+  }
+  .reader:hover{
+    background: url("../img/icons/reader2.png") no-repeat;
+  }
+  
+.float-twitter{
+	position:fixed;
+	width:35px;
+	height:35px;
+	top:60px;
+	right:60px;
+	background-color:#999;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+  box-shadow: rgb(88, 88, 88);
+  z-index: 10;
+}
+
+.float-scholar{
+	position:fixed;
+	width:35px;
+	height:35px;
+	top:60px;
+	right:60px;
+	background-color:#999;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+  box-shadow: rgb(88, 88, 88);
+  z-index: 10;
+}
+
+.float-email{
+	position:fixed;
+	width:35px;
+	height:35px;
+	top:60px;
+	right:110px;
+	background-color:#999;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+  box-shadow: rgb(88, 88, 88);
+  z-index: 10;
+}
+
+.my-float{
+	margin-top:9px;
+}
+.float-img
+{
+  margin-right: 10px;
+}
+.orangeColor
+{
+  color:orange;
+}
+.project-img
+{
+  width: 500px;
+  height: 300px;
+}
+
+.news-logo-margin
+{
+  position: absolute;
+  margin-top:23px;
+}
