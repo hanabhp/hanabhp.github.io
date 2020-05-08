@@ -5,8 +5,40 @@
     url('/fonts/woff/iransansdnweb.woff') format('woff'), /* Pretty Modern Browsers */
     url('/asset/fonts/normal.ttf') format('truetype'); /* Safari, Android, iOS */
 }
+
+@import url(//db.onlinewebfonts.com/c/0a6ee448d1bd65c56f6cf256a7c6f20a?family=Bahnschrift);
+/* 
+@font-face {
+  font-family: "Bahnschrift"; 
+  src: url("//db.onlinewebfonts.com/t/0a6ee448d1bd65c56f6cf256a7c6f20a.eot"); 
+  src: url("//db.onlinewebfonts.com/t/0a6ee448d1bd65c56f6cf256a7c6f20a.eot?#iefix") 
+  format("embedded-opentype"), url("//db.onlinewebfonts.com/t/0a6ee448d1bd65c56f6cf256a7c6f20a.woff2") 
+  format("woff2"), url("//db.onlinewebfonts.com/t/0a6ee448d1bd65c56f6cf256a7c6f20a.woff") 
+  format("woff"), url("//db.onlinewebfonts.com/t/0a6ee448d1bd65c56f6cf256a7c6f20a.ttf") 
+  format("truetype"), url("//db.onlinewebfonts.com/t/0a6ee448d1bd65c56f6cf256a7c6f20a.svg#Bahnschrift") 
+  format("svg"); }
+
 * {
-    font-family: 'helvetica';
+    font-family: "Bahnschrift";
+} */
+
+body
+{
+    background-color: black;
+}
+
+.the-color{
+  color: #25ffff;
+}
+.title-color{
+  color: #bbffff;
+}
+.text-color{
+  color: #00d7a1;
+}
+.nav-item
+{
+  color: #25ffff;
 }
 
 .main-color
@@ -15,15 +47,15 @@
 }
 .secondary
 {
-    color: #000000;
+    color: black;
 }
 .bg-black-color
 {
-    background-color: #000000;
+    background-color: black;
 }
 .bg-main-color
 {
-    background-color: #000000;
+    background-color: black;
 }
 .white-text-color
 {
@@ -167,4 +199,49 @@
 {
   position: absolute;
   margin-top:23px;
+}
+
+.hr-thick
+{
+  height: 2px;
+}
+
+.title-color
+{
+  color: #2cc4c9;
+}
+.award-icon
+{
+  width: 50px;
+  height: 50px;
+}
+
+.border-cyan
+{
+  border-style: solid;
+  border-width: 1px;
+border-color: #00d7a1;
+}
+
+.nav-item:hover
+{
+  background-color: #00404d;
+  color: #00d7a1;
+}
+
+a:hover
+{
+  color: #00d7a1;
+}
+
+.footer-icon-size
+{
+  height: 36px;
+  width: 36px;
+}
+
+.award-size
+{
+  height: 150px;
+  width: 150px;
 }
