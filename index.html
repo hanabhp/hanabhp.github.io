@@ -34,7 +34,7 @@
   </a>
 
 
-  <div class="container px-5 sticky-top bg-main-color mb-8 transparent">
+  <div class="container px-5 sticky-top bg-main-color mb-8 transparent d-none d-md-block">
     <!-- nav -->
     <div class="container">
       <div class="container">
@@ -70,6 +70,45 @@
     <!-- nav -->
   </div>
 
+  <!-- small screen navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-block d-md-none bg-black-color">
+    <a class="navbar-brand" href="#"></a>
+    <button class="navbar-toggler" type="button"
+     data-toggle="collapse" data-target="#navbarSupportedContent" 
+     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto pl-4">
+        <li class="nav-item">
+          <a class="nav-link active the-color" href="index.html">
+            <img class="iconSize m-2" src="img/home.png" alt="">
+          </a>
+        </li>
+        <li class="nav-item mt-2">
+          <a class="nav-link the-color" href="news.html">News</a>
+        </li>
+        <li class="nav-item mt-2">
+          <a class="nav-link the-color" href="projects.html">Projects</a>
+        </li>
+        <li class="nav-item mt-2">
+          <a class="nav-link the-color" href="publications.html">Publications</a>
+        </li>
+
+        <li class="nav-item mt-2">
+          <a class="nav-link the-color" href="awards.html">Awards</a>
+        </li>
+        <li class="nav-item mt-2">
+          <a class="nav-link the-color" href="CV.html">CV</a>
+        </li>
+        <li class="nav-item mt-2">
+          <a class="nav-link the-color" href="blog.html">Blogs</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- small screen navbar -->
   <!-- Content -->
   
  
@@ -90,10 +129,10 @@
           </div>
           <div class="col-md-9 col-12 ">
             <h3 class="mb-5 "> Welcome!</h3>         
-            <p class="mt-2"> I'm Hana (Hannaneh Barahouei Pasandi), and welcome to my personal website! I'm a CS PhD student broadly interested in different aspects of systems & networking, machine learning, and algorithms. My recent focus is on AI-driven wireless communications and networking. More specifically, my research aims to improve IEEE 802.11 WLANs design in MAC and PHY layers. Prior to my PhD program, I worked as research assistant in LIG lab in Grenoble, France and Columbia University in New York City, NY. </p>
+            <p class="mt-2 text-justify"> I'm Hana (Hannaneh Barahouei Pasandi), and welcome to my personal website! I'm a CS PhD student broadly interested in different aspects of systems & networking, machine learning, and algorithms. My recent focus is on AI-driven wireless communications and networking. More specifically, my research aims to improve IEEE 802.11 WLANs design in MAC and PHY layers. Prior to my PhD program, I worked as research assistant in LIG lab in Grenoble, France and Columbia University in New York City, NY. </p>
 
-            <p class="mt-2"> For more information on my previous and ongoing projects please visit <a class="active the-color" href="#">Projects</a> page.  </p>
-            <p class="mt-2"> Fun fact: I have an identical twin! Her name is Haniyeh and she does research in (human) languages.</p>
+            <p class="mt-2 text-justify"> For more information on my previous and ongoing projects please visit <a class="active the-color" href="#">Projects</a> page.  </p>
+            <p class="mt-2 text-justify"> Fun fact: I have an identical twin! Her name is Haniyeh and she does research in (human) languages.</p>
           </div>
   <hr/>
           
@@ -111,11 +150,11 @@
               <!--
               <img src="img/icons/radio-cyan.png" class="img-fluid ml-3 mr-2" />
               -->
-              <span><li>I'm serving as publicity chair at  <a class="active the-color" href="https://icnp20.cs.ucr.edu/hdrnets.html">HDR-NETs Workshp</a> in conjugation with <a class="active the-color" href="https://icnp20.cs.ucr.edu/index.html"> IEEE ICNP 2020</a> scheduled to be held in Madrid, Spain.</li></span>
-              <span><li>I have received full scholarship to present my work on "Collaborative Privacy-Preserving Video Analytics at the edge" at <a class="active the-color" href="http://tapiaconference.org">2020 ACM Richard Tapia Conference</a>  scheduled to be held in Dallas, Tx.</li></span>
-              <span><li>Our paper "CONVINCE: Collaborative Cross-Camera Video Analytics at the Edge"</i> is nominateed for <i> Best WiP Paper in PerCom'20 Conference.</li></span>
+              <span><li class="text-justify">I'm serving as publicity chair at  <a class="active the-color" href="https://icnp20.cs.ucr.edu/hdrnets.html">HDR-NETs Workshp</a> in conjugation with <a class="active the-color" href="https://icnp20.cs.ucr.edu/index.html"> IEEE ICNP 2020</a> scheduled to be held in Madrid, Spain.</li></span>
+              <span><li class="text-justify">I have received full scholarship to present my work on "Collaborative Privacy-Preserving Video Analytics at the edge" at <a class="active the-color" href="http://tapiaconference.org">2020 ACM Richard Tapia Conference</a>  scheduled to be held in Dallas, Tx.</li></span>
+              <span><li class="text-justify">Our paper "CONVINCE: Collaborative Cross-Camera Video Analytics at the Edge"</i> is nominateed for <i> Best WiP Paper in PerCom'20 Conference.</li></span>
           
-              <span><li>I'm visiting Stanford University, Februrary 2020.</li></span>
+              <span><li class="text-justify">I'm visiting Stanford University, Februrary 2020.</li></span>
               <!--
               <span><li>nsdi'20</li></span>
               -->
@@ -130,7 +169,7 @@
               <!--
               <img src="img/icons/radio-cyan.png" class="img-fluid ml-3 mr-2" />
               -->
-              <span><li>Our papers <i>"Unboxing MAC Protocol Design Optimization Using Deep Learning"</i> and <i>"CONVINCE: Collaborative Cross-Camera Video Analytics at the Edge"</i> are accepted to PerCom'20. </li></span>
+              <span><li class="text-justify">Our papers <i>"Unboxing MAC Protocol Design Optimization Using Deep Learning"</i> and <i>"CONVINCE: Collaborative Cross-Camera Video Analytics at the Edge"</i> are accepted to PerCom'20. </li></span>
             </div>
           </div>
         </div>

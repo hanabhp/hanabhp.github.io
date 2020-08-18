@@ -51,7 +51,7 @@ body
 }
 .bg-black-color
 {
-    background-color: black;
+    background-color: black !important;
 }
 .bg-main-color
 {

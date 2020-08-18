@@ -21,7 +21,7 @@
 
 <body>
 
-  <div class="container px-5 sticky-top bg-main-color mb-8 transparent">
+  <div class="container px-5 sticky-top bg-main-color mb-8 transparent d-none d-md-block">
     <!-- nav -->
     <div class="container">
       <div class="container">
@@ -56,16 +56,52 @@
     
     <!-- nav -->
   </div>
+<!-- small screen navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark d-block d-md-none bg-black-color">
+  <a class="navbar-brand" href="#"></a>
+  <button class="navbar-toggler" type="button"
+   data-toggle="collapse" data-target="#navbarSupportedContent" 
+   aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto pl-4">
+      <li class="nav-item">
+        <a class="nav-link active the-color" href="index.html">
+          <img class="iconSize m-2" src="img/home.png" alt="">
+        </a>
+      </li>
+      <li class="nav-item mt-2">
+        <a class="nav-link the-color" href="news.html">News</a>
+      </li>
+      <li class="nav-item mt-2">
+        <a class="nav-link the-color" href="projects.html">Projects</a>
+      </li>
+      <li class="nav-item mt-2">
+        <a class="nav-link the-color" href="publications.html">Publications</a>
+      </li>
+
+      <li class="nav-item mt-2">
+        <a class="nav-link the-color" href="awards.html">Awards</a>
+      </li>
+      <li class="nav-item mt-2">
+        <a class="nav-link the-color" href="CV.html">CV</a>
+      </li>
+      <li class="nav-item mt-2">
+        <a class="nav-link the-color" href="blog.html">Blogs</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<!-- small screen navbar -->
   <!-- Content -->
 <div class="container px-5 bg-main-color mb-8 mt-5">
   <!-- nav -->
-  <div class="container">
-    <div class="container">
-      <div class="row">
-  
-    
-        <div class="col-3">
+  <div class="p-md-4">
+    <div class="p-md-4">
+      <div class="row">      
+        <div class="col-md-3 col-12">
          <a href="#">
            <div class="card mt-2 shadow">
              <div class="card-body">
@@ -127,8 +163,8 @@
            </div>
          </a>
         </div>
-        <div class="col-9">
-         <ul class="nav nav-tabs bor" id="myTab" role="tablist">
+        <div class="col-md-9 col-12">
+         <ul class="nav nav-tabs bor mt-md-0 mt-4" id="myTab" role="tablist">
            <li class="nav-item">
              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
                aria-selected="true">
@@ -160,17 +196,17 @@
                      <img src="img/projects/Lixia.jpg" class="card-img project-img border shadow img-thumbnail" />
          
                      <h1>Is Networking Research a Scientific Undertaking?</h1>
-                     <p class="mt-5 text-left">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                     <p class="mt-5 text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                        Dignissimos iusto maxime perspiciatis distinctio facilis non maiores explicabo
                        deserunt itaque voluptatum aspernatur, harum sunt eligendi veniam debitis,
                        sint rerum similique suscipit?</p>
-                     <p class="text-left">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                     <p class="text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                        Dignissimos iusto maxime perspiciatis distinctio facilis non maiores explicabo
                        deserunt itaque voluptatum aspernatur, harum sunt eligendi veniam debitis,
                        sint rerum similique suscipit?
                        <!-- Read More Collapse -->
                        <div class="collapse" id="collapseReadMore1">
-                         <p class="text-left">
+                         <p class="text-justify">
                            Anim pariatur cliche reprehenderit, enim eiusmod high life
                            accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica,
                            craft beer labore wes anderson cred nesciunt sapiente ea proident.
@@ -208,17 +244,17 @@
                      <img src="img/projects/project.jpg" class="card-img project-img border shadow img-thumbnail" />
          
                      <h1>Research Blog 2</h1>
-                     <p class="mt-5 text-left">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                     <p class="mt-5 text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                        Dignissimos iusto maxime perspiciatis distinctio facilis non maiores explicabo
                        deserunt itaque voluptatum aspernatur, harum sunt eligendi veniam debitis,
                        sint rerum similique suscipit?</p>
-                     <p class="text-left">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                     <p class="text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                        Dignissimos iusto maxime perspiciatis distinctio facilis non maiores explicabo
                        deserunt itaque voluptatum aspernatur, harum sunt eligendi veniam debitis,
                        sint rerum similique suscipit?
                        <!-- Read More Collapse -->
                        <div class="collapse" id="collapseReadMore1">
-                         <p class="text-left">
+                         <p class="text-justify">
                            Anim pariatur cliche reprehenderit, enim eiusmod high life
                            accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica,
                            craft beer labore wes anderson cred nesciunt sapiente ea proident.
@@ -264,17 +300,17 @@
                      <img src="img/projects/project.jpg" class="card-img project-img border shadow img-thumbnail" />
          
                      <h1>Technical Report 1</h1>
-                     <p class="mt-5 text-left">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                     <p class="mt-5 text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                        Dignissimos iusto maxime perspiciatis distinctio facilis non maiores explicabo
                        deserunt itaque voluptatum aspernatur, harum sunt eligendi veniam debitis,
                        sint rerum similique suscipit?</p>
-                     <p class="text-left">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                     <p class="text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                        Dignissimos iusto maxime perspiciatis distinctio facilis non maiores explicabo
                        deserunt itaque voluptatum aspernatur, harum sunt eligendi veniam debitis,
                        sint rerum similique suscipit?
                        <!-- Read More Collapse -->
                        <div class="collapse" id="collapseReadMore1">
-                         <p class="text-left">
+                         <p class="text-justify">
                            Anim pariatur cliche reprehenderit, enim eiusmod high life
                            accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica,
                            craft beer labore wes anderson cred nesciunt sapiente ea proident.
@@ -312,17 +348,17 @@
                      <img src="img/projects/project.jpg" class="card-img project-img border shadow img-thumbnail" />
          
                      <h1>Technical Report 2</h1>
-                     <p class="mt-5 text-left">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                     <p class="mt-5 text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                        Dignissimos iusto maxime perspiciatis distinctio facilis non maiores explicabo
                        deserunt itaque voluptatum aspernatur, harum sunt eligendi veniam debitis,
                        sint rerum similique suscipit?</p>
-                     <p class="text-left">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                     <p class="text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                        Dignissimos iusto maxime perspiciatis distinctio facilis non maiores explicabo
                        deserunt itaque voluptatum aspernatur, harum sunt eligendi veniam debitis,
                        sint rerum similique suscipit?
                        <!-- Read More Collapse -->
                        <div class="collapse" id="collapseReadMore1">
-                         <p class="text-left">
+                         <p class="text-justify">
                            Anim pariatur cliche reprehenderit, enim eiusmod high life
                            accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica,
                            craft beer labore wes anderson cred nesciunt sapiente ea proident.
@@ -366,17 +402,17 @@
                      <img src="img/projects/project.jpg" class="card-img project-img border shadow img-thumbnail" />
          
                      <h1>Technical Report 1</h1>
-                     <p class="mt-5 text-left">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                     <p class="mt-5 text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                        Dignissimos iusto maxime perspiciatis distinctio facilis non maiores explicabo
                        deserunt itaque voluptatum aspernatur, harum sunt eligendi veniam debitis,
                        sint rerum similique suscipit?</p>
-                     <p class="text-left">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                     <p class="text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                        Dignissimos iusto maxime perspiciatis distinctio facilis non maiores explicabo
                        deserunt itaque voluptatum aspernatur, harum sunt eligendi veniam debitis,
                        sint rerum similique suscipit?
                        <!-- Read More Collapse -->
                        <div class="collapse" id="collapseReadMore1">
-                         <p class="text-left">
+                         <p class="text-justify">
                            Anim pariatur cliche reprehenderit, enim eiusmod high life
                            accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica,
                            craft beer labore wes anderson cred nesciunt sapiente ea proident.
@@ -414,17 +450,17 @@
                      <img src="img/projects/project.jpg" class="card-img project-img border shadow img-thumbnail" />
          
                      <h1>Technical Report 2</h1>
-                     <p class="mt-5 text-left">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                     <p class="mt-5 text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                        Dignissimos iusto maxime perspiciatis distinctio facilis non maiores explicabo
                        deserunt itaque voluptatum aspernatur, harum sunt eligendi veniam debitis,
                        sint rerum similique suscipit?</p>
-                     <p class="text-left">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                     <p class="text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                        Dignissimos iusto maxime perspiciatis distinctio facilis non maiores explicabo
                        deserunt itaque voluptatum aspernatur, harum sunt eligendi veniam debitis,
                        sint rerum similique suscipit?
                        <!-- Read More Collapse -->
                        <div class="collapse" id="collapseReadMore1">
-                         <p class="text-left">
+                         <p class="text-justify">
                            Anim pariatur cliche reprehenderit, enim eiusmod high life
                            accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica,
                            craft beer labore wes anderson cred nesciunt sapiente ea proident.
