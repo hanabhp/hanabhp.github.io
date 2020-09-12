@@ -1,0 +1,158 @@
+html {
+  scroll-behavior: smooth;
+ }
+
+
+
+.under-line {
+    border-bottom: 4px solid #fff;
+  }
+.nav-hover:hover {
+    border-bottom: 4px solid #fff;
+  }
+  .navbar-right
+  {
+    right:5%;
+    top:5%;
+    position:absolute;
+  }
+  .nav-link
+  {
+    font-size: 17px !important;
+  }
+  .caption
+  {
+    position: absolute;
+    left:5%;
+    height: 3%;
+    top: 10%;
+    width:90%;
+    color:#fff;
+  }
+  .caption-2
+  {
+    position: absolute;
+    left:5%;
+    height: 5%;
+    top: 50%;
+    width:80%;
+    color:#fff;
+  }
+  .caption-news
+  {
+    position: absolute;
+    left:15%;
+    top: 25%;
+    color:#fff;
+    width:50%;
+
+  }
+  .caption-projects
+  {
+    position: absolute;
+    left:12%;
+    top: 40%;
+    color:#fff;
+    width:90%;
+
+  }
+  .caption-news-2019
+  {
+    position: absolute;
+    left:15%;
+    top: 10%;
+    color:#fff;
+    width:50%;
+  }
+  .carousel-control-prev-icon,
+.carousel-control-next-icon {
+  height: 60px;
+  width: 60px;
+  outline: white;
+  background-size: 100%, 100%;
+  border-radius: 50%;
+  border: 1px solid white;
+  background-image: none;
+}
+
+.carousel-control-next-icon:after
+{
+  content: '>';
+  font-size: 35px;
+  color: white;
+}
+
+.carousel-control-prev-icon:after {
+  content: '<';
+  font-size: 35px;
+  color: white;
+}
+
+
+.btn-circle {
+  display: inline-block;
+  text-decoration: none;
+  width: 50px;
+  margin: 2px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 20px;
+  color: #fff;
+  border-radius: 25px;
+  text-align: center;
+  vertical-align: middle;
+  overflow: hidden;
+  font-weight: bold;
+  transition: .3s;
+  background: black;
+  box-shadow: 0 0 2px 0 #fff;
+  padding-top: 5px;
+}
+
+.btn-circle .con {
+  line-height: 50px
+}
+
+
+.btn-circle:hover {
+  -webkit-transform: translateY(5px);
+  -ms-transform: translateY(5px);
+  transform: translateY(5px);
+}
+.line{
+  width: 30px;
+  max-width: 30px;
+  border-bottom: 2px solid #fff;
+ position: relative;
+ left:0;
+ margin-top: 12px;
+  }
+  .year-title{
+    position: relative;
+    display: inline;
+ right:0;
+  }
+  .year{
+    width: 70px;
+    max-width: 70px;
+  }
+
+  .news-btn
+  {
+    margin-top: 40px !important;
+    background-color: #373737 !important;
+    color: #fff !important;
+  }
+  .welcome
+  {
+    font-size: 40px;
+    font-weight: 400;
+  }
+  a.active
+  {
+    color: #999;
+  }
+  .bg-main
+{
+    background-color: black !important;
+}
