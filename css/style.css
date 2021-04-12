@@ -8160,7 +8160,7 @@ h1, h2, h3, h4, h5,
   line-height: 1.5;
   color: rgba(0, 0, 0, 0.8);
   font-weight: 400;
-  font-family: "Lora", serif; }
+  font-family: "Lora", Georgia; }
 
 .text-primary {
   color: #fdcb6e !important; }
@@ -8924,7 +8924,7 @@ textarea.form-control {
   text-transform: uppercase;
   text-align: left; }
   .heading-section h2 span {
-    font-family: "Lora", serif;
+    font-family: "Lora", Georgia;
     font-weight: 400;
     display: block;
     text-align: right; }
@@ -9273,7 +9273,7 @@ textarea.form-control {
     -ms-border-radius: 4px;
     border-radius: 4px; }
   .testimony-wrap p {
-    font-family: "Lora", serif; }
+    font-family: "Lora", Georgia; }
   .testimony-wrap .name {
     font-weight: 400;
     margin-bottom: 0;
