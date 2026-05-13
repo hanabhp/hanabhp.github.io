@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <defs>
+    <linearGradient id="satBody" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e5e5e5"/>
+      <stop offset="50%" style="stop-color:#a3a3a3"/>
+      <stop offset="100%" style="stop-color:#737373"/>
+    </linearGradient>
+    <linearGradient id="panelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#525252"/>
+      <stop offset="100%" style="stop-color:#262626"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="300" fill="#fafafa"/>
+  
+  <!-- Stars/dots pattern -->
+  <g fill="#d4d4d4">
+    <circle cx="50" cy="30" r="2"/>
+    <circle cx="120" cy="50" r="1.5"/>
+    <circle cx="200" cy="25" r="2"/>
+    <circle cx="280" cy="40" r="1.5"/>
+    <circle cx="350" cy="55" r="2"/>
+    <circle cx="80" cy="70" r="1.5"/>
+    <circle cx="320" cy="20" r="1.5"/>
+  </g>
+  
+  <!-- LEO Orbit arc -->
+  <ellipse cx="200" cy="380" rx="260" ry="260" fill="none" stroke="#d4d4d4" stroke-width="1.5" stroke-dasharray="8,6"/>
+  
+  <!-- Satellite 1 (left) -->
+  <g transform="translate(70, 85)" filter="url(#shadow)">
+    <rect x="-30" y="8" width="24" height="10" rx="1" fill="url(#panelGrad)"/>
+    <line x1="-25" y1="8" x2="-25" y2="18" stroke="#404040" stroke-width="0.5"/>
+    <line x1="-18" y1="8" x2="-18" y2="18" stroke="#404040" stroke-width="0.5"/>
+    <line x1="-11" y1="8" x2="-11" y2="18" stroke="#404040" stroke-width="0.5"/>
+    <rect x="-6" y="3" width="24" height="18" rx="2" fill="url(#satBody)" stroke="#525252" stroke-width="0.5"/>
+    <circle cx="6" cy="12" r="4" fill="#262626"/>
+    <circle cx="6" cy="12" r="2" fill="#525252"/>
+    <rect x="18" y="8" width="24" height="10" rx="1" fill="url(#panelGrad)"/>
+    <line x1="23" y1="8" x2="23" y2="18" stroke="#404040" stroke-width="0.5"/>
+    <line x1="30" y1="8" x2="30" y2="18" stroke="#404040" stroke-width="0.5"/>
+    <line x1="37" y1="8" x2="37" y2="18" stroke="#404040" stroke-width="0.5"/>
+  </g>
+  
+  <!-- Satellite 2 (center) -->
+  <g transform="translate(190, 65)" filter="url(#shadow)">
+    <rect x="-30" y="8" width="24" height="10" rx="1" fill="url(#panelGrad)"/>
+    <line x1="-25" y1="8" x2="-25" y2="18" stroke="#404040" stroke-width="0.5"/>
+    <line x1="-18" y1="8" x2="-18" y2="18" stroke="#404040" stroke-width="0.5"/>
+    <line x1="-11" y1="8" x2="-11" y2="18" stroke="#404040" stroke-width="0.5"/>
+    <rect x="-6" y="3" width="24" height="18" rx="2" fill="url(#satBody)" stroke="#525252" stroke-width="0.5"/>
+    <circle cx="6" cy="12" r="4" fill="#262626"/>
+    <circle cx="6" cy="12" r="2" fill="#525252"/>
+    <rect x="18" y="8" width="24" height="10" rx="1" fill="url(#panelGrad)"/>
+    <line x1="23" y1="8" x2="23" y2="18" stroke="#404040" stroke-width="0.5"/>
+    <line x1="30" y1="8" x2="30" y2="18" stroke="#404040" stroke-width="0.5"/>
+    <line x1="37" y1="8" x2="37" y2="18" stroke="#404040" stroke-width="0.5"/>
+  </g>
+  
+  <!-- Satellite 3 (right) -->
+  <g transform="translate(310, 90)" filter="url(#shadow)">
+    <rect x="-30" y="8" width="24" height="10" rx="1" fill="url(#panelGrad)"/>
+    <line x1="-25" y1="8" x2="-25" y2="18" stroke="#404040" stroke-width="0.5"/>
+    <line x1="-18" y1="8" x2="-18" y2="18" stroke="#404040" stroke-width="0.5"/>
+    <line x1="-11" y1="8" x2="-11" y2="18" stroke="#404040" stroke-width="0.5"/>
+    <rect x="-6" y="3" width="24" height="18" rx="2" fill="url(#satBody)" stroke="#525252" stroke-width="0.5"/>
+    <circle cx="6" cy="12" r="4" fill="#262626"/>
+    <circle cx="6" cy="12" r="2" fill="#525252"/>
+    <rect x="18" y="8" width="24" height="10" rx="1" fill="url(#panelGrad)"/>
+    <line x1="23" y1="8" x2="23" y2="18" stroke="#404040" stroke-width="0.5"/>
+    <line x1="30" y1="8" x2="30" y2="18" stroke="#404040" stroke-width="0.5"/>
+    <line x1="37" y1="8" x2="37" y2="18" stroke="#404040" stroke-width="0.5"/>
+  </g>
+  
+  <!-- Inter-satellite links (maroon) -->
+  <line x1="118" y1="95" x2="165" y2="80" stroke="#800000" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="238" y1="80" x2="285" y2="95" stroke="#800000" stroke-width="1.5" stroke-dasharray="4,3"/>
+  
+  <!-- Earth surface curve -->
+  <ellipse cx="200" cy="340" rx="220" ry="90" fill="#f5f5f5" stroke="#a3a3a3" stroke-width="1.5"/>
+  
+  <!-- Communication beams (maroon accent) -->
+  <polygon points="76,107 50,220 85,220" fill="#800000" opacity="0.1"/>
+  <polygon points="196,88 155,220 205,220" fill="#800000" opacity="0.1"/>
+  <polygon points="316,112 280,220 335,220" fill="#800000" opacity="0.1"/>
+  
+  <line x1="76" y1="107" x2="67" y2="220" stroke="#800000" stroke-width="1" opacity="0.4"/>
+  <line x1="196" y1="88" x2="180" y2="220" stroke="#800000" stroke-width="1" opacity="0.4"/>
+  <line x1="316" y1="112" x2="307" y2="220" stroke="#800000" stroke-width="1" opacity="0.4"/>
+  
+  <!-- IoT Devices -->
+  <g transform="translate(45, 225)" filter="url(#shadow)">
+    <rect x="0" y="0" width="22" height="28" rx="3" fill="white" stroke="#404040" stroke-width="1.5"/>
+    <rect x="4" y="4" width="14" height="10" rx="1" fill="#262626"/>
+    <circle cx="11" cy="20" r="3" fill="#800000"/>
+  </g>
+  
+  <g transform="translate(130, 228)" filter="url(#shadow)">
+    <circle cx="14" cy="14" r="14" fill="white" stroke="#404040" stroke-width="1.5"/>
+    <circle cx="14" cy="14" r="7" fill="#262626"/>
+    <circle cx="14" cy="14" r="2.5" fill="#800000"/>
+  </g>
+  
+  <g transform="translate(175, 222)" filter="url(#shadow)">
+    <rect x="0" y="10" width="28" height="22" rx="2" fill="white" stroke="#404040" stroke-width="1.5"/>
+    <rect x="10" y="0" width="8" height="14" fill="#525252"/>
+    <circle cx="14" cy="4" r="2" fill="#800000"/>
+  </g>
+  
+  <g transform="translate(260, 227)" filter="url(#shadow)">
+    <rect x="0" y="0" width="26" height="20" rx="2" fill="white" stroke="#404040" stroke-width="1.5"/>
+    <rect x="3" y="3" width="20" height="11" rx="1" fill="#262626"/>
+    <rect x="9" y="20" width="8" height="4" fill="#a3a3a3"/>
+  </g>
+  
+  <g transform="translate(325, 223)" filter="url(#shadow)">
+    <rect x="0" y="0" width="18" height="30" rx="3" fill="white" stroke="#404040" stroke-width="1.5"/>
+    <rect x="2" y="4" width="14" height="18" rx="1" fill="#262626"/>
+    <circle cx="9" cy="26" r="2" fill="#a3a3a3"/>
+  </g>
+  
+  <!-- Label -->
+  <text x="200" y="268" text-anchor="middle" fill="#525252" font-family="system-ui, -apple-system, sans-serif" font-size="11">Direct-to-Device IoT</text>
+</svg>

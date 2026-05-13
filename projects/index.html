@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hannah B. Pasandi - Projects</title>
+  <meta name="description" content="Project portfolio of Hannah B. Pasandi. Self-driving systems for networked infrastructure.">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    :root {
+      --red-primary: #800000;
+      --red-secondary: #a52a2a;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: #1f2937;
+      background-color: #fafafa;
+    }
+    .project-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      padding: 28px 32px;
+      margin-bottom: 28px;
+      scroll-margin-top: 80px;
+    }
+    .project-card h2 {
+      color: var(--red-primary);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .project-tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      color: var(--red-secondary);
+      border: 1px solid var(--red-secondary);
+      padding: 2px 10px;
+      border-radius: 12px;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+    .project-status {
+      display: inline-block;
+      font-size: 0.78rem;
+      color: white;
+      background: var(--red-primary);
+      padding: 2px 10px;
+      border-radius: 12px;
+      margin-left: 8px;
+    }
+    .field-label {
+      font-weight: 600;
+      color: var(--red-primary);
+      font-size: 0.95rem;
+      margin-top: 14px;
+      margin-bottom: 4px;
+    }
+    .project-card p {
+      text-align: justify;
+      hyphens: auto;
+    }
+    .header-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: white;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+    .nav-link-custom {
+      color: #4b5563;
+      text-decoration: none;
+      margin: 0 12px;
+      padding: 8px 0;
+      transition: color 0.2s;
+    }
+    .nav-link-custom:hover { color: var(--red-primary); }
+    .page-intro {
+      background: linear-gradient(135deg, var(--red-primary) 0%, var(--red-secondary) 100%);
+      color: white;
+      padding: 56px 0 48px;
+      margin-bottom: 32px;
+    }
+    .page-intro h1 { font-weight: 600; }
+    .page-intro p { opacity: 0.95; }
+    .toc {
+      background: white;
+      border-radius: 10px;
+      padding: 18px 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .toc a {
+      color: var(--red-primary);
+      text-decoration: none;
+    }
+    .toc a:hover { text-decoration: underline; }
+    .ext-link {
+      color: var(--red-primary);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--red-primary);
+    }
+    .ext-link:hover { color: var(--red-secondary); }
+  </style>
+</head>
+<body>
+
+<header class="header-sticky">
+  <div class="container py-3">
+    <div class="d-flex justify-content-between align-items-center">
+      <a href="../" class="text-decoration-none">
+        <h3 class="mb-0" style="color: var(--red-primary); font-weight: 600;">Hannah B. Pasandi</h3>
+      </a>
+      <nav class="d-none d-md-block">
+        <a href="../" class="nav-link-custom">Home</a>
+        <a href="../#research" class="nav-link-custom">Research</a>
+        <a href="./" class="nav-link-custom" style="color: var(--red-primary); font-weight: 600;">Projects</a>
+        <a href="../#publications" class="nav-link-custom">Publications</a>
+        <a href="../#contact" class="nav-link-custom">Contact</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<section class="page-intro">
+  <div class="container">
+    <h1>Projects</h1>
+    <p class="lead mb-0">Selected systems I have built or am building, with problem, approach, results, and status.</p>
+  </div>
+</section>
+
+<div class="container pb-5">
+
+  <div class="toc">
+    <div class="field-label" style="margin-top:0;">Jump to</div>
+    <div class="row">
+      <div class="col-md-6">
+        <p class="mb-1 small">Inference and Serving</p>
+        <p class="mb-2 small">
+          <a href="#tether">Tether</a> ·
+          <a href="#palse">PALSE</a> ·
+          <a href="#skycascade">SkyCascade</a> ·
+          <a href="#orbitmesh">OrbitMesh</a> ·
+          <a href="#drift">Drift</a> ·
+          <a href="#spectra">Spectra</a>
+        </p>
+        <p class="mb-1 small">Cellular and Wi-Fi</p>
+        <p class="mb-2 small">
+          <a href="#cellforge">CellForge</a> ·
+          <a href="#cipher">Cipher</a>
+        </p>
+      </div>
+      <div class="col-md-6">
+        <p class="mb-1 small">Direct-to-Cell Satellite</p>
+        <p class="mb-2 small">
+          <a href="#spaceregulate">SpaceREGULATE</a> ·
+          <a href="#skyhandover">SkyHandover</a> ·
+          <a href="#skywindow">SkyWindow</a>
+        </p>
+        <p class="mb-1 small">Cascade-Safe Learning</p>
+        <p class="mb-2 small">
+          <a href="#blackwidow">BlackWidow</a> ·
+          <a href="#intact">INTACT</a> ·
+          <a href="#veto">VETO</a> ·
+          <a href="#arachne">Arachne</a>
+        </p>
+        <p class="mb-1 small">Foundational (PhD line)</p>
+        <p class="mb-0 small">
+          <a href="#latte">LATTE / MuViS</a> ·
+          <a href="#deepmac">DeepMAC</a> ·
+          <a href="#selfdriving">Self-Driving Framework</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tether -->
+  <div class="project-card" id="tether">
+    <h2>Tether <span class="project-status">In submission, ACM MobiHoc 2026</span></h2>
+    <p class="text-muted small mb-3">Lyapunov-bounded multi-tier LLM inference routing across a device mesh.</p>
+
+    <span class="project-tag">Agentic AI</span>
+    <span class="project-tag">Multi-tier LLM Serving</span>
+    <span class="project-tag">Lyapunov Control</span>
+
+    <div class="field-label">Problem</div>
+    <p>Modern multimodal inference must run across heterogeneous compute (iPhone, MacBook, Watch, cloud). Each tier has different latency, energy, and thermal budgets. Static routing wastes capacity. Reactive routing violates SLOs when load spikes faster than the controller observes it.</p>
+
+    <div class="field-label">Approach</div>
+    <p>A Lyapunov-bounded controller routes inference requests at decision time, conditioned on predicted future state of each tier (thermal envelope, queue depth, energy budget). The controller's worst-case SLO violation is bounded analytically by the Lyapunov drift, not just measured empirically.</p>
+
+    <div class="field-label">Results</div>
+    <p>Voice SLO violations bounded under 0.2 percent across a heterogeneous device mix. The Lyapunov bound holds across all observed workloads. Sole first author.</p>
+  </div>
+
+  <!-- PALSE -->
+  <div class="project-card" id="palse">
+    <h2>PALSE <span class="project-status">In submission</span></h2>
+    <p class="text-muted small mb-3">Plan-aware agentic serving with cached plan reuse.</p>
+
+    <span class="project-tag">Agentic AI</span>
+    <span class="project-tag">LLM Planning</span>
+    <span class="project-tag">Plan Caching</span>
+
+    <div class="field-label">Problem</div>
+    <p>Agentic inference systems often re-plan from scratch on every request, even when the input is structurally similar to past inputs. Re-planning is expensive and predictable failure cases (e.g. plan applies-then-invalidates under distribution shift) are not surfaced to the executor.</p>
+
+    <div class="field-label">Approach</div>
+    <p>Split the agent loop into a planner and an executor. The planner emits a typed plan structure that can be cached, reused, and revoked. The executor checks plan validity at each step against current observations, falling back to re-planning when validity fails.</p>
+
+    <div class="field-label">Results</div>
+    <p>Cached plan reuse for repeated patterns. Plan-validity checks surface distribution shifts at the moment they invalidate the cached plan, rather than after the action has been taken.</p>
+  </div>
+
+  <!-- SkyCascade -->
+  <div class="project-card" id="skycascade">
+    <h2>SkyCascade <span class="project-status">In submission</span></h2>
+    <p class="text-muted small mb-3">Carbon-aware multi-cloud inference orchestration, extending SkyPilot.</p>
+
+    <span class="project-tag">Multi-cloud</span>
+    <span class="project-tag">Carbon-Aware</span>
+    <span class="project-tag">SkyPilot</span>
+
+    <div class="field-label">Problem</div>
+    <p>Inference workloads scheduled across cloud providers face wildly different per-region carbon intensities and latencies. Existing orchestrators optimize cost, not carbon, and ignore latency-carbon tradeoffs in routing decisions.</p>
+
+    <div class="field-label">Approach</div>
+    <p>Extend SkyPilot's intercloud broker with carbon-intensity-aware region selection. The scheduler treats predicted carbon and latency as joint objectives, with explicit user-controlled tradeoff weighting. Region selection happens at decision time using real-time carbon intensity feeds.</p>
+
+    <div class="field-label">Results</div>
+    <p>22.5 percent carbon reduction and 68.5 percent latency improvement on a real multi-cloud workload trace, compared to cost-only baselines.</p>
+  </div>
+
+  <!-- OrbitMesh -->
+  <div class="project-card" id="orbitmesh">
+    <h2>OrbitMesh <span class="project-status">In submission</span></h2>
+    <p class="text-muted small mb-3">Four-tier inference orchestration including a satellite edge tier.</p>
+
+    <span class="project-tag">Multi-tier Inference</span>
+    <span class="project-tag">Satellite Edge</span>
+    <span class="project-tag">Predictive Routing</span>
+
+    <div class="field-label">Problem</div>
+    <p>As direct-to-cell satellite becomes a real backhaul option, inference can be served not just from device, edge, and cloud, but also from satellite-resident compute. Static routing across four tiers is intractable.</p>
+
+    <div class="field-label">Approach</div>
+    <p>A predictive routing controller selects compute tier at decision time, using orbital determinism to forecast satellite availability tens of minutes ahead. The controller composes with Tether's Lyapunov bound at the device tier.</p>
+
+    <div class="field-label">Results</div>
+    <p>32.8 percentage point stall reduction over device-only baseline. 99.5 percent of oracle performance, where the oracle has perfect knowledge of future tier availability.</p>
+  </div>
+
+  <!-- Drift -->
+  <div class="project-card" id="drift">
+    <h2>Drift <span class="project-status">In submission, ACM MobiCom 2026</span></h2>
+    <p class="text-muted small mb-3">Mobility-aware mobile LLM serving.</p>
+    <div class="field-label">Problem and Approach</div>
+    <p>Mobile users move through environments with different network conditions and compute availability. A serving controller that ignores predicted mobility makes worse routing choices than necessary. Drift integrates mobility prediction into the tier-selection controller.</p>
+  </div>
+
+  <!-- Spectra -->
+  <div class="project-card" id="spectra">
+    <h2>Spectra <span class="project-status">In submission, ACM MobiCom 2026</span></h2>
+    <p class="text-muted small mb-3">Thermal-aware multi-tier serving for mobile inference.</p>
+    <div class="field-label">Problem and Approach</div>
+    <p>iPhone and similar mobile platforms throttle under sustained inference workloads, producing performance cliffs invisible to standard schedulers. Spectra integrates thermal prediction into the tier-selection controller, routing inference away from devices approaching thermal cutoff before the cutoff fires.</p>
+  </div>
+
+  <!-- CellForge -->
+  <div class="project-card" id="cellforge">
+    <h2>CellForge <span class="project-status">In submission, USENIX NSDI 2027</span></h2>
+    <p class="text-muted small mb-3">Spec-grounded 5G cellular attack detection that generalizes across 3GPP Releases.</p>
+
+    <span class="project-tag">LLM-based extraction</span>
+    <span class="project-tag">5G NR</span>
+    <span class="project-tag">Cross-Layer Invariants</span>
+
+    <div class="field-label">Problem</div>
+    <p>5G data-plane attack detectors trained on one operator and one 3GPP Release do not transfer to other deployments without retraining. The retraining cost is prohibitive across the 4 major US operators and the ongoing protocol release cadence (Releases 15 through 18).</p>
+
+    <div class="field-label">Approach</div>
+    <p>Use an LLM as a typed extraction agent reading 3GPP normative text to produce cross-layer invariants. Pair the invariants with a Gradient Boosted Machine classifier. Because the features are spec-grounded rather than data-fit, the detector generalizes across releases.</p>
+
+    <div class="field-label">Results</div>
+    <p>F1 of 0.953 on 106 GB of traces from 4 US operators. Generalizes across 3GPP Releases 15 through 18 without retraining.</p>
+  </div>
+
+  <!-- Cipher -->
+  <div class="project-card" id="cipher">
+    <h2>Cipher <span class="project-status">In submission, ACM MobiCom 2026</span></h2>
+    <p class="text-muted small mb-3">Wi-Fi 7 cross-layer privacy side channels.</p>
+    <div class="field-label">Problem and Approach</div>
+    <p>Wi-Fi 7's multi-link operation creates new cross-layer side channels visible to network observers. Cipher characterizes the leakage and proposes protocol-layer mitigations.</p>
+  </div>
+
+  <!-- SpaceREGULATE -->
+  <div class="project-card" id="spaceregulate">
+    <h2>SpaceREGULATE <span class="project-status">In submission, USENIX NSDI 2027 Frontiers</span></h2>
+    <p class="text-muted small mb-3">Cross-jurisdictional data sovereignty for LEO satellite networks. Sole-authored.</p>
+
+    <span class="project-tag">Sole Author</span>
+    <span class="project-tag">Direct-to-Cell</span>
+    <span class="project-tag">Predictive Compliance</span>
+
+    <div class="field-label">Problem</div>
+    <p>A single LEO satellite crosses 3 to 6 data-protection jurisdictions per orbit, and every active session becomes a cross-border processing activity by default. GDPR, PIPL, the CLOUD Act, and 5 other major regimes contradict each other in 38 percent of pairwise combinations. No deployed compliance system enforces this at orbital timescales.</p>
+
+    <div class="field-label">Approach</div>
+    <p>Three lightweight data-plane components: an Orbit-to-Law Mapper that predicts jurisdictional crossings 17.4 minutes ahead from public TLE data, an Orbital Policy Bundle cache that pre-stages the incoming regime's rules, and a Jurisdiction Handover Sequencer that commits policy atomically at the boundary in 6.6 milliseconds.</p>
+
+    <div class="field-label">Results</div>
+    <p>Evaluated on 4,504 satellites across Starlink, OneWeb, and Kuiper. 17.4-minute median lead time. 4,530x feasibility margin between handover overhead and minimum dwell time. Confirmed under StarryNet ISL emulation with 99th-percentile commit time of 5.35 milliseconds.</p>
+  </div>
+
+  <!-- SkyHandover -->
+  <div class="project-card" id="skyhandover">
+    <h2>SkyHandover <span class="project-status">In submission</span></h2>
+    <p class="text-muted small mb-3">Predictive direct-to-cell satellite handover from cross-layer protocol features.</p>
+
+    <span class="project-tag">D2C</span>
+    <span class="project-tag">Cross-Layer Prediction</span>
+    <span class="project-tag">O-RAN rApp</span>
+
+    <div class="field-label">Problem</div>
+    <p>Direct-to-cell satellite handovers happen on a different timescale than terrestrial cellular handovers. The 3GPP-CHO reactive baseline triggers too late for D2C orbital geometry. Throughput degradation at handover is significant.</p>
+
+    <div class="field-label">Approach</div>
+    <p>Cross-layer protocol features (DL/UL TBS ratio, RACH/RRC co-occurrence, MR density) encode a handover signature observable seconds before the handover decision. A Gradient Boosted Machine classifier with an LLM reranker detects the signature, deployed as an O-RAN Near-RT RIC rApp.</p>
+
+    <div class="field-label">Results</div>
+    <p>F1 of 0.923. Mean prediction lead time of 8.3 seconds, compared to 2.0 seconds for 3GPP-CHO. 34.2 percent throughput improvement. Validated on 106 GB of production-scale traces from 4 US carriers.</p>
+  </div>
+
+  <!-- SkyWindow -->
+  <div class="project-card" id="skywindow">
+    <h2>SkyWindow / DeferSat <span class="project-status">In submission</span></h2>
+    <p class="text-muted small mb-3">Predictive transmission deferral to high-elevation orbital passes.</p>
+    <div class="field-label">Problem and Approach</div>
+    <p>Dual-orbit IoT terminals waste energy and packets transmitting during low-elevation passes when Doppler-induced PHY errors cause loss. SkyWindow uses on-device SGP4 propagation of cached TLE data to predict high-elevation pass windows, deferring transmission to the midpoint of the predicted window. Requires only 4 KB of RAM on the end device.</p>
+    <div class="field-label">Results</div>
+    <p>Packet delivery ratio rises from 0.55 (instant-send) to 0.72 (defer-to-window). Robust to 14 days of TLE staleness. Validated on 847 real packets from FossaSat-2.</p>
+  </div>
+
+  <!-- BlackWidow -->
+  <div class="project-card" id="blackwidow">
+    <h2>BlackWidow <span class="project-status">In submission, ACM SIGCOMM 2026</span></h2>
+    <p class="text-muted small mb-3">Decision-time constraint-masked reinforcement learning for shared infrastructure.</p>
+
+    <span class="project-tag">Safe RL</span>
+    <span class="project-tag">Constraint Masking</span>
+    <span class="project-tag">Multi-Agent</span>
+
+    <div class="field-label">Problem</div>
+    <p>Reinforcement learning controllers deployed in shared infrastructure cascade their violations downstream. A single bad scheduling decision can propagate across 50,000 concurrent flows. Standard RL produces 148 to 708 propagating violations under benchmark workloads.</p>
+
+    <div class="field-label">Approach</div>
+    <p>Compute a constraint mask at decision time from the current network state. The mask excludes actions known to cause cascade violations. The agent's policy is shaped by the safety constraints without requiring offline retraining.</p>
+
+    <div class="field-label">Results</div>
+    <p>Zero propagating violations across 50,000 concurrent flows. 73 percent throughput gain over unconstrained baseline.</p>
+  </div>
+
+  <!-- INTACT -->
+  <div class="project-card" id="intact">
+    <h2>INTACT <span class="project-status">In submission, ACM SIGMETRICS 2026</span></h2>
+    <p class="text-muted small mb-3">Phase-transition theory for multi-agent learning under shift.</p>
+    <div class="field-label">Problem and Approach</div>
+    <p>Multi-agent reinforcement learning systems oscillate or converge based on environmental properties that are not well-characterized in standard theory. INTACT identifies an R0 phase boundary that predicts convergence behavior, with a regret bound of O(sqrt(T log|A|/eta_min)).</p>
+    <div class="field-label">Results</div>
+    <p>Empirical R-squared of 0.94 between the theoretical phase boundary and observed convergence behavior.</p>
+  </div>
+
+  <!-- VETO -->
+  <div class="project-card" id="veto">
+    <h2>VETO <span class="project-status">In submission, CoRL 2026</span></h2>
+    <p class="text-muted small mb-3">Safety envelopes for learning controllers under distribution shift.</p>
+    <div class="field-label">Problem and Approach</div>
+    <p>Safety envelopes for learned controllers drift when the deployment distribution diverges from training. VETO uses Kolmogorov-Smirnov-distance-bounded online recalibration to maintain envelope validity. Joint work with Bartosz Krawczyk (RIT).</p>
+  </div>
+
+  <!-- Arachne -->
+  <div class="project-card" id="arachne">
+    <h2>Arachne <span class="project-status">In submission, ACM MobiHoc 2026</span></h2>
+    <p class="text-muted small mb-3">LLM-driven compositional synthesis of cascade-safe MAC protocols from standards specifications. Sole-authored.</p>
+
+    <span class="project-tag">Sole Author</span>
+    <span class="project-tag">LLM Synthesis</span>
+    <span class="project-tag">Formal Verification</span>
+
+    <div class="field-label">Problem</div>
+    <p>MAC protocol design is bottlenecked by the cost of human expertise. Existing automated design tools either ignore safety constraints or produce non-compositional outputs that cannot be verified.</p>
+
+    <div class="field-label">Approach</div>
+    <p>Treat the LLM as a typed extraction agent over 3GPP, 802.11, and other normative specifications. The LLM produces typed protocol blocks (carrier sensing, backoff, ACK, channel reservation) which are then composed under formal cascade-safety constraints. The agent's outputs are verified before deployment, so the LLM never produces an unsafe protocol.</p>
+
+    <div class="field-label">Results</div>
+    <p>Synthesizes verified MAC protocols across six standards documents. The methodological pattern generalizes to other protocol design domains.</p>
+  </div>
+
+  <!-- LATTE / MuViS -->
+  <div class="project-card" id="latte">
+    <h2>LATTE / MuViS <span class="project-status">ACM MobiSys 2021 (Best Poster)</span></h2>
+    <p class="text-muted small mb-3">Online MU-MIMO grouping for video streaming over commodity Wi-Fi.</p>
+    <div class="field-label">Approach and Results</div>
+    <p>Dual-phase RL framework. First phase groups MU-MIMO users by channel correlation. Second phase optimizes bitrate per group. Deployed on 802.11ac testbed. The methodological foundation for the production MU-MIMO scheduler later built at Skylark Wireless.</p>
+  </div>
+
+  <!-- DeepMAC -->
+  <div class="project-card" id="deepmac">
+    <h2>DeepMAC <span class="project-status">ACM SenSys 2019 (Best Poster, N2Women track)</span></h2>
+    <p class="text-muted small mb-3">Machine-learning-based automated MAC protocol design.</p>
+    <div class="field-label">Approach and Results</div>
+    <p>The first paper introducing modular protocol decomposition with RL composition. Decouple 802.11 b, a, g, n, ac variants into parametric blocks. RL chooses which blocks to combine for each scenario. The conceptual ancestor of Arachne.</p>
+  </div>
+
+  <!-- Self-Driving Framework -->
+  <div class="project-card" id="selfdriving">
+    <h2>Self-Driving Framework <span class="project-status">IEEE Access 2021 (NCWIT Award)</span></h2>
+    <p class="text-muted small mb-3">A learning-based framework for self-driving design of networking protocols.</p>
+    <div class="field-label">Approach</div>
+    <p>Full paper introducing the modular-decomposition-with-RL-composition methodology that underlies the dissertation line. Establishes the principle that wireless protocols can be decomposed into typed modular blocks and composed adaptively, opening the design space later filled by spec-grounded LLM synthesis.</p>
+  </div>
+
+</div>
+
+<footer style="background: #1f2937; color: white; padding: 24px 0; text-align: center;">
+  <div class="container">
+    <p class="mb-0">&copy; 2026 Hannah B. Pasandi. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
