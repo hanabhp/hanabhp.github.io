@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>teNET: Certified LLM Synthesis of Network Protocols (Wi-Fi, 5G MAC, NTN) | Hannah B. Pasandi</title>
+<meta name="description" content="teNET mines a protocol from its specification as a graph of typed mechanism blocks, lets a model compose them, and deploys only what a computable certificate proves cannot collapse. Built on a doctoral thesis on self-driving protocols and a year at Skylark Wireless on MU-MIMO scheduling. Case studies in Wi-Fi, 5G, and NTN." />
+<meta name="author" content="Hannah B. Pasandi" />
+<style>
+:root{
+  --bg:#0a0e14; --bg-soft:#0e131c; --bg-card:#111722;
+  --line:#1e2734; --line-soft:#2a3646;
+  /* text colors only, zero neutral gray */
+  --ink:#eef2f7; --head:#ffffff;
+  --blue:#6ea8ff; --blue-soft:#9cc0ff;
+  --green:#5fd17a; --amber:#f0c25a; --purple:#c79bff; --rose:#ff9a8f;
+  --steel:#8fb1e6;            /* hued substitute anywhere a muted tone is needed */
+  --max:960px; --pad:clamp(16px,4vw,34px);
+  --mono:"JetBrains Mono","Fira Code","SF Mono","Menlo",monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-size:15px;line-height:1.65;color:var(--ink);background:var(--bg);
+  background-image:radial-gradient(circle at 88% -5%,rgba(110,168,255,0.08),transparent 55%);
+  -webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:var(--blue);text-decoration:none;transition:color .12s}
+a:hover{color:var(--blue-soft);text-decoration:underline;text-underline-offset:3px}
+
+/* ===== sticky scrolling top menu ===== */
+nav.topbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:22px;
+  padding:12px var(--pad);background:rgba(10,14,20,0.82);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line)}
+nav.topbar .mark{font-family:var(--mono);font-weight:700;font-size:18px;letter-spacing:-.03em;color:var(--head)}
+nav.topbar .mark .dot{color:var(--blue)}
+nav.topbar .links{display:flex;flex-wrap:wrap;gap:8px 18px;overflow:visible;font-family:var(--mono);font-size:12.5px;scrollbar-width:thin}
+nav.topbar .links::-webkit-scrollbar{height:0}
+nav.topbar .links a{color:var(--blue-soft);white-space:nowrap;position:relative;padding-bottom:3px;transition:color .15s}
+nav.topbar .links a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--blue);transition:width .22s ease}
+nav.topbar .links a:hover{color:var(--head);text-decoration:none}
+nav.topbar .links a:hover::after{width:100%}
+nav.topbar .links a.active{color:var(--head)}
+nav.topbar .links a.active::after{width:100%;background:var(--green)}
+
+header.hero{padding:46px var(--pad) 18px;max-width:var(--max);margin:0 auto;text-align:center}
+.brand{font-family:Cambria,Georgia,'Times New Roman',serif;font-size:clamp(38px,8vw,52px);font-weight:700;letter-spacing:-.045em;line-height:1;color:var(--head);margin-bottom:8px}
+.brand .dot{color:var(--blue)}
+.tagline{font-family:var(--mono);font-size:13.5px;color:var(--blue-soft);margin-bottom:8px}
+.byline{font-size:14px;color:var(--ink)}
+.byline b{color:var(--head)}
+
+.thesis{margin-top:28px;border:1px solid var(--line-soft);border-left:3px solid var(--green);border-radius:0 14px 14px 0;background:var(--bg-card);padding:22px 24px}
+.thesis .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin-bottom:9px;letter-spacing:.22em;text-transform:uppercase;font-size:11.5px}
+.thesis h2{font-size:clamp(19px,3vw,25px);line-height:1.32;font-weight:600;color:var(--head)}
+.thesis p{margin-top:11px;color:var(--ink);max-width:70ch}
+.thesis .one{font-family:var(--mono);color:var(--amber);font-size:13.5px;margin-top:13px}
+
+/* ===== scrolling news box ===== */
+.newsbox{margin-top:26px;border:1px solid var(--line-soft);border-radius:14px;background:var(--bg-soft);overflow:hidden}
+.newsbox .nhead{display:flex;align-items:center;gap:10px;padding:11px 18px;border-bottom:1px solid var(--line)}
+.newsbox .nhead .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber)}
+.newsbox .nhead .pulse{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(95,209,122,0.6);animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(95,209,122,0.5)}70%{box-shadow:0 0 0 7px rgba(95,209,122,0)}100%{box-shadow:0 0 0 0 rgba(95,209,122,0)}}
+.news-window{max-height:200px;overflow-y:auto;position:relative}
+.news-track{}
+.news-window:hover .news-track{animation-play-state:paused}
+@keyframes newsscroll{0%{transform:translateY(0)}100%{transform:translateY(-50%)}}
+.news-item{display:flex;gap:14px;padding:11px 18px;border-bottom:1px solid var(--line);font-size:13.5px}
+.news-item .when{font-family:var(--mono);font-size:11.5px;color:var(--blue);white-space:nowrap;min-width:74px}
+.news-item .what{color:var(--ink)}
+.news-item .what b{color:var(--head)}
+
+section{padding:42px var(--pad);max-width:var(--max);margin:0 auto;border-top:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--steel);margin-bottom:10px}
+h2.s{font-size:clamp(20px,3vw,27px);font-weight:600;letter-spacing:-.02em;margin-bottom:6px;color:var(--head)}
+h3{font-family:var(--mono);font-size:15px;font-weight:600;margin:20px 0 6px;color:var(--head)}
+p{margin:9px 0;color:var(--ink);max-width:72ch}
+p strong{color:var(--head)}
+
+figure{margin:22px 0}
+.fig{width:100%;height:auto;display:block;font-family:var(--mono)}
+figcaption{font-family:var(--mono);font-size:11.5px;color:var(--steel);margin-top:8px}
+.hint{font-family:var(--mono);font-size:10.5px;color:var(--blue);margin-top:4px}
+
+.fig .n{cursor:default}
+.fig .n rect,.fig .n circle{transition:filter .14s ease, stroke-width .14s ease}
+.fig .n:hover rect,.fig .n:hover circle{filter:brightness(1.7);stroke-width:2.6}
+.fig .e{transition:stroke-width .14s ease}
+.fig .e:hover{stroke-width:3.4}
+.fig text{pointer-events:none}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px}
+.card{border:1px solid var(--line);border-radius:12px;background:var(--bg-card);padding:17px}
+.card .k{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.card.w .k{color:var(--green)} .card.f .k{color:var(--blue)} .card.n2 .k{color:var(--amber)}
+.card h4{font-size:14.5px;margin-bottom:5px;color:var(--head)}
+.card p{font-size:13px;margin:0;color:var(--ink)}
+.card .role{font-family:var(--mono);font-size:10.5px;color:var(--steel);margin-top:8px}
+
+.tablewrap{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:600px}
+th,td{text-align:left;padding:10px 13px;vertical-align:top;border-bottom:1px solid var(--line);color:var(--ink)}
+thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--steel);background:var(--bg-card)}
+tbody tr:last-child td{border-bottom:none}
+.mono{font-family:var(--mono);color:var(--ink)}
+.tagp{display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:4px;border:1px solid var(--line-soft);color:var(--ink)}
+.tagp.s{color:var(--blue);border-color:#33507a}.tagp.c{color:var(--purple);border-color:#4f3a66}
+
+.b{display:block;padding-left:18px;position:relative;margin:8px 0;color:var(--ink);font-size:14px;max-width:74ch}
+.b:before{content:"\2022";position:absolute;left:0;color:var(--blue)}
+
+.note{border:1px solid var(--line-soft);border-radius:12px;background:var(--bg-card);padding:15px 18px;margin-top:16px}
+.note .h{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+
+/* foundations list */
+.pub{padding:11px 0;border-bottom:1px solid var(--line)}
+.pub:last-child{border-bottom:none}
+.pub .t{color:var(--head);font-weight:600;font-size:14px}
+.pub .v{font-family:var(--mono);font-size:11.5px;color:var(--blue);margin-top:2px}
+.pub .d{font-size:13px;color:var(--ink);margin-top:3px}
+
+footer{padding:46px var(--pad) 80px;max-width:var(--max);margin:0 auto;border-top:1px solid var(--line);font-size:13px;color:var(--ink)}
+footer a{color:var(--blue)}
+.org{font-size:14px;color:var(--ink)}
+.fineprint{margin-top:14px;color:var(--steel);font-size:12px}
+/* exo-style header links and tech tags */
+.hlinks{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px;font-family:var(--mono);font-size:12.5px;justify-content:center}
+.hlinks a{color:var(--blue);border:1px solid var(--line-soft);border-radius:7px;padding:5px 11px}
+.hlinks a:hover{color:var(--head);border-color:var(--blue);text-decoration:none}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;font-family:var(--mono);font-size:11px}
+.tags span{color:var(--blue-soft);border:1px solid var(--line);border-radius:5px;padding:2px 8px}
+/* demo terminal */
+.demo{margin-top:26px;border:1px solid var(--line-soft);border-radius:14px;overflow:hidden;background:#06090e}
+.demo .tabs{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--line);background:var(--bg-soft)}
+.demo .tabs button{font-family:var(--mono);font-size:12px;color:var(--blue-soft);background:none;border:none;border-right:1px solid var(--line);padding:10px 16px;cursor:pointer;transition:color .12s}
+.demo .tabs button:hover{color:var(--head)}
+.demo .tabs button.on{color:var(--head);background:#06090e;box-shadow:inset 0 -2px 0 var(--green)}
+.demo .screen{padding:15px 18px;overflow-x:auto}
+.demo pre{margin:0;font-family:var(--mono);font-size:12.5px;line-height:1.75;white-space:pre;color:var(--ink)}
+.demo .panel{display:none}
+.demo .panel.on{display:block}
+.demo .cmd{color:var(--blue)}
+.demo .ok{color:var(--green)}
+.demo .no{color:#ff9a8f}
+.demo .dim{color:var(--blue-soft)}
+.demo .cur{color:var(--green);animation:blink 1.1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.demo .termline{display:block;opacity:0;transform:translateY(3px);transition:opacity .16s ease,transform .16s ease}
+.demo .termline.show{opacity:1;transform:none}
+.demo .cap{font-family:var(--mono);font-size:10.5px;color:var(--steel);padding:0 18px 12px}
+.quickstart{margin-top:16px;border:1px solid var(--line);border-radius:12px;background:#06090e;padding:14px 18px}
+.quickstart pre{margin:0;font-family:var(--mono);font-size:12.5px;line-height:1.7;white-space:pre-wrap;color:var(--ink)}
+.quickstart .cmd{color:var(--green)}
+.quickstart .hash{color:var(--blue-soft)}
+@media(max-width:640px){ table{font-size:12px} nav.topbar{gap:14px} }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4M99RGCCZP"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4M99RGCCZP');</script>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="teNET: Certified LLM Synthesis of Network Protocols | Hannah B. Pasandi" />
+<meta property="og:description" content="Compose protocols from typed blocks, let a model search, deploy only what a certificate proves cannot collapse. Wi-Fi, 5G MAC, and NTN case studies." />
+<meta property="og:image" content="https://hanabhp.github.io/assets/og-card.png" />
+<meta name="twitter:card" content="summary_large_image" />
+</head>
+<body>
+
+<nav class="topbar">
+  <span class="mark"><span class="pglogo" title="teNET" style="display:inline-flex;width:22px;height:22px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="teNET logo" style="width:100%;height:100%"><title>teNET</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#1f6feb" fill-opacity="0.10" stroke="#1f6feb" stroke-width="1.6"/><rect x="8" y="8" width="12" height="12" rx="3" fill="none" stroke="#1f6feb" stroke-width="2"/><rect x="24" y="8" width="12" height="12" rx="3" fill="none" stroke="#1f6feb" stroke-width="2"/><rect x="8" y="24" width="12" height="12" rx="3" fill="none" stroke="#1f6feb" stroke-width="2"/><rect x="24" y="24" width="12" height="12" rx="3" fill="#1f6feb" fill-opacity="0.25" stroke="#1f6feb" stroke-width="2"/><path d="M20 14 h4 M14 20 v4 M30 20 v4 M20 30 h4" stroke="#1f6feb" stroke-width="2"/></svg></span>teNET<span class="dot">.</span></span>
+  <span class="links">
+    <a href="#idea">the block</a>
+    <a href="#grammar">grammar</a>
+    <a href="#stack">across the stack</a>
+    <a href="#loop">the loop</a>
+    <a href="#certificate">certificate</a>
+    <a href="#cases">case studies</a>
+    <a href="#foundations">foundations</a>
+    <a href="#demo">demo</a>
+    <a href="#publications">publications</a>
+    <a href="#contact">contact</a>
+  </span>
+  <a class="homelink" href="index.html" style="white-space:nowrap;margin-left:auto">Hannah B. Pasandi</a>
+</nav>
+
+<header class="hero">
+  <div class="brand"><span class="pglogo" title="teNET" style="display:inline-flex;width:40px;height:40px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="teNET logo" style="width:100%;height:100%"><title>teNET</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#1f6feb" fill-opacity="0.10" stroke="#1f6feb" stroke-width="1.6"/><rect x="8" y="8" width="12" height="12" rx="3" fill="none" stroke="#1f6feb" stroke-width="2"/><rect x="24" y="8" width="12" height="12" rx="3" fill="none" stroke="#1f6feb" stroke-width="2"/><rect x="8" y="24" width="12" height="12" rx="3" fill="none" stroke="#1f6feb" stroke-width="2"/><rect x="24" y="24" width="12" height="12" rx="3" fill="#1f6feb" fill-opacity="0.25" stroke="#1f6feb" stroke-width="2"/><path d="M20 14 h4 M14 20 v4 M30 20 v4 M20 30 h4" stroke="#1f6feb" stroke-width="2"/></svg></span>teNET<span class="dot">.</span></div>
+  <div class="tagline">certified synthesis of network protocols, across the stack</div>
+  <div class="byline">a research project led by <b>Hannah B. Pasandi</b> &middot; Scientist, UC Berkeley Sky Computing Lab</div>
+  <div class="hlinks">
+  </div>
+  <div class="tags"><span>python</span><span>simpy</span><span>ns-3</span><span>5g-lena</span><span>hypatia</span><span>802.11ax</span><span>5g nr</span><span>ntn</span><span>certificate-gated</span></div>
+  <div style="margin-top:22px;border:1px solid #2a3646;border-left:3px solid #6ea8ff;border-radius:0 12px 12px 0;background:#111722;padding:16px 18px"><span style="font-family:'JetBrains Mono',SF Mono,Menlo,monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6ea8ff">in plain terms</span><p style="margin:8px 0 0;color:#eef2f7;font-size:14.5px;line-height:1.6;max-width:76ch">Wireless protocols like Wi-Fi and 5G are still designed by hand. teNET breaks a protocol into typed building blocks, lets a model assemble and tune them, and uses a mathematical certificate to admit only designs that cannot break: no collision storms, no dropped handovers, no deadlock. It builds directly on her PhD work on self-driving protocols and extends it to 5G and satellite.</p></div>
+
+  <div class="thesis">
+    <div class="eyebrow">the idea</div>
+    <h2>A protocol is an agreement. Compose it from typed blocks, let a model search, and deploy only what a certificate proves cannot collapse.</h2>
+    <p>teNET grows out of her doctoral thesis, <b>Learning-Driven Frameworks for Self-Driving Protocols in Next-Generation Networks</b>, and turns that foundation into a system. It mines a protocol from its specification as a set of blocks, each one an extended finite state machine with typed dependencies. A generative model composes and tunes those blocks. A computable certificate then decides what may run, admitting only compositions that provably cannot collapse: no collision storm, no ping-pong, no starvation, no deadlock. The certificate is the one tenet every composition has to hold to. Cardinal is the dense-MAC instance. Wi-Fi, 5G, and NTN are the case studies.</p>
+    <div class="one">performance in the objective, safety in the certificate, search in between. <a href="#demo" style="white-space:nowrap">see it running &darr;</a></div>
+  </div>
+
+  <div class="newsbox">
+    <div class="nhead"><span class="pulse"></span><span class="tag">news</span></div>
+    <div class="news-window">
+      <div class="news-track">
+        <div class="news-item"><span class="when">teNET</span><span class="what"><b>Self-Driving Protocols Need a License</b>, the vision paper that introduces the certificate-as-license abstraction behind teNET. The license grows into its own system: <a href="vouch.html">Vouch</a>.</span></div>
+        <div class="news-item"><span class="when">Cardinal</span><span class="what"><b>Cardinal</b>, the dense-MAC instance with the R0 stability certificate, a generative proposer over a typed block library, and certified search validated in ns-3.</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<section id="idea">
+  <div class="eyebrow">the unit</div>
+  <h2 class="s">A block is an extended finite state machine</h2>
+  <p>Every mechanism is one block with a fixed set of fields mined from the spec: a trigger that activates it, a guard that says when it is meaningful, an action, an objective, a configuration of toggles and parameters, typed dependencies to other blocks, and its own internal state machine. The guard does the work. Backoff is meaningful only if a failure signal exists, so removing all feedback turns it into dead code.</p>
+  <figure>
+    <svg class="fig" viewBox="0 0 960 460" xmlns="http://www.w3.org/2000/svg">
+      <g class="n"><title>The block schema: fields mined from the spec</title>
+        <rect x="20" y="20" width="430" height="420" rx="12" fill="#5fd17a" fill-opacity="0.05" stroke="#2ea043"/></g>
+      <text x="42" y="54" fill="#5fd17a" font-size="17" font-weight="700">Block  B = &#10216; ... &#10217;</text>
+      <text x="42" y="72" fill="#8fb1e6" font-size="11">a self-contained protocol mechanism</text>
+      <g font-size="13">
+        <text x="42" y="112" fill="#6ea8ff">id</text><text x="170" y="112" fill="#eef2f7">name of the mechanism</text>
+        <text x="42" y="144" fill="#6ea8ff">layer</text><text x="170" y="144" fill="#eef2f7">PHY, MAC, RLC, ..., transport</text>
+        <text x="42" y="176" fill="#6ea8ff">trigger</text><text x="170" y="176" fill="#eef2f7">event or input that activates it</text>
+        <text x="42" y="208" fill="#6ea8ff">guard</text><text x="170" y="208" fill="#eef2f7">enabling condition (when valid)</text>
+        <text x="42" y="240" fill="#6ea8ff">action</text><text x="170" y="240" fill="#eef2f7">output or state change produced</text>
+        <text x="42" y="272" fill="#6ea8ff">objective</text><text x="170" y="272" fill="#eef2f7">metric it serves</text>
+        <text x="42" y="304" fill="#6ea8ff">config</text><text x="170" y="304" fill="#eef2f7">tunable params, on or off toggles</text>
+        <text x="42" y="336" fill="#6ea8ff">deps</text><text x="170" y="336" fill="#eef2f7">typed edges to other blocks</text>
+        <text x="42" y="368" fill="#6ea8ff">fsm</text><text x="170" y="368" fill="#eef2f7">its own internal state machine</text>
+      </g>
+      <text x="42" y="410" fill="#8fb1e6" font-size="11">deps and fsm are what make composition checkable.</text>
+      <g class="n"><title>Binary exponential backoff in 802.11 DCF</title>
+        <rect x="480" y="20" width="460" height="420" rx="12" fill="#5fd17a" fill-opacity="0.09" stroke="#5fd17a"/></g>
+      <text x="502" y="54" fill="#5fd17a" font-size="16" font-weight="700">Example: Backoff (802.11 DCF)</text>
+      <g font-size="12.5">
+        <text x="502" y="92" fill="#6ea8ff">id</text><text x="610" y="92" fill="#eef2f7">binary exponential backoff</text>
+        <text x="502" y="120" fill="#6ea8ff">layer</text><text x="610" y="120" fill="#eef2f7">MAC</text>
+        <text x="502" y="148" fill="#6ea8ff">trigger</text><text x="610" y="148" fill="#eef2f7">channel busy OR ACK timeout</text>
+        <text x="502" y="176" fill="#6ea8ff">guard</text><text x="610" y="176" fill="#eef2f7">a failure signal must exist</text>
+        <text x="502" y="204" fill="#6ea8ff">action</text><text x="610" y="204" fill="#eef2f7">pick slot in [0, CW]; CW x2 on fail</text>
+        <text x="502" y="232" fill="#6ea8ff">objective</text><text x="610" y="232" fill="#eef2f7">collision avoidance, fairness</text>
+        <text x="502" y="260" fill="#6ea8ff">config</text><text x="610" y="260" fill="#eef2f7">CWmin, CWmax, stages, BEB law</text>
+        <text x="502" y="288" fill="#6ea8ff">deps</text><text x="610" y="288" fill="#eef2f7">conditional on ACK; strong w/ CS</text>
+        <text x="502" y="316" fill="#6ea8ff">fsm</text><text x="610" y="316" fill="#eef2f7">Idle, Backoff, Tx, Await</text>
+      </g>
+      <text x="502" y="360" fill="#f0c25a" font-size="11.5">Key point: backoff only means something if a</text>
+      <text x="502" y="378" fill="#f0c25a" font-size="11.5">failure signal exists. That is a conditional</text>
+      <text x="502" y="396" fill="#f0c25a" font-size="11.5">dependency, not a free design choice.</text>
+    </svg>
+    <figcaption>Fig 1 - the block fields, filled in for 802.11 binary exponential backoff.</figcaption>
+    <div class="hint">hover a panel to highlight it</div>
+  </figure>
+</section>
+
+<section id="grammar">
+  <div class="eyebrow">the grammar</div>
+  <h2 class="s">Four dependency types separate a legal protocol from a broken one</h2>
+  <p>Strong edges are co-required, ACK and retransmission travel together. Conditional edges gate validity, backoff is valid only if a feedback signal exists. Weak edges are optional and toggleable, RTS/CTS improves carrier sense but can be switched off, and most of the design space lives on them. Independent blocks share no state and compose freely.</p>
+  <figure>
+    <svg class="fig" viewBox="0 0 940 520" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="d-uni" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8fb1e6"/></marker></defs>
+      <text x="20" y="42" fill="#5fd17a" font-size="15" font-weight="700">1 - STRONG  (co-required, must exist together)</text>
+      <g class="n"><title>ACK: returns acknowledgement on receipt</title><rect x="40" y="60" width="150" height="52" rx="9" fill="#5fd17a" fill-opacity="0.10" stroke="#2ea043"/></g><text x="115" y="92" fill="#eef2f7" font-size="13" text-anchor="middle">ACK</text>
+      <g class="n"><title>Retransmission: resends on NACK or timeout</title><rect x="300" y="60" width="180" height="52" rx="9" fill="#5fd17a" fill-opacity="0.10" stroke="#2ea043"/></g><text x="390" y="92" fill="#eef2f7" font-size="13" text-anchor="middle">Retransmission</text>
+      <line class="e" x1="190" y1="80" x2="298" y2="80" stroke="#5fd17a" stroke-width="2"/><line class="e" x1="298" y1="94" x2="190" y2="94" stroke="#5fd17a" stroke-width="2"/>
+      <text x="520" y="84" fill="#eef2f7" font-size="12">Retransmission needs ACK or NACK to know what</text>
+      <text x="520" y="102" fill="#eef2f7" font-size="12">to resend; ACK with nothing to resend is pointless.</text>
+      <text x="20" y="168" fill="#f0c25a" font-size="15" font-weight="700">2 - CONDITIONAL  (B valid only if A is present)</text>
+      <g class="n"><title>Any feedback signal: ACK, NACK, or loss event</title><rect x="40" y="186" width="150" height="52" rx="9" fill="#f0c25a" fill-opacity="0.10" stroke="#bb8009"/></g><text x="115" y="218" fill="#eef2f7" font-size="13" text-anchor="middle">ACK / feedback</text>
+      <g class="n"><title>Backoff: dead code without a failure signal</title><rect x="300" y="186" width="150" height="52" rx="9" fill="#f0c25a" fill-opacity="0.10" stroke="#bb8009"/></g><text x="375" y="218" fill="#eef2f7" font-size="13" text-anchor="middle">Backoff</text>
+      <line class="e" x1="190" y1="212" x2="298" y2="212" stroke="#f0c25a" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#d-uni)"/>
+      <text x="212" y="204" fill="#f0c25a" font-size="10.5">enables</text>
+      <text x="480" y="208" fill="#eef2f7" font-size="12">No failure signal, no reason to back off. Pure</text>
+      <text x="480" y="226" fill="#eef2f7" font-size="12">ALOHA keeps ACK, so backoff is valid. Strip all</text>
+      <text x="480" y="244" fill="#eef2f7" font-size="12">feedback and the backoff block is dead code.</text>
+      <text x="20" y="294" fill="#6ea8ff" font-size="15" font-weight="700">3 - WEAK  (enhancing, optional, toggleable)</text>
+      <g class="n"><title>Carrier sense: defer while medium busy</title><rect x="40" y="312" width="160" height="52" rx="9" fill="#6ea8ff" fill-opacity="0.09" stroke="#1f6feb"/></g><text x="120" y="344" fill="#eef2f7" font-size="13" text-anchor="middle">Carrier sense</text>
+      <g class="n"><title>RTS/CTS: optional reservation, can be turned off</title><rect x="300" y="312" width="150" height="52" rx="9" fill="#6ea8ff" fill-opacity="0.09" stroke="#1f6feb"/></g><text x="375" y="344" fill="#eef2f7" font-size="13" text-anchor="middle">RTS/CTS</text>
+      <line class="e" x1="298" y1="338" x2="202" y2="338" stroke="#6ea8ff" stroke-width="2" stroke-dasharray="2 3" marker-end="url(#d-uni)"/>
+      <text x="225" y="330" fill="#6ea8ff" font-size="10.5">improves</text>
+      <text x="480" y="334" fill="#eef2f7" font-size="12">RTS/CTS reduces hidden-terminal collisions, so</text>
+      <text x="480" y="352" fill="#eef2f7" font-size="12">it helps carrier sense. But carrier sense works</text>
+      <text x="480" y="370" fill="#eef2f7" font-size="12">without it, and RTS/CTS can be switched off.</text>
+      <text x="20" y="420" fill="#8fb1e6" font-size="15" font-weight="700">4 - INDEPENDENT  (no edge)</text>
+      <g class="n"><title>Checksum: integrity check, no shared state</title><rect x="40" y="438" width="150" height="46" rx="9" fill="#8fb1e6" fill-opacity="0.08" stroke="#4a6088"/></g><text x="115" y="466" fill="#eef2f7" font-size="13" text-anchor="middle">Checksum</text>
+      <g class="n"><title>Backoff</title><rect x="300" y="438" width="150" height="46" rx="9" fill="#8fb1e6" fill-opacity="0.08" stroke="#4a6088"/></g><text x="375" y="466" fill="#eef2f7" font-size="13" text-anchor="middle">Backoff</text>
+      <text x="480" y="466" fill="#eef2f7" font-size="12">Different concerns, no shared state. Compose freely.</text>
+    </svg>
+    <figcaption>Fig 2 - the dependency taxonomy, with examples from the specs.</figcaption>
+    <div class="hint">hover a block for its role</div>
+  </figure>
+</section>
+
+<section id="stack">
+  <div class="eyebrow">across the stack</div>
+  <h2 class="s">A protocol is a graph of blocks, and each decision has a home layer</h2>
+  <p>CSMA/CA equals ALOHA plus a strong carrier-sense block plus an optional weak RTS/CTS block. Protocols differ by which blocks are present and how the edges wire them, not by being written from scratch.</p>
+  <figure>
+    <svg class="fig" viewBox="0 0 940 480" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="g-arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8fb1e6"/></marker></defs>
+      <text x="20" y="40" fill="#6ea8ff" font-size="15" font-weight="700">ALOHA</text>
+      <text x="20" y="58" fill="#8fb1e6" font-size="11">transmit, recover on failure</text>
+      <g class="n"><title>Transmit</title><rect x="40" y="80" width="130" height="44" rx="9" fill="#5fd17a" fill-opacity="0.10" stroke="#2ea043"/></g><text x="105" y="107" fill="#eef2f7" font-size="12" text-anchor="middle">Transmit</text>
+      <g class="n"><title>ACK</title><rect x="40" y="170" width="130" height="44" rx="9" fill="#5fd17a" fill-opacity="0.10" stroke="#2ea043"/></g><text x="105" y="197" fill="#eef2f7" font-size="12" text-anchor="middle">ACK</text>
+      <g class="n"><title>Backoff (fires on ACK timeout)</title><rect x="40" y="260" width="130" height="44" rx="9" fill="#f0c25a" fill-opacity="0.10" stroke="#bb8009"/></g><text x="105" y="287" fill="#eef2f7" font-size="12" text-anchor="middle">Backoff</text>
+      <line class="e" x1="105" y1="124" x2="105" y2="168" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#g-arr)"/>
+      <line class="e" x1="170" y1="192" x2="112" y2="262" stroke="#f0c25a" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#g-arr)"/><text x="190" y="235" fill="#f0c25a" font-size="10">timeout</text>
+      <line class="e" x1="95" y1="260" x2="95" y2="126" stroke="#8fb1e6" stroke-width="1.4" marker-end="url(#g-arr)"/><text x="40" y="195" fill="#8fb1e6" font-size="10" text-anchor="end">retry</text>
+      <text x="40" y="345" fill="#8fb1e6" font-size="11">No carrier sense. Collisions seen</text>
+      <text x="40" y="361" fill="#8fb1e6" font-size="11">only as a missing ACK.</text>
+      <line x1="360" y1="30" x2="360" y2="430" stroke="#1e2734"/>
+      <text x="410" y="40" fill="#6ea8ff" font-size="15" font-weight="700">CSMA/CA  (802.11 DCF)</text>
+      <text x="410" y="58" fill="#8fb1e6" font-size="11">= ALOHA + carrier sense + optional RTS/CTS</text>
+      <g class="n"><title>Carrier sense: physical and virtual (NAV)</title><rect x="430" y="80" width="150" height="44" rx="9" fill="#6ea8ff" fill-opacity="0.09" stroke="#1f6feb"/></g><text x="505" y="107" fill="#eef2f7" font-size="12" text-anchor="middle">Carrier sense</text>
+      <g class="n"><title>Backoff</title><rect x="430" y="170" width="150" height="44" rx="9" fill="#f0c25a" fill-opacity="0.10" stroke="#bb8009"/></g><text x="505" y="197" fill="#eef2f7" font-size="12" text-anchor="middle">Backoff</text>
+      <g class="n"><title>Transmit</title><rect x="430" y="260" width="150" height="44" rx="9" fill="#5fd17a" fill-opacity="0.10" stroke="#2ea043"/></g><text x="505" y="287" fill="#eef2f7" font-size="12" text-anchor="middle">Transmit</text>
+      <g class="n"><title>ACK</title><rect x="430" y="350" width="150" height="44" rx="9" fill="#5fd17a" fill-opacity="0.10" stroke="#2ea043"/></g><text x="505" y="377" fill="#eef2f7" font-size="12" text-anchor="middle">ACK</text>
+      <g class="n"><title>RTS/CTS: optional, weak edge to carrier sense</title><rect x="660" y="170" width="150" height="44" rx="9" fill="#6ea8ff" fill-opacity="0.09" stroke="#1f6feb"/></g><text x="735" y="190" fill="#eef2f7" font-size="12" text-anchor="middle">RTS/CTS</text><text x="735" y="205" fill="#8fb1e6" font-size="9.5" text-anchor="middle">optional</text>
+      <line class="e" x1="505" y1="124" x2="505" y2="168" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#g-arr)"/><text x="560" y="150" fill="#8fb1e6" font-size="10">strong</text>
+      <line class="e" x1="505" y1="214" x2="505" y2="258" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#g-arr)"/>
+      <line class="e" x1="505" y1="304" x2="505" y2="348" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#g-arr)"/>
+      <line class="e" x1="575" y1="372" x2="545" y2="216" stroke="#f0c25a" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#g-arr)"/><text x="600" y="300" fill="#f0c25a" font-size="10">timeout: CWx2</text>
+      <line class="e" x1="660" y1="192" x2="582" y2="192" stroke="#6ea8ff" stroke-width="1.6" stroke-dasharray="2 3" marker-end="url(#g-arr)"/><text x="620" y="184" fill="#6ea8ff" font-size="9.5">weak</text>
+      <text x="410" y="430" fill="#8fb1e6" font-size="11">Same blocks as ALOHA, plus carrier sense (strong) and optional RTS/CTS (weak).</text>
+    </svg>
+    <figcaption>Fig 3 - ALOHA and CSMA/CA as block graphs. CSMA/CA is ALOHA plus two blocks.</figcaption>
+    <div class="hint">hover a block or an edge</div>
+  </figure>
+  <p>Where each decision sits is fixed by layer: when to transmit at the MAC, the route at the network layer, the sending rate at transport, connection state and handover at the control plane. Wi-Fi owns PHY and MAC only; 5G owns the full access-stratum stack; NTN is that stack under long delay and Doppler; the transport protocols own transport.</p>
+  <figure>
+    <svg class="fig" viewBox="0 0 940 420" xmlns="http://www.w3.org/2000/svg">
+      <g class="n"><title>Application: HTTP/3, DNS, RTP</title><rect x="20" y="14" width="300" height="40" rx="7" fill="#c79bff" fill-opacity="0.09" stroke="#8957e5"/></g><text x="36" y="33" fill="#eef2f7" font-size="12">Application</text><text x="36" y="48" fill="#8fb1e6" font-size="10">HTTP/3, DNS, RTP</text>
+      <g class="n"><title>Transport: the sending rate (cwnd) lives here</title><rect x="20" y="60" width="300" height="40" rx="7" fill="#c79bff" fill-opacity="0.09" stroke="#8957e5"/></g><text x="36" y="79" fill="#eef2f7" font-size="12">Transport</text><text x="36" y="94" fill="#8fb1e6" font-size="10">TCP, UDP, QUIC, congestion control</text>
+      <g class="n"><title>Network: route and next hop</title><rect x="20" y="106" width="300" height="40" rx="7" fill="#6ea8ff" fill-opacity="0.08" stroke="#1f6feb"/></g><text x="36" y="125" fill="#eef2f7" font-size="12">Network / IP</text><text x="36" y="140" fill="#8fb1e6" font-size="10">routing: BGP, OSPF, ISL routing</text>
+      <g class="n"><title>PDCP: ciphering, reorder, duplication</title><rect x="20" y="152" width="300" height="34" rx="7" fill="#6ea8ff" fill-opacity="0.06" stroke="#1f6feb"/></g><text x="36" y="173" fill="#eef2f7" font-size="12">PDCP</text><text x="190" y="173" fill="#8fb1e6" font-size="10">ciphering, reorder, duplication</text>
+      <g class="n"><title>RLC: ARQ in AM/UM/TM, segmentation</title><rect x="20" y="192" width="300" height="34" rx="7" fill="#6ea8ff" fill-opacity="0.06" stroke="#1f6feb"/></g><text x="36" y="213" fill="#eef2f7" font-size="12">RLC</text><text x="190" y="213" fill="#8fb1e6" font-size="10">ARQ (AM, UM, TM)</text>
+      <g class="n"><title>MAC: when to transmit (backoff, scheduler, RACH, HARQ)</title><rect x="20" y="232" width="300" height="40" rx="7" fill="#f0c25a" fill-opacity="0.10" stroke="#bb8009"/></g><text x="36" y="251" fill="#eef2f7" font-size="12">MAC</text><text x="36" y="266" fill="#8fb1e6" font-size="10">HARQ, RACH, backoff, tx decision</text>
+      <g class="n"><title>PHY: coding, modulation, beam</title><rect x="20" y="278" width="300" height="40" rx="7" fill="#5fd17a" fill-opacity="0.09" stroke="#2ea043"/></g><text x="36" y="297" fill="#eef2f7" font-size="12">PHY</text><text x="36" y="312" fill="#8fb1e6" font-size="10">coding, modulation, beam</text>
+      <g class="n"><title>Control plane: state, mobility/handover, authentication</title><rect x="20" y="330" width="300" height="40" rx="7" fill="#ff9a8f" fill-opacity="0.09" stroke="#ff9a8f"/></g><text x="36" y="349" fill="#eef2f7" font-size="12">Control plane (RRC/NAS)</text><text x="36" y="364" fill="#8fb1e6" font-size="10">state, mobility, handover, auth</text>
+      <text x="360" y="34" fill="#c79bff" font-size="12" font-weight="700">where decisions sit</text>
+      <text x="360" y="84" fill="#eef2f7" font-size="11.5">transmit rate and cwnd  to  transport</text>
+      <text x="360" y="130" fill="#eef2f7" font-size="11.5">route and next hop  to  network layer</text>
+      <text x="360" y="256" fill="#eef2f7" font-size="11.5">when to transmit  to  MAC</text>
+      <text x="360" y="302" fill="#eef2f7" font-size="11.5">how to send bits  to  PHY</text>
+      <text x="360" y="354" fill="#eef2f7" font-size="11.5">connect, handover, authenticate  to  control plane</text>
+      <line x1="700" y1="130" x2="700" y2="300" stroke="#1e2734"/>
+      <text x="720" y="130" fill="#8fb1e6" font-size="11">owned by</text>
+      <text x="720" y="160" fill="#5fd17a" font-size="11">Wi-Fi: PHY + MAC</text>
+      <text x="720" y="186" fill="#6ea8ff" font-size="11">5G: PHY..RRC (full AS)</text>
+      <text x="720" y="212" fill="#f0c25a" font-size="11">NTN: 5G + delay, Doppler</text>
+      <text x="720" y="238" fill="#c79bff" font-size="11">TCP, UDP, QUIC: transport</text>
+    </svg>
+    <figcaption>Fig 4 - the layer and decision map, and which technology owns which layers.</figcaption>
+    <div class="hint">hover a layer for detail</div>
+  </figure>
+</section>
+
+<section id="loop">
+  <div class="eyebrow">the loop</div>
+  <h2 class="s">A generate-evaluate-refine loop whose verifier is sound</h2>
+  <p>Synthesis runs as generate, evaluate, refine, the pattern the recent AI-for-systems work established. Its documented failure is reward hacking when the verifier is incomplete. teNET replaces the gameable benchmark with a sound certificate, so the loop cannot reward-hack into a protocol that can collapse.</p>
+  <figure>
+    <svg class="fig" viewBox="0 0 940 330" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="l-arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8fb1e6"/></marker>
+        <marker id="l-arrg" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5fd17a"/></marker>
+      </defs>
+      <rect x="250" y="56" width="430" height="210" rx="12" fill="#c79bff" fill-opacity="0.05" stroke="#8957e5" stroke-dasharray="6 4"/>
+      <text x="465" y="46" fill="#c79bff" font-size="11" text-anchor="middle" font-weight="700">search loop: generate, evaluate, refine</text>
+      <g class="n"><title>The standard, in prose</title><rect x="20" y="130" width="110" height="64" rx="9" fill="#8fb1e6" fill-opacity="0.08" stroke="#4a6088"/></g>
+      <text x="75" y="160" fill="#eef2f7" font-size="12" text-anchor="middle">Standard</text><text x="75" y="177" fill="#8fb1e6" font-size="10" text-anchor="middle">802.11, 3GPP</text>
+      <g class="n"><title>Spec-Grounder: extract typed blocks, check against the spec</title><rect x="150" y="130" width="120" height="64" rx="9" fill="#6ea8ff" fill-opacity="0.08" stroke="#1f6feb"/></g>
+      <text x="210" y="158" fill="#eef2f7" font-size="11.5" text-anchor="middle">Spec-Grounder</text><text x="210" y="175" fill="#8fb1e6" font-size="9.5" text-anchor="middle">mine and check</text>
+      <g class="n"><title>Proposer: generate parameterized compositions</title><rect x="300" y="90" width="150" height="64" rx="9" fill="#5fd17a" fill-opacity="0.10" stroke="#2ea043"/></g>
+      <text x="375" y="118" fill="#5fd17a" font-size="12" text-anchor="middle" font-weight="700">Proposer (model)</text><text x="375" y="135" fill="#8fb1e6" font-size="9.5" text-anchor="middle">generate composition</text>
+      <g class="n"><title>Certificate: microsecond veto, sound and un-gameable</title><rect x="490" y="90" width="170" height="64" rx="9" fill="#5fd17a" fill-opacity="0.10" stroke="#2ea043"/></g>
+      <text x="575" y="114" fill="#5fd17a" font-size="12" text-anchor="middle" font-weight="700">Certificate (veto)</text><text x="575" y="131" fill="#f0c25a" font-size="9.5" text-anchor="middle">R0 &lt; 1 or no-RLF, sound</text>
+      <g class="n"><title>Simulator: slow scorer, only on admissible designs</title><rect x="490" y="186" width="170" height="58" rx="9" fill="#8fb1e6" fill-opacity="0.08" stroke="#4a6088"/></g>
+      <text x="575" y="212" fill="#eef2f7" font-size="12" text-anchor="middle">Simulator (slow)</text><text x="575" y="229" fill="#8fb1e6" font-size="9.5" text-anchor="middle">throughput, delay, fairness</text>
+      <g class="n"><title>Deploy the best admissible composition</title><rect x="700" y="120" width="120" height="64" rx="9" fill="#c79bff" fill-opacity="0.09" stroke="#8957e5"/></g>
+      <text x="760" y="150" fill="#eef2f7" font-size="12" text-anchor="middle">Deploy</text><text x="760" y="167" fill="#8fb1e6" font-size="9.5" text-anchor="middle">best admissible</text>
+      <line class="e" x1="130" y1="162" x2="148" y2="162" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#l-arr)"/>
+      <line class="e" x1="270" y1="150" x2="300" y2="128" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#l-arr)"/>
+      <line class="e" x1="450" y1="122" x2="488" y2="122" stroke="#5fd17a" stroke-width="2" marker-end="url(#l-arrg)"/><text x="469" y="114" fill="#5fd17a" font-size="9" text-anchor="middle">every candidate</text>
+      <line class="e" x1="575" y1="154" x2="575" y2="184" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#l-arr)"/><text x="625" y="172" fill="#8fb1e6" font-size="9">admitted only</text>
+      <line class="e" x1="660" y1="135" x2="698" y2="145" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#l-arr)"/>
+      <path class="e" d="M495 130 q-120 90 -118 -2" fill="none" stroke="#f0c25a" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#l-arr)"/>
+      <text x="405" y="205" fill="#f0c25a" font-size="9.5" text-anchor="middle">counterexample, refine</text>
+      <text x="465" y="290" fill="#8fb1e6" font-size="9.5" text-anchor="middle">Cardinal's change: the evaluator is a sound certificate, not a gameable benchmark, so the loop cannot reward-hack.</text>
+    </svg>
+    <figcaption>Fig 5 - the synthesis loop. The dashed box is the search pattern; the green certificate is the sound verifier inside it.</figcaption>
+    <div class="hint">hover a stage for its role</div>
+  </figure>
+</section>
+
+<section id="certificate">
+  <div class="eyebrow">safety</div>
+  <h2 class="s">Two certificate families, one objective rule</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Layer / mechanism</th><th>Failure prevented</th><th>Certificate</th><th>Family</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">Wi-Fi MAC, 5G RACH</td><td>collision storm, collapse</td><td>R0 &lt; 1 branching stability</td><td><span class="tagp s">stability</span></td></tr>
+      <tr><td class="mono">5G RRC handover</td><td>ping-pong, radio link failure</td><td>oscillation bound + reachability</td><td><span class="tagp c">correctness</span></td></tr>
+      <tr><td class="mono">Transport (TCP, QUIC)</td><td>starvation, non-convergence</td><td>no-starvation bound</td><td><span class="tagp c">correctness</span></td></tr>
+      <tr><td class="mono">RLC, routing</td><td>deadlock, loops</td><td>no-deadlock, loop-freedom</td><td><span class="tagp c">correctness</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="note">
+    <div class="h">the objective rule</div>
+    <p style="margin:0">Performance goes in the objective, a proportional-fair utility scaled by the Jain fairness index. Safety, stability, and correctness go in the constraint, the certificate. A soft stability penalty gets reward-hacked, which is why a decade of learned congestion control kept rediscovering unfairness. The certificate makes the constraint un-gameable.</p>
+  </div>
+</section>
+
+<section id="cases">
+  <div class="eyebrow">case studies</div>
+  <h2 class="s">Wi-Fi for depth, 5G for novelty, NTN for the frontier</h2>
+  <div class="cards">
+    <div class="card w"><div class="k">Wi-Fi 802.11</div><h4>Cardinal: dense MAC</h4><p>The R0 stability certificate over BEB, HARQ, RTS/CTS, OFDMA, and MLO. The depth anchor, validated in ns-3.</p><div class="role">stability certificate, proven</div></div>
+    <div class="card f"><div class="k">5G NR</div><h4>RACH and handover</h4><p>RACH shows the stability certificate transfers. Handover is the novelty: a correctness certificate against ping-pong and radio link failure.</p><div class="role">novelty lead</div></div>
+    <div class="card n2"><div class="k">NTN / LEO</div><h4>Direct-to-cell</h4><p>The 5G stack under 20 to 40 ms one-way delay, plus or minus 50 kHz Doppler, and constant handover. Both certificate families at once.</p><div class="role">frontier stress test</div></div>
+  </div>
+</section>
+
+<section id="foundations">
+  <div class="eyebrow">foundations</div>
+  <h2 class="s">Built on her doctoral thesis, and a year at Skylark Wireless</h2>
+  <p>teNET grows directly out of two things. The first is her doctoral thesis, <b>Learning-Driven Frameworks for Self-Driving Protocols in Next-Generation Networks</b>, which introduced the idea of treating protocol mechanisms as learnable, composable building blocks rather than a hand-tuned monolith. The second is a year as a full-time research intern at <b>Skylark Wireless LLC</b>, working on on-device resource allocation and MU-MIMO scheduling in massive MIMO; the IEEE WCNC 2024 paper below is the on-device result of that work. teNET adds the three pieces the thesis line was missing: a generative model as the proposer, a sound certificate as the gate, and generalization beyond Wi-Fi MAC to the 5G and NTN stacks. The thesis is the foundation; this program is what it grew into.</p>
+  <div style="margin-top:14px">
+    <div class="pub"><div class="t">Learning-Driven Frameworks for Self-Driving Protocols in Next-Generation Networks</div><div class="v">PhD dissertation</div><div class="d">The thesis that framed protocol mechanisms as learnable modules composed under correctness constraints.</div></div>
+    <div class="pub"><div class="t">Autonomous On-Device Protocols: Empowering Wireless with Self-Driven Capabilities</div><div class="v">IEEE WCNC, 2024 &middot; from the Skylark Wireless internship on MU-MIMO scheduling</div><div class="d">On-device self-driving protocol behavior, grounded in the massive-MIMO resource-allocation work at Skylark.</div></div>
+    <div class="pub"><div class="t">Towards a Learning-Based Framework for Self-Driving Design of Networking Protocols</div><div class="v">IEEE Access, 2021 &middot; NCWIT Collegiate Award Honorable Mention</div><div class="d">The cornerstone framework paper for self-driving protocol design.</div></div>
+    <div class="pub"><div class="t">LATTE: Online MU-MIMO Grouping for Video Streaming over Commodity WiFi</div><div class="v">ACM MobiSys, 2021 &middot; Best Poster</div><div class="d">Online MU-MIMO user grouping, the precursor to the production scheduler later built at Skylark.</div></div>
+    <div class="pub"><div class="t">MuViS: Online MU-MIMO Grouping for Multi-User Applications over Commodity WiFi</div><div class="v">2021</div><div class="d">Grouping for multi-user multimedia applications over commodity Wi-Fi.</div></div>
+    <div class="pub"><div class="t">A Cross-Layer Approach for Supporting Real-Time Multi-User Video Streaming over WLANs</div><div class="v">ACM MobiSys, 2021</div><div class="d">Cross-layer scheduling for real-time multi-user video over WLANs.</div></div>
+    <div class="pub"><div class="t">MAC Protocol Design Optimization Using Deep Learning</div><div class="v">IEEE ICAIIC, 2020 &middot; NCWIT Collegiate Award Finalist</div><div class="d">Early deep-learning optimization of MAC behavior.</div></div>
+    <div class="pub"><div class="t">Unboxing MAC Protocol Design Optimization Using Deep Learning</div><div class="v">2020</div><div class="d">Interpreting what a learned MAC design optimizer actually does.</div></div>
+    <div class="pub"><div class="t">CONVINCE: Collaborative Cross-Camera Video Analytics at the Edge</div><div class="v">IEEE PerCom Workshops, 2020 &middot; Best WIP</div><div class="d">Collaborative cross-camera analytics at the edge.</div></div>
+    <div class="pub"><div class="t">Challenges and Limitations in Automating the Design of MAC Protocols Using Machine Learning</div><div class="v">IEEE ICAIIC, 2019</div><div class="d">The problem statement that motivated the line: where naive automation breaks.</div></div>
+    <div class="pub"><div class="t">Towards a Machine Learning-Based Framework for Automated Design of Networking Protocols</div><div class="v">IEEE PerCom Workshops, 2019</div><div class="d">The early framing of automated protocol design as a learning problem.</div></div>
+    <div class="pub"><div class="t">Poster: Towards Self-Managing and Self-Adaptive Framework for Automating MAC Protocol Design</div><div class="v">ACM HotMobile, 2019</div><div class="d">The first poster sketch of the self-driving MAC idea.</div></div>
+    <div class="pub"><div class="t">DeepMAC: A Machine Learning-Based Automated Design Framework for MAC Protocols</div><div class="v">N2Women @ ACM SenSys, 2019 &middot; Best Poster</div><div class="d">The first automated MAC-design framework in the line.</div></div>
+    </div>
+</section>
+<section id="demo">
+  <div class="eyebrow">try it</div>
+  <h2 class="s">teNET, running</h2>
+  <p>The same pipeline on three technologies. Each run mines blocks from the spec, proposes a composition, gets vetoed by the certificate, refines against the reason it failed, and only then reaches the simulator. Numbers are illustrative until the benchmark lands.</p>
+  <div class="demo">
+    <div class="tabs">
+      <button class="on" onclick="tnTab(event,'wifi')">Wi-Fi MAC</button>
+      <button onclick="tnTab(event,'rach')">5G RACH</button>
+      <button onclick="tnTab(event,'ho')">5G handover</button>
+    </div>
+    <div class="screen">
+      <div class="panel on" id="wifi"><pre><span class="cmd">$ tenet synth --spec 802.11ax --objective pf --density 50</span>
+<span class="dim">mining blocks ............</span> 7 blocks: DCF, BEB, RTS/CTS, HARQ, OFDMA, TWT, MLO
+<span class="dim">dependency graph .........</span> 4 strong, 3 conditional, 5 weak edges
+<span class="dim">proposer  candidate #1 ...</span> CW=[16,1024], HARQ on, TWT off
+<span class="dim">certificate (R0) .........</span> <span class="no">R0 = 1.37  &gt;= 1   REJECTED</span>
+<span class="no">   reason: contention window too small at density 50</span>
+<span class="dim">proposer  candidate #2 ...</span> CW=[64,4096], HARQ on, TWT thinning  <span class="dim">(refined)</span>
+<span class="dim">certificate (R0) .........</span> <span class="ok">R0 = 0.41  &lt; 1    ADMITTED</span>
+<span class="dim">simulator (ns-3 ax) ......</span> goodput 612 Mbps, p99 8.3 ms, Jain 0.94
+<span class="ok">deploy: distributed, per-station DCF</span> <span class="cur">_</span></pre></div>
+      <div class="panel" id="rach"><pre><span class="cmd">$ tenet synth --spec 3gpp-rach --objective access-delay --ues 2000</span>
+<span class="dim">mining blocks ............</span> RACH preamble, backoff, power ramping, msg3
+<span class="dim">dependency graph .........</span> 3 strong, 2 conditional, 2 weak edges
+<span class="dim">proposer  candidate #1 ...</span> backoff 20 ms, 64 preambles
+<span class="dim">certificate (R0) .........</span> <span class="no">R0 = 1.12  &gt;= 1   REJECTED</span>
+<span class="no">   reason: preamble collisions diverge at 2000 UEs</span>
+<span class="dim">proposer  candidate #2 ...</span> backoff 80 ms, ramp +2 dB  <span class="dim">(refined)</span>
+<span class="dim">certificate (R0) .........</span> <span class="ok">R0 = 0.73  &lt; 1    ADMITTED</span>
+<span class="dim">simulator (5G-LENA) ......</span> access p99 142 ms, collisions 3.1%
+<span class="ok">deploy: centralized, gNB scheduler</span> <span class="cur">_</span></pre></div>
+      <div class="panel" id="ho"><pre><span class="cmd">$ tenet synth --spec ts-38.331 --objective continuity --constellation leo</span>
+<span class="dim">mining blocks ............</span> A3 event, TTT, hysteresis, RLF timers
+<span class="dim">dependency graph .........</span> 2 strong, 3 conditional, 1 weak edge
+<span class="dim">proposer  candidate #1 ...</span> A3 offset 2 dB, TTT 40 ms
+<span class="dim">certificate (correctness)</span> <span class="no">ping-pong loop REACHABLE   REJECTED</span>
+<span class="no">   reason: A3 offset too low, oscillation under Doppler</span>
+<span class="dim">proposer  candidate #2 ...</span> A3 offset 4 dB, TTT 160 ms  <span class="dim">(refined)</span>
+<span class="dim">certificate (correctness)</span> <span class="ok">no RLF, no ping-pong       ADMITTED</span>
+<span class="dim">simulator (Hypatia, LEO) .</span> handover failures 0, drops 0
+<span class="ok">deploy: predictive, UE plus gNB</span> <span class="cur">_</span></pre></div>
+    </div>
+    <div class="cap">illustrative run, not measured results</div>
+  </div>
+  <div class="quickstart"><pre><span class="hash"># install</span>
+<span class="cmd">pip install tenet-synth</span>
+<span class="hash"># synthesize a certified Wi-Fi MAC at density 50</span>
+<span class="cmd">tenet synth --spec 802.11ax --objective pf --density 50</span>
+<span class="hash"># validate the admitted design in a standard simulator</span>
+<span class="cmd">tenet validate --sim ns3 --design out/best.json</span></pre></div>
+</section>
+
+<section id="publications">
+  <div class="eyebrow">publications</div>
+  <h2 class="s">Selected publications</h2>
+  <p>The self-driving wireless line below is what teNET grows from; the other groups show the wider program. First author throughout unless noted; some entries are under submission.</p>
+
+  <h3>Self-driving wireless and protocols</h3>
+  <div style="margin-top:6px">
+    <div class="pub"><div class="t">Self-Driving Protocols Need a License</div><div class="v">ACM HotNets, 2026 &middot; under blind review &middot; the vision paper (Project 1)</div></div>
+    <div class="pub"><div class="t">Cardinal: Generative Synthesis of Wireless MAC Protocols Under a Compositional Stability Certificate</div><div class="v">ACM SIGCOMM, 2026 &middot; in preparation &middot; the dense-MAC instance (Project 2)</div></div>
+    <div class="pub"><div class="t">BlackWidow: Constraint-Masked Reinforcement Learning for Cascade-Safe Wireless Control</div><div class="v">ACM SIGCOMM, 2026 &middot; under submission</div></div>
+    <div class="pub"><div class="t">Arachne: LLM-Driven Compositional MAC Protocol Synthesis from Standards Specifications</div><div class="v">ACM MobiHoc, 2026 &middot; sole author, under submission</div></div>
+    <div class="pub"><div class="t">INTACT: Phase-Transition Theory for Multi-Agent Learning Under Distribution Shift</div><div class="v">ACM SIGMETRICS, 2026 &middot; under submission</div></div>
+    <div class="pub"><div class="t">VETO: Verified Safety Envelopes for Reinforcement Learning under Distribution Shift</div><div class="v">CoRL / AAAI, 2026 &middot; under submission</div></div>
+    <div class="pub"><div class="t">MIRAGE: Mobility-Invariant RAN Attack-detection Guard Engine</div><div class="v">USENIX NSDI, 2027 &middot; under submission</div></div>
+  </div>
+
+  <h3>Agentic AI systems</h3>
+  <div style="margin-top:6px">
+    <div class="pub"><div class="t">On the Wire, Three LLMs: A Comparative Network Measurement of Chat, Inference-Serving, and Agentic Workloads</div><div class="v">ACM SIGMETRICS '27 &middot; the Gauge line</div></div>
+    <div class="pub"><div class="t">Patient Packets: A Reliability-Budgeted Scheduler for Agentic LLM Workflows</div><div class="v">ACM SoCC, 2026</div></div>
+    <div class="pub"><div class="t">Old Models Don't Retire: Network-Layer Behavior of Multi-Version LLM Coexistence</div><div class="v">MLSys, 2027</div></div>
+    <div class="pub"><div class="t">The Single-Call Fallacy: Why Carbon-Aware Scheduling Misses Agentic AI's Real Drivers</div><div class="v">Workshop on Sustainable Computer Systems (HotCarbon), 2026</div></div>
+  </div>
+
+  <h3>Direct-to-cell LEO satellite</h3>
+  <div style="margin-top:6px">
+    <div class="pub"><div class="t">SkyHandover (Stellink): Predictive Direct-to-Cell Handover for LEO Satellite Networks</div><div class="v">under submission &middot; 8.3 s lead time on 106 GB of traces</div></div>
+    <div class="pub"><div class="t">SpaceREGULATE: Schedule-Driven Cross-Jurisdictional Data Governance for LEO Constellations</div><div class="v">sole author, under submission</div></div>
+    <div class="pub"><div class="t">SoK: Privacy Risks and Security Vulnerabilities in B5G/6G-Satellite Networks</div><div class="v">USENIX Security &middot; under review</div></div>
+    <div class="pub"><div class="t">Survey on Direct-to-Device Satellite Communications: Advances, Challenges, and Prospects</div><div class="v">ACM MobiCom LEO-Nets, 2024</div></div>
+  </div>
+
+  <h3>Datacenter and web systems</h3>
+  <div style="margin-top:6px">
+    <div class="pub"><div class="t">CacheCatalyst: Application-Aware Cache Coordination for the Modern Web</div><div class="v">USENIX NSDI, 2026 &middot; accepted</div></div>
+    <div class="pub"><div class="t">Poison Comes in Small Packages: Application-Driven Reexamination of Datacenter Microbursts</div><div class="v">ACM POMACS / SIGMETRICS, 2025</div></div>
+    <div class="pub"><div class="t">Balancify: Application-Aware Load Balancing for Microservices</div><div class="v">ACM CoNEXT, 2025</div></div>
+  </div>
+</section>
+
+<section id="framework">
+  <div class="eyebrow">artifact</div>
+  <h2 class="s">An open, measurement-heavy framework</h2>
+  <p>The simulator is built on SimPy, process-based discrete-event, with each block a process and the channel a shared resource. It is designed to be opened up: swap blocks, toggle configurations, plug in different objectives and reward functions, and instrument every event. Validation runs against ns-3 for Wi-Fi and Hypatia or StarryNet for LEO. The point is a shared block-level testbed for protocol synthesis, which the field does not have today.</p>
+  <p>The block model is formal and is the source of truth. The dependency graph and the block state machines are defined explicitly so the certificate can check a composition and the protocol stays readable. A graph neural network, if used at all, only accelerates the search; it never decides correctness.</p>
+</section>
+
+<section id="papers">
+  <div class="eyebrow">outputs</div>
+  <h2 class="s">Two papers, two projects</h2>
+  <p>The work is told in two complementary projects. One names the problem and the abstraction; the other builds and measures it end to end.</p>
+  <span class="b"><strong>Project 1 &middot; the vision.</strong> <b>Self-Driving Protocols Need a License</b> (under blind review, HotNets 2026). The position paper: automated protocol design became generative without becoming trustworthy, and the fix is an idea the self-driving-networks vision set aside, closed-form analysis recast as a deployment <em>license</em>. It frames the certificate-gated division of labor that defines teNET, an untrusted proposer and a trusted certifier, and lays out the cross-stack research agenda.</span>
+  <span class="b"><strong>Project 2 &middot; the instance.</strong> <b>Cardinal</b> (in preparation, SIGCOMM). The concrete dense-MAC system that turns the license into running code: the R0 stability certificate over backoff, HARQ, RTS/CTS, OFDMA, and MLO, a generative proposer over a typed block library, and a certified search that reaches the safe-and-good designs a fixed grid misses, validated in ns-3.</span>
+  <p>Together they are the vision and its first proof point. The roadmap continues with 5G handover, where the correctness certificate against ping-pong and radio link failure is the novel core, then NTN, where both certificate families are stressed under long delay and constant handover, alongside an open framework and benchmark released for the community.</p>
+  <p>Structural precedent for the writing is TCP ex Machina: Computer-Generated Congestion Control (SIGCOMM 2013). The addition a generative search needs, which a fixed-action search did not, is the certificate.</p>
+</section>
+
+<section id="contact">
+  <div class="eyebrow">get involved</div>
+  <h2 class="s">Contact</h2>
+  <p>If you work on protocol design, formal methods for networks, or agentic systems, and want to contribute a mining workstream, a certificate, or a case study, get in touch. The framework and benchmark will be released openly.</p>
+  <p>Email <a href="mailto:h.pasandi@berkeley.edu">h.pasandi@berkeley.edu</a> &middot; code and benchmark on GitHub at release.</p>
+</section>
+
+<footer>
+  <div class="org">teNET is led by <b>Hannah B. Pasandi</b>.</div>
+  <p style="margin-top:6px">Scientist, UC Berkeley Sky Computing Lab &middot; <a href="mailto:h.pasandi@berkeley.edu">h.pasandi@berkeley.edu</a></p>
+  <p class="fineprint">The name: a tenet is a binding principle, and the certificate is the one tenet every protocol must hold to; the network sits in the capitals. Cardinal is the dense-MAC instance. All figures are inline vector graphics drawn in the page. Specifications referenced: IEEE 802.11, 3GPP TS 38.3xx and TR 38.821, and the transport RFCs.</p>
+</footer>
+
+<script>
+function tnRun(panel){
+  var pre = panel.querySelector('pre');
+  if(!pre) return;
+  if(!pre.dataset.raw){ pre.dataset.raw = pre.innerHTML; }
+  pre._run = (pre._run || 0) + 1;
+  var token = pre._run;
+  var lines = pre.dataset.raw.split('\n');
+  pre.innerHTML = lines.map(function(l){
+    return '<span class="termline">' + (l.length ? l : ' ') + '</span>';
+  }).join('');
+  var spans = pre.querySelectorAll('.termline');
+  spans.forEach(function(s, i){
+    setTimeout(function(){ if(pre._run === token){ s.classList.add('show'); } }, i * 85);
+  });
+}
+function tnTab(e, id){
+  var demo = e.target.closest('.demo');
+  demo.querySelectorAll('.tabs button').forEach(function(b){ b.classList.remove('on'); });
+  demo.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('on'); });
+  e.target.classList.add('on');
+  var el = demo.querySelector('#'+id);
+  if(el){ el.classList.add('on'); tnRun(el); }
+}
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('.demo .panel.on').forEach(function(p){ tnRun(p); });
+});
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.topbar .links a'));
+  var map = {};
+  links.forEach(function(a){ var id = a.getAttribute('href').slice(1); var s = document.getElementById(id); if(s) map[id] = a; });
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(a){ a.classList.remove('active'); });
+        var a = map[e.target.id]; if(a){ a.classList.add('active'); a.scrollIntoView({inline:'nearest', block:'nearest'}); }
+      }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+  Object.keys(map).forEach(function(id){ obs.observe(document.getElementById(id)); });
+})();
+</script>
+</body>
+</html>

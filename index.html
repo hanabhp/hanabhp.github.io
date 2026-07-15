@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hannah B. Pasandi - Research Scholar Fellow at UC Berkeley Sky Computing Lab. Research in networked systems, satellite IoT, privacy, and machine learning.">
+  <meta name="keywords" content="Hannah Pasandi, UC Berkeley, wireless systems, satellite IoT, LEO, privacy, 5G, machine learning">
+  <title>Hannah B. Pasandi | Networked Systems, Agentic AI, Wireless Privacy | UC Berkeley</title>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4M99RGCCZP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4M99RGCCZP');
+  </script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --red-primary: #5C0000;
+      --red-secondary: #7A1F1F;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: #1f2937;
+      background-color: #f9fafb;
+    }
+
+    /* Justified paragraph blocks (academic site style) */
+    .card-custom p,
+    .support-box p,
+    .news-content p,
+    .thrust-content p.small,
+    #publications .pub-item .fw-semibold,
+    section p:not(.text-center):not(.small):not(.mb-0):not(.text-muted) {
+      text-align: justify;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+    }
+
+    /* Keep contact pills and footer text left-aligned */
+    .contact-pill, footer p, .keyword, .nav-link-custom {
+      text-align: left !important;
+      hyphens: none;
+    }
+
+    .header-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: white;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+
+    .profile-img-large {
+      width: 220px;
+      height: 270px;
+      object-fit: cover;
+      object-position: center top;
+      border: 4px solid white;
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      border-radius: 10px;
+    }
+
+    .nav-link-custom {
+      color: #4b5563;
+      text-decoration: none;
+      transition: color 0.3s;
+      padding: 0.5rem 1rem;
+    }
+
+    .nav-link-custom:hover { color: var(--red-primary); }
+
+    .hero-gradient {
+      background: linear-gradient(135deg, var(--red-primary) 0%, var(--red-secondary) 100%);
+    }
+
+    .card-custom {
+      background: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      border: none;
+    }
+
+    .name-link {
+      color: var(--red-primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .name-link:hover {
+      color: var(--red-secondary);
+      text-decoration: underline;
+    }
+
+    .news-item { padding-left: 1rem; margin-bottom: 1rem; }
+    .news-item-rose { border-left: 4px solid #f43f5e; }
+    .news-item-emerald { border-left: 4px solid #059669; }
+    .news-item-cyan { border-left: 4px solid #06b6d4; }
+    .news-item-orange { border-left: 4px solid #f97316; }
+    .news-item-blue { border-left: 4px solid #3b82f6; }
+    .news-item-purple { border-left: 4px solid #8b5cf6; }
+    .news-item-yellow { border-left: 4px solid #f59e0b; }
+    .news-item-indigo { border-left: 4px solid #6366f1; }
+    .news-item-pink { border-left: 4px solid #ec4899; }
+    .news-item-teal { border-left: 4px solid #14b8a6; }
+    .news-item-green { border-left: 4px solid #10b981; }
+
+    .news-scroll {
+      max-height: 22rem;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+
+    .news-scroll::-webkit-scrollbar { width: 4px; }
+    .news-scroll::-webkit-scrollbar-track { background: #f1f1f1; }
+    .news-scroll::-webkit-scrollbar-thumb { background: #888; border-radius: 2px; }
+
+    .link-custom {
+      color: var(--red-primary);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .link-custom:hover { color: var(--red-secondary); }
+
+    .btn-white {
+      background: white;
+      color: var(--red-primary);
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      transition: background 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-white:hover {
+      background: #f3f4f6;
+      color: var(--red-primary);
+    }
+
+    .thrust-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .thrust-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+
+    .thrust-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .thrust-content {
+      padding: 1.25rem;
+    }
+
+    .thrust-keywords {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .keyword {
+      font-size: 11px;
+      padding: 3px 10px;
+      background: #f3f4f6;
+      color: #6b7280;
+      border-radius: 20px;
+    }
+
+    .thrust-publications {
+      display: none;
+      padding: 1rem 1.25rem;
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .thrust-publications.show {
+      display: block;
+    }
+
+    .thrust-pub-item {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .thrust-pub-item:last-child {
+      border-bottom: none;
+    }
+
+    .pub-year {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--red-primary);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--red-primary);
+    }
+
+    .pub-item {
+      background: white;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    }
+
+    .pub-award {
+      display: inline-block;
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      color: #1f2937;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-left: 8px;
+    }
+
+    .advisor-card {
+      text-align: center;
+      padding: 1rem;
+      background: #f9fafb;
+      border-radius: 8px;
+    }
+
+    .advisor-card a {
+      color: #1f2937;
+      text-decoration: none;
+    }
+
+    .advisor-card a:hover {
+      color: var(--red-primary);
+    }
+
+    .support-box {
+      background: #f5f5f5;
+      border-left: 4px solid var(--red-primary);
+      padding: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .support-box a {
+      color: var(--red-primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .support-box a:hover {
+      text-decoration: underline;
+    }
+
+    .mobile-menu-btn { display: none; }
+
+    @media (max-width: 768px) {
+      .mobile-menu-btn { display: block; }
+      .desktop-nav { display: none; }
+      .mobile-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        padding: 1rem;
+      }
+      .mobile-nav.show { display: block; }
+    }
+
+    @media (min-width: 769px) {
+      .mobile-nav { display: none !important; }
+    }
+
+    .thrust-tile-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .thrust-tile {
+      display: block; border-radius: 14px; overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .thrust-tile:hover { transform: translateY(-5px); box-shadow: 0 12px 28px rgba(0,0,0,0.2); }
+    .thrust-tile img { width: 100%; height: auto; display: block; }
+  </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Hannah B. Pasandi","alternateName":["Hannaneh B. Pasandi","Hannaneh Barahouei Pasandi","Hana Pasandi"],"jobTitle":"Research Scholar Fellow","affiliation":{"@type":"Organization","name":"UC Berkeley Sky Computing Lab"},"url":"https://hanabhp.github.io/","email":"mailto:h.pasandi@berkeley.edu","sameAs":["https://github.com/hanabhp","https://scholar.google.com/citations?user=8B25UksAAAAJ"],"knowsAbout":["agentic AI systems","LLM serving","network protocols","wireless privacy","autonomous vehicles","satellite networks"]}
+</script>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Hannah B. Pasandi | Networked Systems, Agentic AI, Wireless Privacy" />
+<meta property="og:description" content="Research Scholar Fellow at UC Berkeley Sky Computing Lab: agentic AI systems, LLM serving, network protocols, wireless privacy, autonomous vehicles, satellite networks." />
+<meta property="og:image" content="https://hanabhp.github.io/assets/og-card.png" />
+<meta name="twitter:card" content="summary_large_image" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header-sticky">
+    <div class="container py-3">
+      <div class="d-flex align-items-center justify-content-between position-relative">
+        <div>
+          <h1 class="h5 mb-0 fw-bold" style="color: var(--red-primary);">Hannah B. Pasandi</h1>
+          <p class="small text-muted mb-0">Research Scholar Fellow</p>
+        </div>
+
+        <nav class="desktop-nav">
+          <div class="d-flex">
+            <a href="#home" class="nav-link-custom">Home</a>
+            <a href="#research" class="nav-link-custom">Research</a>
+            <a href="#research" class="nav-link-custom">Projects</a>
+            <a href="#publications" class="nav-link-custom">Publications</a>
+            <a href="#advisors" class="nav-link-custom">Collaborators</a>
+            <a href="#contact" class="nav-link-custom">Contact</a>
+          </div>
+        </nav>
+
+        <button class="btn mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Open menu">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h18M3 6h18M3 18h18"></path>
+          </svg>
+        </button>
+
+        <nav class="mobile-nav" id="mobileNav">
+          <div class="d-flex flex-column">
+            <a href="#home" class="nav-link-custom py-2">Home</a>
+            <a href="#research" class="nav-link-custom py-2">Research</a>
+            <a href="#research" class="nav-link-custom py-2">Projects</a>
+            <a href="#publications" class="nav-link-custom py-2">Publications</a>
+            <a href="#advisors" class="nav-link-custom py-2">Collaborators</a>
+            <a href="#contact" class="nav-link-custom py-2">Contact</a>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="hero-gradient py-5 text-white">
+    <div class="container text-center">
+      <img src="./images/Hannah-2.png" alt="Hannah B. Pasandi" class="profile-img-large mb-4">
+      <h1 class="display-5 fw-bold mb-3">Hannah B. Pasandi</h1>
+      <p class="h5 mb-4">Research Scholar Fellow | UC Berkeley Sky Computing Lab</p>
+
+      <div class="d-flex justify-content-center flex-wrap gap-3 mb-4">
+        <a href="mailto:h.pasandi@berkeley.edu" class="btn-white"><span>✉️</span><span>Email</span></a>
+        <a href="https://scholar.google.com/citations?user=8B25UksAAAAJ&hl=en" target="_blank" class="btn-white"><span>🎓</span><span>Google Scholar</span></a>
+        <a href="https://x.com/HEchenoz" target="_blank" class="btn-white"><span>𝕏</span><span>X</span></a>
+        <a href="https://github.com/hanabhp" target="_blank" class="btn-white"><span>🐙</span><span>GitHub</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About + News -->
+  <section class="py-5 bg-white">
+    <div class="container">
+      <div class="card-custom">
+        <h2 class="h3 fw-bold mb-4" style="color: var(--red-primary);">Bienvenue!</h2>
+
+        <p class="mb-3">
+          I am a wireless and networked systems researcher currently serving as a Research Scholar Fellow at <a href="https://sky.cs.berkeley.edu/" target="_blank" class="name-link">UC Berkeley's Sky Computing Lab</a>, where I contribute to the SkyPilot project with <a href="https://people.eecs.berkeley.edu/~istoica/" target="_blank" class="name-link">Professor Ion Stoica</a>. I have been fortunate to work with exceptional researchers throughout my journey: <a href="https://music.lab.vcu.edu/" target="_blank" class="name-link">Prof. Tamer Nadeem</a> at <a href="https://www.vcu.edu/" target="_blank" class="name-link">Virginia Commonwealth University</a> during my PhD, <a href="https://people.eecs.berkeley.edu/~sylvia/" target="_blank" class="name-link">Prof. Sylvia Ratnasamy</a> and <a href="https://www.icsi.berkeley.edu/icsi/people/shenker" target="_blank" class="name-link">Prof. Scott Shenker</a> at <a href="https://netsys.cs.berkeley.edu/" target="_blank" class="name-link">UC Berkeley's NetSys Lab</a>, <a href="https://scholar.google.com/citations?user=YXq56tgAAAAJ" target="_blank" class="name-link">Dr. Juan A. Fraire</a> and <a href="https://perso.citi-lab.fr/hrivano/" target="_blank" class="name-link">Prof. Hervé Rivano</a> at <a href="https://team.inria.fr/agora/" target="_blank" class="name-link">INRIA Lyon</a>, <a href="https://lig-membres.imag.fr/rousseau/" target="_blank" class="name-link">Prof. Franck Rousseau</a> at <a href="https://www.liglab.fr/" target="_blank" class="name-link">LIG Lab (Université Grenoble Alpes)</a>, <a href="https://wimnet.ee.columbia.edu/people/gil-zussman/" target="_blank" class="name-link">Prof. Gil Zussman</a> at <a href="https://www.columbia.edu/" target="_blank" class="name-link">Columbia University's</a> Wireless and Mobile Networking Lab, and industry leaders at <a href="https://www.qualcomm.com/" target="_blank" class="name-link">Qualcomm</a>, <a href="https://skylarkwireless.com/" target="_blank" class="name-link">Skylark Wireless LLC</a>, and <a href="https://www.bell-labs.com/" target="_blank" class="name-link">Bell Labs</a>.
+        </p>
+
+        <p class="mb-3">
+          My research interests are network protocol synthesis and certification, LLM serving and scheduling across device, edge, cloud, and direct-to-cell satellite tiers, plan-level accounting and reliability for agentic AI, cellular and voice privacy, and the security of connected vehicles and UAVs.
+        </p>
+
+        <p class="mb-3" style="font-style: italic; color: #4a4a4a;">
+          The commitment underneath the work is that systems should make decisions on predicted future state and prove bounds against the prediction error, rather than react to measured present state and bound average-case performance.
+        </p>
+
+        <p class="mb-3">
+          One principle, two arenas. In <span style="font-weight: bold; color: var(--red-primary);">networks</span>, <a href="tenet.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">teNET</a> deploys only protocol compositions that carry a certificate they cannot collapse, and <a href="agentic_ai.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">OrbitMesh</a> turns direct-to-cell satellite into a first-class serving tier for LLM requests. In <a href="agentic_ai.html" style="font-weight: bold; color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">AI agents</a>, where the unit of work is now the <span style="font-weight: bold; color: var(--red-primary);">plan</span> rather than the single call, <a href="patient.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Patient</a>, <a href="confine.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Confine</a>, and <a href="gauge.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Gauge</a> schedule, route, and evaluate at the plan level. <a href="agentic_ai.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Loom</a> is both arenas in one system: an LLM agent held inside a safety certificate while it composes a live wireless MAC layer.
+        </p>
+        <p class="mb-3">
+          The same discipline extends to connected vehicles and smart farming through the students I advise: Mahsa Tavasoli's rural connected-vehicle communication survey (IEEE Access '25), Mohammad Sepahi's co-authored VIN2VICTIM (USENIX VehicleSec '26), and Radwan Rouzky's smart-farming data-governance review (Information Processing in Agriculture '26).
+        </p>
+
+        <div class="card-custom mt-4" style="background-color: #f5f5f5;">
+          <h3 class="h5 fw-bold mb-3" style="color: var(--red-primary);">Impact at Scale</h3>
+          <p class="mb-3">
+            Some of my work has shipped into production. At <a href="https://skylarkwireless.com/" target="_blank" class="name-link">Skylark Wireless</a>, my MU-MIMO scheduler improved spectral efficiency by 23 percent and serves millions of users on commercial 5G fixed-wireless deployments. At <a href="https://www.qualcomm.com/" target="_blank" class="name-link">Qualcomm</a>, my Wi-Fi 7 protocol contributions are integrated into commercial chipsets. My open-source tools (<span class="fw-semibold">SIMSAT</span>, <span class="fw-semibold">SATMetrics</span>, <span class="fw-semibold">OffloadSim</span>) are used by satellite operators and academic groups evaluating LEO constellations.
+          </p>
+          <h3 class="h6 fw-bold mb-2 mt-4" style="color: var(--red-primary);">Technologies and Systems</h3>
+          <p class="mb-0 small">
+            Wireless protocols across Wi-Fi 4 through Wi-Fi 7 and Wi-Fi 8 drafts. Cellular and 5G NR across 3GPP Releases 15 through 18, with O-RAN Near-RT RIC rApp development. Direct-to-cell LEO satellite systems across Starlink, Kuiper, OneWeb, and Globalstar architectures. Multi-tier LLM serving across device, edge, cloud, and satellite compute. SkyPilot, vLLM, Triton, and Ray for inference orchestration. PyTorch and JAX for learning. StarryNet, ns-3, and MATLAB for protocol simulation. C, C++, Python, Rust, and Go for systems code.
+          </p>
+        </div>
+
+        <!-- Research Support Box -->
+        <div class="support-box">
+          <p class="mb-2 small"><span style="color: #111111;">&#9824;</span> <b style="color: var(--red-primary);">A note on my name:</b> I go by Hana or Hannah. My publications appear under Hannaneh B. Pasandi and Hannaneh Barahouei Pasandi.</p>
+        <p class="mb-3 small"><span style="color: #111111;">&#9824;</span> <b style="color: var(--red-primary);">Collaborations:</b> If you want to build systems for networks or AI agents, feel free to reach me at <a href="mailto:h.pasandi@berkeley.edu">h.pasandi@berkeley.edu</a>. My inbox has a soft spot for hard problems.</p>
+
+        <h4 class="h6 fw-bold mb-2" style="color: var(--red-primary);">Recognition and Research Support</h4>
+          <p class="mb-0 small">
+            My work has been recognized by the <a href="https://n2women.comsoc.org/" target="_blank">N2Women Top 10 Rising Star Award</a>, the <a href="https://www.aspirations.org/award-programs/aic-collegiate-award" target="_blank">NCWIT Collegiate Award</a>, and the <a href="https://www.heidelberg-laureate-forum.org/" target="_blank">Heidelberg Laureate Forum</a>, and supported by the <a href="https://www.facultyforthefuture.net/" target="_blank">Schlumberger Foundation</a> and <a href="https://www.helmholtz-hida.de/" target="_blank">HIDA (Germany)</a>.
+          </p>
+        </div>
+
+        <!-- NEWS -->
+        <div class="card-custom mt-4">
+          <h2 class="h4 fw-bold mb-3" style="color: var(--red-primary);">New Highlights</h2>
+          <div class="news-scroll">
+            <div class="news-item news-item-green mb-3">
+              <h3 class="h6 fw-semibold">[2026] Nominated to Sigma Xi</h3>
+              <p class="small text-muted mb-0">Nominated to join Sigma Xi, the research honor society whose members since 1886 have included Albert Einstein, Richard Feynman, and more than 200 Nobel laureates.</p>
+            </div>
+            <div class="news-item news-item-green mb-3">
+              <h3 class="h6 fw-semibold">[2026] HotCarbon 2026 Acceptance</h3>
+              <p class="small text-muted mb-0">Our paper "The Reasoning Tax: Profiling Test-Time Compute Carbon in Agentic AI Workloads" is accepted to HotCarbon 2026.</p>
+            </div>
+            <div class="news-item news-item-emerald mb-3">
+              <h3 class="h6 fw-semibold">[2026] VIN2VICTIM Accepted at USENIX VehicleSec 2026</h3>
+              <p class="small text-muted mb-0">Our VIN2VICTIM paper, in collaboration with Rivian, was accepted at USENIX VehicleSec 2026.</p>
+            </div>
+            <div class="news-item news-item-rose mb-3">
+              <h3 class="h6 fw-semibold">[Dec 2025] NSDI'25 Acceptance</h3>
+              <p class="small text-muted mb-0">Our paper "CacheCatalyst" has been accepted to USENIX NSDI 2025.</p>
+            </div>
+            <div class="news-item news-item-orange mb-3">
+              <h3 class="h6 fw-semibold">[Dec 2025] Best Paper and Best Contribution Award at ACM SW CoNEXT'25</h3>
+              <p class="small text-muted mb-0">Our paper "Balancify" won Best Paper Award and Best Contribution Award at ACM Student Workshop CoNEXT 2025.</p>
+            </div>
+            <div class="news-item news-item-cyan mb-3">
+              <h3 class="h6 fw-semibold">[Dec 2025] CoNEXT Student Workshop Co-Chair</h3>
+              <p class="small text-muted mb-0">Co-chaired ACM CoNEXT Student Workshop and gave a talk on "AI for Networks and Networks for AI".</p>
+            </div>
+            <div class="news-item news-item-emerald mb-3">
+              <h3 class="h6 fw-semibold">[Nov 2025] Three Papers at MobiCom'25</h3>
+              <p class="small text-muted mb-0">Our three papers were presented at MobiCom'25.</p>
+            </div>
+            <div class="news-item news-item-purple mb-3">
+              <h3 class="h6 fw-semibold">[Sep 2025] Heidelberg Laureate Forum</h3>
+              <p class="small text-muted mb-0">Invited as Young Researcher to the 10th HLF in Germany.</p>
+            </div>
+            <div class="news-item news-item-blue mb-3">
+              <h3 class="h6 fw-semibold">[Mar 2025] SIGMETRICS'25 Acceptance</h3>
+              <p class="small text-muted mb-0">Research on datacenter microbursts accepted to ACM SIGMETRICS 2025.</p>
+            </div>
+            <div class="news-item news-item-green mb-3">
+              <h3 class="h6 fw-semibold">[Jan 2025] Best Paper Award</h3>
+              <p class="small text-muted mb-0">Received Best Paper Award for "Role of Machine Learning in Satellite IoT".</p>
+            </div>
+            <div class="news-item news-item-indigo mb-3">
+              <h3 class="h6 fw-semibold">[2025] Invited Talk at USI Switzerland</h3>
+              <p class="small text-muted mb-0">Talk on "Privacy and Security Challenges in Space Terrestrial Networks".</p>
+            </div>
+            <div class="news-item news-item-pink mb-3">
+              <h3 class="h6 fw-semibold">[2023] Invited Talks at Major Venues</h3>
+              <p class="small text-muted mb-0">Delivered talks at IEEE S&P, USENIX SOUPS/Security, Microsoft BlueHat, and MSR on 5G privacy.</p>
+            </div>
+            <div class="news-item news-item-teal mb-3">
+              <h3 class="h6 fw-semibold">[2023] HIDA Research Grant</h3>
+              <p class="small text-muted mb-0">Received grant from Helmholtz Information and Data Science Academy, Germany.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+    <!-- Research Thrusts -->
+  <section id="research" class="py-5" style="background-color: #f9fafb;">
+    <div class="container">
+      <h2 class="h3 fw-bold text-center mb-2">Research Thrusts</h2>
+      <p class="text-center text-muted mb-5">Eight lines of work. Tap a thrust to open it.</p>
+      <div class="thrust-tile-grid">
+        <a class="thrust-tile" href="thrusts/self_driving_llm_serving.html" aria-label="Self-Driving LLM Serving">
+          <img src="assets/thrusts/self_driving_llm_serving.svg" alt="Self-Driving LLM Serving. Inference and serving systems across device, edge, cloud, and satellite tiers." loading="lazy">
+        </a>
+        <a class="thrust-tile" href="agentic_ai.html" aria-label="Agentic AI">
+          <img src="assets/thrusts/agentic_ai.svg" alt="Agentic AI. Network systems and measurement for deployable agents; the AgenticStack agenda, portfolio, and reading list." loading="lazy">
+        </a>
+        <a class="thrust-tile" href="thrusts/direct_to_cell_satellite.html" aria-label="Direct to Cell Satellite">
+          <img src="assets/thrusts/direct_to_cell_satellite.svg" alt="Direct to Cell Satellite. LEO satellite networking for direct to cell and satellite IoT." loading="lazy">
+        </a>
+        <a class="thrust-tile" href="thrusts/cellular_and_wireless_privacy.html" aria-label="Cellular and Wireless Privacy">
+          <img src="assets/thrusts/cellular_and_wireless_privacy.svg" alt="Cellular and Wireless Privacy. Privacy and security from cross-layer structure in 5G, Wi-Fi, vehicles, voice agents, and satellite access." loading="lazy">
+        </a>
+        <a class="thrust-tile" href="thrusts/cascade_safe_learning.html" aria-label="Cascade Safe Learning">
+          <img src="assets/thrusts/cascade_safe_learning.svg" alt="Cascade Safe Learning. Learning with decision-time safety, constraint masks, and zero-violation guarantees." loading="lazy">
+        </a>
+        <a class="thrust-tile" href="tenet.html" aria-label="Self-Driving Protocols">
+          <img src="assets/thrusts/self_driving_protocols.svg" alt="Self-Driving Protocols. Compositional wireless protocol design with learned synthesis and formal certificates; the teNET project." loading="lazy">
+        </a>
+        <a class="thrust-tile" href="thrusts/human_centered_ai_accessibility.html" aria-label="Human Centered and Accessible AI">
+          <img src="assets/thrusts/human_centered_ai_accessibility.svg" alt="Human Centered and Accessible AI. Accessible and relational AI that keeps sensitive interaction local." loading="lazy">
+        </a>
+        <a class="thrust-tile" href="av.html" aria-label="Autonomous Vehicles and UAVs">
+          <img src="assets/thrusts/av.svg" alt="Autonomous Vehicles and UAVs. Security, privacy, and connectivity for autonomous ground vehicles and UAVs: CAN-bus intrusion detection, GPS spoofing limits, vehicle privacy, rural V2X, and agentic UAV control." loading="lazy">
+        </a>
+      </div>
+    </div>
+  </section>
+
+<!-- Publications -->
+  <section id="publications" class="py-5 bg-white">
+    <div class="container">
+      <h2 class="h3 fw-bold text-center mb-5">Selected Publications</h2>
+
+      <h3 class="pub-year">2026 (in submission unless noted)</h3><div class="pub-item">
+        <div class="fw-semibold">CacheCatalyst: Cooperative Web Cache Coordination</div>
+        <div class="small text-muted">Co-author</div>
+        <div class="small" style="color: var(--red-primary);">USENIX NSDI 2026 (accepted)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">VIN2VICTIM: From Vehicle Identification to Targeted Tracking via Data Broker Exploitation</div>
+        <div class="small text-muted">H. B. Pasandi, M. Sepahi</div>
+        <div class="small" style="color: var(--red-primary);">USENIX VehicleSec '26 (accepted)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">The Reasoning Tax: Profiling Test-Time Compute Carbon in Agentic AI Workloads</div>
+        <div class="small text-muted">H. B. Pasandi, T. Nadeem</div>
+        <div class="small" style="color: var(--red-primary);">ACM HotCarbon '26 (accepted)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">Data Governance in Smart Farming: A Systematic Review of Challenges and Gaps</div>
+        <div class="small text-muted">R. Rouzky, A. Sarrafzadeh, E. Sowells-Boone, H. B. Pasandi, G. Goins</div>
+        <div class="small" style="color: var(--red-primary);">Information Processing in Agriculture, 2026 (published)</div>
+      </div>
+      <div class="pub-item">
+        <div class="fw-semibold">SpaceREGULATE: Cross-Jurisdictional Data Sovereignty for LEO Satellite Networks</div>
+        <div class="small text-muted">H. B. Pasandi (sole author)</div>
+        <div class="small" style="color: var(--red-primary);">USENIX NSDI 2027 Frontiers (in submission)</div>
+      </div>
+      <div class="pub-item">
+        <div class="fw-semibold">MIRAGE: Mobility-Invariant RAN Attack-detection Guard Engine</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">NDSS (in submission)</div>
+      </div>
+      <div class="pub-item">
+        <div class="fw-semibold">Tether: Apple Device-Mesh Routing for Multi-Tier LLM Serving</div>
+        <div class="small text-muted">H. B. Pasandi (sole author)</div>
+        <div class="small" style="color: var(--red-primary);">ACM MobiHoc 2026 (in submission)</div>
+      </div>
+      <div class="pub-item">
+        <div class="fw-semibold">SkyHandover: Predictive Direct-to-Cell Handover for LEO Satellite Networks</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">In submission</div>
+      </div>
+      <div class="pub-item">
+        <div class="fw-semibold">SkyWindow (DeferSat): Predictive Pass-Aware Deferral for Dual-Orbit IoT</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">In submission</div>
+      </div>
+      <div class="pub-item">
+        <div class="fw-semibold">OrbitMesh: A Four-Tier Inference Serving System Across the Direct-to-Cell Satellite Edge</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">In submission</div>
+      </div>
+      <div class="pub-item">
+        <div class="fw-semibold">PALSE: Plan-Aware Prefetch for Agentic LLM Serving at the Edge</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">IEEE/ACM SEC 2026 (Position Paper, in submission)</div>
+      </div>
+      <div class="pub-item">
+        <div class="fw-semibold">BlackWidow: Decision-Time Constraint-Masked Reinforcement Learning</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">In submission</div>
+      </div>
+      <div class="pub-item">
+        <div class="fw-semibold">Arachne: LLM-Driven Compositional Synthesis of Cascade-Safe MAC Protocols</div>
+        <div class="small text-muted">H. B. Pasandi (sole author)</div>
+        <div class="small" style="color: var(--red-primary);">ACM MobiHoc 2026 (in submission)</div>
+      </div>
+      <div class="pub-item">
+        <div class="fw-semibold">INTACT: Phase-Transition Theory for Multi-Agent Learning Under Shift</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">ACM SIGMETRICS 2026 (in submission)</div>
+      </div>
+      <div class="pub-item">
+        <div class="fw-semibold">Cipher: Wi-Fi 7 Cross-Layer Privacy Side Channels</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">NDSS (in submission)</div>
+      </div>
+      <div class="pub-item">
+        <div class="fw-semibold">SoK on Privacy and Security in B5/6G + LEO Satellite Networks</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">In submission</div>
+      </div>
+      <div class="pub-item">
+        <div class="fw-semibold">Contextual-Integrity Admission Control for Persistent Memory in LLM Agents</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">PETs (in submission)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">Predict Once, Track Forever: The Trajectory-Predictability Privacy Gap in Direct-to-Cell</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">ACM CoNEXT '26 (in submission)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">Winnow: A Decoy-Aware Adversary Defeats Ghost-Keystroke Defenses in Virtual Reality</div>
+        <div class="small text-muted">H. B. Pasandi, Haniyeh B. Pasandi</div>
+        <div class="small" style="color: var(--red-primary);">XR Security '26 (in submission)</div>
+      </div>
+
+      <h3 class="pub-year mt-4">2025</h3><div class="pub-item">
+        <div class="fw-semibold">The Role of Machine Learning in Satellite IoT<span class="pub-award">🏆 Best Paper</span></div>
+        <div class="small text-muted">A. Florez, H. B. Pasandi, J. A. Fraire, H. Rivano</div>
+        <div class="small" style="color: var(--red-primary);">Computer Networks, 2025</div>
+      </div>
+      <div class="pub-item">
+        <div class="fw-semibold">Balancify: A Hybrid L4 Load Balancer<span class="pub-award">🏆 Best Paper + Best Contribution</span></div>
+        <div class="small text-muted">A. Sadr, K. Pakzad, M. Hosseini, H. B. Pasandi, S. Darabi</div>
+        <div class="small" style="color: var(--red-primary);">ACM CoNEXT 2025 Student Workshop</div>
+      </div>
+      <div class="pub-item">
+        <div class="fw-semibold">Poison Comes in Small Packages: Application-Driven Reexamination of Datacenter Microbursts</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">ACM SIGMETRICS / POMACS 2025</div>
+      </div>
+      <div class="pub-item">
+        <div class="fw-semibold">Privacy-Aware Doppler Compensation in Next-Generation LEO Networks</div>
+        <div class="small text-muted">H. B. Pasandi, F. Parastar, J. A. Fraire, H. Rivano</div>
+        <div class="small" style="color: var(--red-primary);">ASMS 2025</div>
+      </div>
+      <div class="pub-item">
+        <div class="fw-semibold">CANDOR: Vehicular CAN-Bus Anomaly Detection</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">IEEE Transactions on Consumer Electronics 2025</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">Hybrid Clustering-Transformer IDS for Rural CAVs</div>
+        <div class="small text-muted">M. Tavasoli, A. Sarrafzadeh, A. Karimoddini, M. Khaleghi, H. B. Pasandi</div>
+        <div class="small" style="color: var(--red-primary);">ACM CoNEXT 2025 Student Workshop</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">Beyond Terrestrial: LLM-Orchestrated DtS-IoT Networks for Ubiquitous Edge Intelligence</div>
+        <div class="small text-muted">H. B. Pasandi, F. Rousseau, T. Nadeem, S. Darabi</div>
+        <div class="small" style="color: var(--red-primary);">ACM Access Networks with AI Workshop, 2025</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">Adaptive Orbital Direct-to-Device: Rethinking Satellite IoT Architecture</div>
+        <div class="small text-muted">H. B. Pasandi, M. Hosseini, S. Darabi, F. Rousseau, J. A. Fraire</div>
+        <div class="small" style="color: var(--red-primary);">ACM MobiArch 2025</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">WiP: Orbital Edge Intelligence: Real-Time Foundation Model Inference for Earth Observation</div>
+        <div class="small text-muted">H. B. Pasandi</div>
+        <div class="small" style="color: var(--red-primary);">Workshop on Edge and Mobile Foundation Models, 2025</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">FedSat-LAM: Enabling Large AI Models on Resource-Constrained Satellites via Hierarchical Federated Learning</div>
+        <div class="small text-muted">H. B. Pasandi, Z. Tan, M. Hosseini, S. Darabi, F. Rousseau, J. A. Fraire</div>
+        <div class="small" style="color: var(--red-primary);">Workshop on Edge and Mobile Foundation Models, 2025</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">SecuFarmArch: AI-Driven Cybersecurity Architecture for Smart Farming Using Digital Twins and Machine Learning</div>
+        <div class="small text-muted">M. Tavasoli, A. Sarrafzadeh, E. R. Sowells-Boone, H. B. Pasandi, M. Wolfe</div>
+        <div class="small" style="color: var(--red-primary);">SPIE Applications of Machine Learning, 2025</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">Data Communication Challenges of Connected and Automated Vehicles in Rural Areas</div>
+        <div class="small text-muted">M. Tavasoli, A. Sarrafzadeh, M. Khaleghi, M. Zakaria, H. B. Pasandi, et al.</div>
+        <div class="small" style="color: var(--red-primary);">IEEE Access, 2025</div>
+      </div>
+
+      <h3 class="pub-year mt-4">2024</h3><div class="pub-item">
+        <div class="fw-semibold">Survey on Direct-to-Device Satellite Communications: Advances, Challenges, and Prospects</div>
+        <div class="small text-muted">H. B. Pasandi, J. A. Fraire, S. Ratnasamy, H. Rivano</div>
+        <div class="small" style="color: var(--red-primary);">ACM MobiCom LEO-Nets Workshop 2024</div>
+      </div>
+      <div class="pub-item">
+        <div class="fw-semibold">Autonomous On-Device Protocols: Empowering Wireless with Self-Driven Capabilities</div>
+        <div class="small text-muted">H. B. Pasandi, T. Nadeem</div>
+        <div class="small" style="color: var(--red-primary);">IEEE WCNC 2024</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">Location Privacy in B5G/6G: Systematization of Knowledge</div>
+        <div class="small text-muted">H. B. Pasandi, F. Parastar</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">Wipe: A Novel Web-Based Intelligent Packaging Evaluation via Machine Learning and Association Mining</div>
+        <div class="small text-muted">M. Tavasoli, E. Lee, Y. Mousavi, H. B. Pasandi, A. Fekih</div>
+        <div class="small" style="color: var(--red-primary);">IEEE Access, 2024</div>
+      </div>
+
+      <h3 class="pub-year mt-4">2023</h3>
+
+      <div class="pub-item">
+        <div class="fw-semibold">Echoing the Future: On-Device Machine Learning in Next-Generation Networks, A Comprehensive Survey</div>
+        <div class="small text-muted">H. B. Pasandi, F. Pasandi, F. Parastar, A. Moradbeikie, T. Nadeem</div>
+        <div class="small" style="color: var(--red-primary);">Preprint, 2023</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">Improving BLE Fingerprint Radio Maps: A Method Based on Fuzzy Clustering and Weighted Interpolation</div>
+        <div class="small text-muted">H. Barahouei Pasandi, A. Moradbeikie, D. Barros, D. Verde, S. Paiva, et al.</div>
+        <div class="small" style="color: var(--red-primary);">Workshop on Enhanced Network Techniques, 2023</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">Towards Secure Edge-Based LoRaWAN for Next Generation Wireless Communications</div>
+        <div class="small text-muted">A. Moradbeikie, H. B. Pasandi, A. Keshavarz, H. Rostami, S. Paiva, S. I. Lopes</div>
+        <div class="small" style="color: var(--red-primary);">CISTI 2023</div>
+      </div>
+
+      <h3 class="pub-year mt-4">2022</h3>
+
+      <div class="pub-item">
+        <div class="fw-semibold">Low-Cost Traffic Sensing System Based on LoRaWAN for Urban Areas</div>
+        <div class="small text-muted">H. B. Pasandi, A. Haqiqat, A. Moradbeikie, A. Keshavarz, H. Rostami, S. Paiva, et al.</div>
+        <div class="small" style="color: var(--red-primary);">Workshop on Emerging Topics in Wireless, 2022</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">Evaluation of ASR Systems for Conversational Speech: A Linguistic Perspective</div>
+        <div class="small text-muted">H. B. Pasandi, Haniyeh B. Pasandi</div>
+        <div class="small" style="color: var(--red-primary);">ACM SenSys 2022</div>
+      </div>
+
+      <h3 class="pub-year mt-4">2021</h3><div class="pub-item">
+        <div class="fw-semibold">LATTE: Online MU-MIMO Grouping for Video Streaming Over Commodity WiFi<span class="pub-award">🏆 Best Poster</span></div>
+        <div class="small text-muted">H. B. Pasandi, T. Nadeem</div>
+        <div class="small" style="color: var(--red-primary);">ACM MobiSys 2021</div>
+      </div>
+      <div class="pub-item">
+        <div class="fw-semibold">Towards a Learning-Based Framework for Self-Driving Design of Networking Protocols<span class="pub-award">NCWIT Award</span></div>
+        <div class="small text-muted">H. B. Pasandi, T. Nadeem</div>
+        <div class="small" style="color: var(--red-primary);">IEEE Access 2021</div>
+      </div>
+
+      <h3 class="pub-year mt-4">2020</h3><div class="pub-item">
+        <div class="fw-semibold">CONVINCE: Collaborative Cross-Camera Video Analytics at the Edge<span class="pub-award">🏆 Best WIP Paper</span></div>
+        <div class="small text-muted">H. B. Pasandi, T. Nadeem</div>
+        <div class="small" style="color: var(--red-primary);">IEEE PerCom Workshops 2020</div>
+      </div>
+
+      <h3 class="pub-year mt-4">2019</h3><div class="pub-item">
+        <div class="fw-semibold">DeepMAC: A Machine-Learning-Based Automated Design Framework for MAC Protocols<span class="pub-award">🏆 Best Poster</span></div>
+        <div class="small text-muted">H. B. Pasandi, T. Nadeem</div>
+        <div class="small" style="color: var(--red-primary);">N2Women ACM SenSys/BuildSys Workshop 2019</div>
+      </div>
+
+      <p class="text-center mt-4">
+        View all publications on Google Scholar →
+      </p>
+    </div>
+  </section>
+
+  <!-- Advisors & Collaborators -->
+  <section id="advisors" class="py-5" style="background-color: #f9fafb;">
+    <div class="container">
+      <h2 class="h3 fw-bold text-center mb-5">Advisors and Collaborators</h2>
+      <div class="row g-3">
+        <div class="col-lg-3 col-md-4 col-6">
+          <div class="advisor-card">
+            <div class="fw-semibold">Prof. Ion Stoica</div>
+            <div class="small text-muted">Professor of EECS</div>
+            <div class="small" style="color: var(--red-primary);">UC Berkeley</div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+          <div class="advisor-card">
+            <div class="fw-semibold">Prof. Sylvia Ratnasamy</div>
+            <div class="small text-muted">Professor of CS</div>
+            <div class="small" style="color: var(--red-primary);">UC Berkeley</div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+          <div class="advisor-card">
+            <div class="fw-semibold">Prof. Scott Shenker</div>
+            <div class="small text-muted">Professor of EECS</div>
+            <div class="small" style="color: var(--red-primary);">UC Berkeley</div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+          <div class="advisor-card">
+            <div class="fw-semibold">Prof. Tamer Nadeem</div>
+            <div class="small text-muted">Professor of CS (PhD Advisor)</div>
+            <div class="small" style="color: var(--red-primary);">VCU</div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+          <div class="advisor-card">
+            <div class="fw-semibold">Prof. Gil Zussman</div>
+            <div class="small text-muted">Kenneth Brayer Professor</div>
+            <div class="small" style="color: var(--red-primary);">Columbia University</div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+          <div class="advisor-card">
+            <div class="fw-semibold">Dr. Juan A. Fraire</div>
+            <div class="small text-muted">Researcher, Agora Team</div>
+            <div class="small" style="color: var(--red-primary);">INRIA Lyon</div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+          <div class="advisor-card">
+            <div class="fw-semibold">Prof. Hervé Rivano</div>
+            <div class="small text-muted">University Professor</div>
+            <div class="small" style="color: var(--red-primary);">INSA Lyon / INRIA</div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+          <div class="advisor-card">
+            <div class="fw-semibold">Prof. Franck Rousseau</div>
+            <div class="small text-muted">Associate Professor</div>
+            <div class="small" style="color: var(--red-primary);">Univ. Grenoble Alpes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-5 hero-gradient text-white">
+    <div class="container text-center">
+      <h2 class="h3 fw-bold mb-4">Get In Touch</h2>
+      <p class="mb-4">Interested in collaboration, research discussions, or speaking opportunities?</p>
+      <div class="d-flex justify-content-center flex-wrap gap-3">
+        <a href="mailto:h.pasandi@berkeley.edu" class="btn-white"><span>✉️</span><span>Email Me</span></a>
+        <a href="https://scholar.google.com/citations?user=8B25UksAAAAJ&hl=en" target="_blank" class="btn-white"><span>🎓</span><span>Google Scholar</span></a>
+        <a href="https://x.com/HEchenoz" target="_blank" class="btn-white"><span>𝕏</span><span>X</span></a>
+        <a href="https://github.com/hanabhp" target="_blank" class="btn-white"><span>🐙</span><span>GitHub</span></a>
+        <a href="https://www.linkedin.com/in/hannanahpasandi/" target="_blank" class="btn-white"><span>💼</span><span>LinkedIn</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-4 text-white" style="background-color: #111827;">
+    <div class="container text-center">
+      <p class="mb-1">© 2025 Hannah B. Pasandi. All rights reserved.</p>
+      <p class="small text-muted mb-0">Research Scholar Fellow • UC Berkeley Sky Computing Lab</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Toggle publications for research thrusts
+    function togglePublications(thrustId) {
+      const pubsDiv = document.getElementById(thrustId + '-pubs');
+      if (pubsDiv) {
+        pubsDiv.classList.toggle('show');
+      }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const headerOffset = 70;
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+          const mobileNav = document.getElementById('mobileNav');
+          if (mobileNav && mobileNav.classList.contains('show')) mobileNav.classList.remove('show');
+        }
+      });
+    });
+
+    function toggleMobileMenu() {
+      const mobileNav = document.getElementById('mobileNav');
+      if (mobileNav) mobileNav.classList.toggle('show');
+    }
+
+    document.addEventListener('click', function(event) {
+      const mobileNav = document.getElementById('mobileNav');
+      const mobileBtn = document.querySelector('.mobile-menu-btn');
+      if (mobileNav && mobileBtn && !mobileNav.contains(event.target) && !mobileBtn.contains(event.target)) {
+        mobileNav.classList.remove('show');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono,SF Mono,Menlo,monospace">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a0e14"/><stop offset="0.55" stop-color="#0e1726"/><stop offset="1" stop-color="#161033"/></linearGradient>
+    <radialGradient id="gl" cx="85%" cy="6%" r="60%"><stop offset="0" stop-color="#6ea8ff" stop-opacity="0.18"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/><rect width="1600" height="900" fill="url(#gl)"/>
+  <g stroke="#2a3646" stroke-width="2" fill="none" opacity="0.9"><line x1="1140" y1="190" x2="1300" y2="150"/><line x1="1300" y1="150" x2="1410" y2="250"/><line x1="1140" y1="190" x2="1230" y2="320"/><line x1="1230" y1="320" x2="1410" y2="250"/><line x1="1230" y1="320" x2="1330" y2="430"/></g><circle cx="1140" cy="190" r="20" fill="#6ea8ff"/><circle cx="1300" cy="150" r="16" fill="#6ea8ff"/><circle cx="1410" cy="250" r="18" fill="#c79bff"/><circle cx="1230" cy="320" r="22" fill="#6ea8ff"/><circle cx="1330" cy="430" r="15" fill="#f0c25a"/>
+  <rect x="110" y="150" width="1180" height="600" rx="26" fill="#0d1320" stroke="#1e2734" stroke-width="2" opacity="0.78"/>
+  <text x="170" y="300" fill="#ffffff" font-size="86" font-weight="700" letter-spacing="-3" font-family="-apple-system,Segoe UI,Helvetica Neue,Arial,sans-serif">Agentic AI</text>
+  <text x="172" y="372" fill="#9cc0ff" font-size="34">network systems and measurement</text>
+  <text x="172" y="418" fill="#9cc0ff" font-size="34">for deployable agents</text>
+  <rect x="172" y="470" width="276" height="52" rx="26" fill="none" stroke="#33507a"/><text x="310" y="504" fill="#9cc0ff" font-size="26" text-anchor="middle" font-family="JetBrains Mono,SF Mono,Menlo,monospace">plan accounting</text><rect x="464.5" y="470" width="214" height="52" rx="26" fill="none" stroke="#33507a"/><text x="572" y="504" fill="#9cc0ff" font-size="26" text-anchor="middle" font-family="JetBrains Mono,SF Mono,Menlo,monospace">reliability</text><rect x="695.0" y="470" width="152" height="52" rx="26" fill="none" stroke="#33507a"/><text x="771" y="504" fill="#9cc0ff" font-size="26" text-anchor="middle" font-family="JetBrains Mono,SF Mono,Menlo,monospace">serving</text><rect x="863.5" y="470" width="230" height="52" rx="26" fill="none" stroke="#33507a"/><text x="978" y="504" fill="#9cc0ff" font-size="26" text-anchor="middle" font-family="JetBrains Mono,SF Mono,Menlo,monospace">safety gates</text>
+  <text x="172" y="648" fill="#6ea8ff" font-size="40" font-weight="700">AgenticStack · agenda + reading list</text>
+</svg>

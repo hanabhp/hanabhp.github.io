@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AgenticStack: Systems for Agentic AI, Plan-Level Serving, Scheduling, and Safety | Hannah B. Pasandi</title>
+<meta name="description" content="AgenticStack is a systems agenda for deployable AI agents. It treats the plan, not the model call, as the unit of computation and introduces the runtime, control plane, contracts, schedulers, telemetry, and safety gates that make agentic workflows reliable in production. Portfolio of papers and systems by Hannah B. Pasandi." />
+<meta name="author" content="Hannah B. Pasandi" />
+<style>
+:root{
+  --bg:#0a0e14; --bg-soft:#0e131c; --bg-card:#111722; --bg-card-hi:#16202e;
+  --line:#1e2734; --line-soft:#2a3646;
+  --ink:#eef2f7; --head:#ffffff; --mute:#8fb1e6;
+  --blue:#6ea8ff; --blue-soft:#9cc0ff;
+  --green:#5fd17a; --amber:#f0c25a; --purple:#c79bff; --rose:#ff9a8f;
+  --max:1000px; --pad:clamp(16px,4vw,34px);
+  --mono:"JetBrains Mono","Fira Code","SF Mono","Menlo",monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-size:15px;line-height:1.65;color:var(--ink);background:var(--bg);
+  background-image:radial-gradient(circle at 88% -5%,rgba(110,168,255,0.08),transparent 55%);
+  -webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:var(--blue);text-decoration:none;transition:color .12s}
+a:hover{color:var(--blue-soft);text-decoration:underline;text-underline-offset:3px}
+
+nav.topbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:22px;
+  padding:12px var(--pad);background:rgba(10,14,20,0.82);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line)}
+nav.topbar .mark{font-family:var(--mono);font-weight:700;font-size:17px;letter-spacing:-.03em;color:var(--head)}
+nav.topbar .mark .dot{color:var(--blue)}
+nav.topbar .links{display:flex;flex-wrap:wrap;gap:8px 18px;overflow:visible;font-family:var(--mono);font-size:12.5px;scrollbar-width:thin}
+nav.topbar .links::-webkit-scrollbar{height:0}
+nav.topbar .links a{color:var(--blue-soft);white-space:nowrap;position:relative;padding-bottom:3px}
+nav.topbar .links a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--blue);transition:width .22s ease}
+nav.topbar .links a:hover{color:var(--head);text-decoration:none}
+nav.topbar .links a:hover::after{width:100%}
+nav.topbar .home{margin-left:auto;color:var(--mute)}
+
+header.hero{padding:48px var(--pad) 20px;max-width:var(--max);margin:0 auto;text-align:center}
+.brand{font-family:Cambria,Georgia,'Times New Roman',serif;font-size:clamp(36px,8vw,50px);font-weight:700;letter-spacing:-.045em;line-height:1;color:var(--head);margin-bottom:8px}
+.brand .dot{color:var(--blue)}
+.tagline{font-family:var(--mono);font-size:13.5px;color:var(--blue-soft);margin-bottom:8px}
+.byline{font-size:14px;color:var(--ink)} .byline b{color:var(--head)}
+
+.thesis{margin-top:26px;border:1px solid var(--line-soft);border-left:3px solid var(--green);border-radius:0 14px 14px 0;background:var(--bg-card);padding:22px 24px}
+.thesis .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin-bottom:9px;letter-spacing:.22em;text-transform:uppercase;font-size:11.5px}
+.thesis h2{font-size:clamp(18px,3vw,24px);line-height:1.34;font-weight:600;color:var(--head)}
+.thesis p{margin-top:11px;color:var(--ink);max-width:74ch}
+.thesis .one{font-family:var(--mono);color:var(--amber);font-size:13.5px;margin-top:13px}
+
+section{padding:42px var(--pad);max-width:var(--max);margin:0 auto;border-top:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-bottom:10px}
+h2.s{font-size:clamp(20px,3vw,27px);font-weight:600;letter-spacing:-.02em;margin-bottom:6px;color:var(--head)}
+p{margin:9px 0;color:var(--ink);max-width:74ch}
+p strong{color:var(--head)}
+figure{margin:22px 0}
+figcaption{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-top:8px}
+.hint{font-family:var(--mono);font-size:10.5px;color:var(--blue);margin-top:4px}
+
+/* demo */
+.demo{margin-top:22px;border:1px solid var(--line-soft);border-radius:14px;overflow:hidden;background:#06090e}
+.demo .tabs{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--line);background:var(--bg-soft)}
+.demo .tabs button{font-family:var(--mono);font-size:12px;color:var(--blue-soft);background:none;border:none;border-right:1px solid var(--line);padding:10px 16px;cursor:pointer}
+.demo .tabs button:hover{color:var(--head)}
+.demo .tabs button.on{color:var(--head);background:#06090e;box-shadow:inset 0 -2px 0 var(--green)}
+.demo .screen{padding:15px 18px;overflow-x:auto}
+.demo pre{margin:0;font-family:var(--mono);font-size:12.5px;line-height:1.75;white-space:pre;color:var(--ink)}
+.demo .panel{display:none}.demo .panel.on{display:block}
+.demo .cmd{color:var(--blue)} .demo .ok{color:var(--green)} .demo .no{color:#ff9a8f} .demo .dim{color:var(--blue-soft)} .demo .amb{color:var(--amber)}
+.demo .termline{display:block;opacity:0;transform:translateY(3px);transition:opacity .16s ease,transform .16s ease}
+.demo .termline.show{opacity:1;transform:none}
+.demo .cap{font-family:var(--mono);font-size:10.5px;color:var(--mute);padding:0 18px 12px}
+
+/* primitives grid */
+.prims{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:16px}
+.prim{border:1px solid var(--line);border-radius:12px;background:var(--bg-card);padding:16px}
+.prim .k{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.prim h4{font-size:14.5px;color:var(--head);margin-bottom:4px}
+.prim p{font-size:13px;margin:0;color:var(--ink)}
+.prim .maps{font-family:var(--mono);font-size:11px;color:var(--blue-soft);margin-top:9px}
+
+/* tables */
+.tablewrap{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:680px}
+th,td{text-align:left;padding:12px 14px;vertical-align:top;border-bottom:1px solid var(--line)}
+thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);background:var(--bg-card)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--bg-card-hi)}
+.name{font-weight:700;color:var(--blue);font-size:14px}
+.what{color:var(--ink);font-size:13px}
+.venue{font-family:var(--mono);font-size:12px;color:var(--ink);white-space:nowrap}
+.tag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 8px;border-radius:5px;white-space:nowrap;margin-top:6px}
+.t-sub{background:rgba(95,209,122,.16);color:var(--green)}
+.t-prep{background:rgba(110,168,255,.16);color:var(--blue)}
+.t-plan{background:rgba(240,194,90,.16);color:var(--amber)}
+.t-prop{background:rgba(199,155,255,.16);color:var(--purple)}
+.t-redir{background:rgba(255,154,143,.18);color:var(--rose)}
+
+.note{border:1px solid var(--line-soft);border-radius:12px;background:var(--bg-card);padding:15px 18px;margin-top:16px}
+.note .h{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.reads{margin-top:14px}
+.read{padding:10px 0;border-bottom:1px solid var(--line)}
+.read:last-child{border-bottom:none}
+.read .t{color:var(--head);font-weight:600;font-size:14px}
+.read .v{font-family:var(--mono);font-size:11.5px;color:var(--blue);margin-top:2px}
+.read .d{font-size:13px;color:var(--ink);margin-top:3px;max-width:78ch}
+.cite{margin-top:18px;border:1px solid var(--line-soft);border-radius:12px;background:#06090e;padding:14px 18px}
+.cite .h{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-bottom:6px}
+.cite code{font-family:var(--mono);font-size:12.5px;color:var(--ink);line-height:1.6;display:block;white-space:pre-wrap}
+
+footer{padding:44px var(--pad) 80px;max-width:var(--max);margin:0 auto;border-top:1px solid var(--line);font-size:13px;color:var(--ink)}
+footer a{color:var(--blue)}
+.fineprint{margin-top:14px;color:var(--mute);font-size:12px}
+@media(max-width:640px){ table{font-size:12px} nav.topbar{gap:14px} }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4M99RGCCZP"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4M99RGCCZP');</script>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="AgenticStack: Systems for Agentic AI | Hannah B. Pasandi" />
+<meta property="og:description" content="A control plane for deployable AI agents: plan-level accounting, reliability-budgeted scheduling, honest routing, measured evaluation, certified actions." />
+<meta property="og:image" content="https://hanabhp.github.io/assets/og-card.png" />
+<meta name="twitter:card" content="summary_large_image" />
+</head>
+<body>
+
+<nav class="topbar">
+  <span class="mark"><span class="pglogo" title="AgenticStack" style="display:inline-flex;width:22px;height:22px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AgenticStack logo" style="width:100%;height:100%"><title>AgenticStack</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#8957e5" fill-opacity="0.10" stroke="#8957e5" stroke-width="1.6"/><rect x="9" y="27" width="26" height="7" rx="2" fill="none" stroke="#8957e5" stroke-width="2"/><rect x="12" y="18" width="20" height="7" rx="2" fill="none" stroke="#8957e5" stroke-width="2" opacity="0.7"/><rect x="15" y="9" width="14" height="7" rx="2" fill="#8957e5" fill-opacity="0.25" stroke="#8957e5" stroke-width="2"/></svg></span>AgenticStack<span class="dot">.</span></span>
+  <span class="links">
+    <a href="#area">the area</a>
+    <a href="#demo">demo</a>
+    <a href="#arch">architecture</a>
+    <a href="#prims">primitives</a>
+    <a href="#serving">serving</a>
+    <a href="#measure">measurement</a>
+    <a href="#net">networked</a>
+    <a href="#privacy">privacy</a>
+    <a href="#proposed">proposed</a>
+    <a href="#reading">landscape</a>
+  </span>
+  <a class="home" href="index.html">home</a>
+</nav>
+
+<header class="hero">
+  <div class="brand"><span class="pglogo" title="AgenticStack" style="display:inline-flex;width:40px;height:40px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AgenticStack logo" style="width:100%;height:100%"><title>AgenticStack</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#8957e5" fill-opacity="0.10" stroke="#8957e5" stroke-width="1.6"/><rect x="9" y="27" width="26" height="7" rx="2" fill="none" stroke="#8957e5" stroke-width="2"/><rect x="12" y="18" width="20" height="7" rx="2" fill="none" stroke="#8957e5" stroke-width="2" opacity="0.7"/><rect x="15" y="9" width="14" height="7" rx="2" fill="#8957e5" fill-opacity="0.25" stroke="#8957e5" stroke-width="2"/></svg></span>AgenticStack<span class="dot">.</span></div>
+  <div class="tagline">network systems and measurement for deployable agents</div>
+  <div class="byline">a research agenda led by <b>Hannah B. Pasandi</b> &middot; Scientist, UC Berkeley Sky Computing Lab</div>
+  <div style="margin-top:22px;border:1px solid #2a3646;border-left:3px solid #6ea8ff;border-radius:0 12px 12px 0;background:#111722;padding:16px 18px"><span style="font-family:'JetBrains Mono',SF Mono,Menlo,monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6ea8ff">in plain terms</span><p style="margin:8px 0 0;color:#eef2f7;font-size:14.5px;line-height:1.6;max-width:76ch">An AI agent finishes one task by making many model calls behind the scenes, but the networks, schedulers, and cost accounting underneath were all built for a single call at a time. AgenticStack first measures what agent workloads actually do on the network, then builds the serving, reliability, and safety layers that make them dependable in production. Each project below is one piece of that stack.</p></div>
+
+  <div class="thesis">
+    <div class="eyebrow">the agenda</div>
+    <h2>Agentic AI raised the unit of computation from the call to the plan. The networks, schedulers, and accounting beneath agents still see single calls. AgenticStack raises the systems and the measurement to match.</h2>
+    <p>AgenticStack is a network-systems and measurement agenda for deployable agents: it measures what agent workloads do on the wire, then builds the control plane that makes them reliable. Measurement first, mechanism second. Each project below is one primitive in that stack. The pattern behind them, in the spirit of Specula, is that every AI-generated or AI-consumed signal in production needs a systems contract: a fidelity contract for generated code, a reliability contract for verifier signals, a telemetry contract for traces, and a safety contract for control actions.</p>
+    <div class="one">expose autonomy as policy, enforce trust as mechanism.</div>
+  </div>
+</header>
+
+<section id="area">
+  <div class="eyebrow">the area</div>
+  <h2 class="s">Network systems and measurement for deployable agents</h2>
+  <p>Work on agents and networks tends to sit in one of two places. One treats the network as the medium <strong>between</strong> agents, an ecosystem for autonomous agents to discover and coordinate; this is largely a 6G and wireless vision (AgentNet, SANNet, agentic cores). The other puts agents <strong>in charge of running</strong> the network: agentic NetOps. This agenda is a third thing, and a less crowded one: the network-systems and measurement view of the agent workloads themselves.</p>
+  <p>It treats those workloads as the object of study: how to serve and schedule <em>plans</em> rather than calls, and what contracts the data plane needs to keep plan-level autonomy reliable. The tradition is measurement-driven systems work in the style of SIGCOMM, NSDI, SoCC, and SOSP, not a vision paper. The landscape at the end places this lane against its neighbors.</p>
+</section>
+
+<section id="demo">
+  <div class="eyebrow">the shift</div>
+  <h2 class="s">One workflow, two views</h2>
+  <p>An operator who sees only model calls cannot account for an agent. The same workflow looks like noise at the call level and like a budgeted unit at the plan level. AgenticStack makes the plan the visible object. Numbers are illustrative.</p>
+  <div class="demo">
+    <div class="tabs">
+      <button class="on" onclick="asTab(event,'call')">call view (today)</button>
+      <button onclick="asTab(event,'plan')">plan view (AgenticStack)</button>
+    </div>
+    <div class="screen">
+      <div class="panel on" id="call"><pre><span class="dim">GET /v1/messages</span>  gen     312 tok   <span class="dim">req a91f</span>
+<span class="dim">GET /v1/messages</span>  gen     880 tok   <span class="dim">req a920</span>
+<span class="dim">GET /v1/messages</span>  verify  140 tok   <span class="dim">req a921</span>
+<span class="dim">GET /v1/messages</span>  retry   880 tok   <span class="dim">req a922</span>
+<span class="dim">GET /v1/messages</span>  verify  140 tok   <span class="dim">req a923</span>
+<span class="dim">GET /v1/messages</span>  judge   205 tok   <span class="dim">req a924</span>
+<span class="dim">GET /v1/messages</span>  gen     410 tok   <span class="dim">req a925  (abandoned step)</span>
+<span class="no">no plan id . no workflow budget . abandoned work is invisible</span> <span class="dim">_</span></pre></div>
+      <div class="panel" id="plan"><pre><span class="cmd">plan 7c2e  "summarize and file the contract"</span>
+  <span class="ok">stage</span> generate     x2     1192 tok
+  <span class="ok">stage</span> verify       x2      280 tok    <span class="amb">reliability 0.86, defer if &lt; 0.80</span>
+  <span class="ok">stage</span> retry        x1      880 tok
+  <span class="ok">stage</span> judge        x1      205 tok
+  <span class="no">stage</span> abandoned    x1      410 tok    <span class="no">charged to plan, not hidden</span>
+  <span class="dim">-----------------------------------------</span>
+  <span class="ok">workflow total 2967 tok . budget 3500 . reliability 0.86 . status COMPLETE</span> <span class="dim">_</span></pre></div>
+    </div>
+    <div class="cap">illustrative trace, not measured results</div>
+  </div>
+</section>
+
+<section id="arch">
+  <div class="eyebrow">architecture</div>
+  <h2 class="s">Four layers, one visible unit</h2>
+  <p>The agent runtime stays free to plan and act. The control plane is where trust is enforced: it owns the plan ID, the workflow budget, the reliability interval, the certificate, and the event log, and it sits over the serving and network data plane. Operators read outcomes, not calls.</p>
+  <figure>
+    <svg viewBox="0 0 940 430" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:var(--mono)">
+      <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8fb1e6"/></marker></defs>
+      <!-- layer 1 -->
+      <rect x="40" y="20" width="860" height="78" rx="12" fill="#6ea8ff" fill-opacity="0.07" stroke="#1f6feb"/>
+      <text x="60" y="48" fill="#6ea8ff" font-size="14" font-weight="700">Agent runtime</text>
+      <text x="60" y="70" fill="#eef2f7" font-size="12">plans &#183; reasoning traces &#183; tool calls &#183; retries &#183; verify and judge</text>
+      <text x="60" y="88" fill="#8fb1e6" font-size="11">free to plan and act</text>
+      <!-- layer 2 -->
+      <rect x="40" y="116" width="860" height="92" rx="12" fill="#5fd17a" fill-opacity="0.09" stroke="#2ea043"/>
+      <text x="60" y="144" fill="#5fd17a" font-size="14" font-weight="700">AgenticStack control plane</text>
+      <text x="60" y="166" fill="#eef2f7" font-size="12">plan ID &#183; workflow budget &#183; reliability interval &#183; certificate &#183; event log</text>
+      <text x="60" y="190" fill="#f0c25a" font-size="11.5">trust enforced here: accounting, budgets, contracts, gates, rollback</text>
+      <!-- layer 3 -->
+      <rect x="40" y="226" width="860" height="78" rx="12" fill="#c79bff" fill-opacity="0.08" stroke="#8957e5"/>
+      <text x="60" y="254" fill="#c79bff" font-size="14" font-weight="700">Serving &amp; network data plane</text>
+      <text x="60" y="276" fill="#eef2f7" font-size="12">gateway &#183; router &#183; edge / device / satellite tiers &#183; verifier tier &#183; protocol deployment</text>
+      <text x="60" y="294" fill="#8fb1e6" font-size="11">moves the work under latency, energy, carbon, quota, availability</text>
+      <!-- layer 4 -->
+      <rect x="40" y="322" width="860" height="70" rx="12" fill="#f0c25a" fill-opacity="0.08" stroke="#bb8009"/>
+      <text x="60" y="350" fill="#f0c25a" font-size="14" font-weight="700">Operator-visible outcomes</text>
+      <text x="60" y="372" fill="#eef2f7" font-size="12">reliable completion &#183; safety &#183; cost &#183; latency &#183; privacy &#183; carbon</text>
+      <!-- arrows -->
+      <line x1="470" y1="98" x2="470" y2="114" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#a)"/>
+      <line x1="470" y1="208" x2="470" y2="224" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#a)"/>
+      <line x1="470" y1="304" x2="470" y2="320" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#a)"/>
+    </svg>
+    <figcaption>Fig 1 - the AgenticStack control plane between an agent runtime and the serving / network data plane.</figcaption>
+  </figure>
+</section>
+
+<section id="prims">
+  <div class="eyebrow">primitives</div>
+  <h2 class="s">Each paper is one primitive in the stack</h2>
+  <p>The agenda is not a list of unrelated systems. Each project supplies one contract or mechanism the control plane needs.</p>
+  <div class="prims">
+    <div class="prim"><div class="k">accounting</div><h4>Plan-level accounting</h4><p>Charge generator, verifier, retry, judge, and abandoned steps to the plan that caused them, not to individual calls.</p><div class="maps">&rarr; Single-Call Fallacy</div></div>
+    <div class="prim"><div class="k">budget</div><h4>Reliability budget</h4><p>A scheduler that trades single-request latency for workflow reliability under a bounded budget.</p><div class="maps">&rarr; Patient Packets</div></div>
+    <div class="prim"><div class="k">prefetch</div><h4>Plan-aware prefetch</h4><p>Read the agent's plan while generation is in flight and stage state before the next step starts.</p><div class="maps">&rarr; PALSE</div></div>
+    <div class="prim"><div class="k">contract</div><h4>Reliability contract</h4><p>The router consumes a reliability vector, a verdict interval, and a defer action instead of trusting a verdict as truth.</p><div class="maps">&rarr; <a href="confine.html">Confine</a></div></div>
+    <div class="prim"><div class="k">license</div><h4>Deployment license</h4><p>An untrusted proposer plus a small certificate that decides what may run; agents never control unsafe systems directly.</p><div class="maps">&rarr; Vouch &middot; MAC-Agent &middot; Loom</div></div>
+    <div class="prim"><div class="k">telemetry</div><h4>Telemetry &amp; reasoning tax</h4><p>Expose the boundary between hidden reasoning tokens and user-visible tokens so schedulers can see test-time compute.</p><div class="maps">&rarr; TraceProbe &middot; Reasoning Tax</div></div>
+    <div class="prim"><div class="k">privacy gate</div><h4>Action-level privacy gate</h4><p>Contextual-integrity gates on the agent's actions: tool calls, memory, paralinguistic inference.</p><div class="maps">&rarr; Voice-agent privacy papers</div></div>
+  </div>
+</section>
+
+<section id="serving">
+  <div class="eyebrow">serving &amp; systems</div>
+  <h2 class="s">Inference runtime and OS-level work</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th style="width:24%">System / title</th><th style="width:20%">Venue</th><th>What it is</th></tr></thead>
+    <tbody>
+      <tr><td class="name"><span class="pglogo" title="PALSE" style="display:inline-flex;width:20px;height:20px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="PALSE logo" style="width:100%;height:100%"><title>PALSE</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#8957e5" fill-opacity="0.10" stroke="#8957e5" stroke-width="1.6"/><path d="M10 12 l10 10 l-10 10 z M24 12 l10 10 l-10 10 z" fill="#8957e5" fill-opacity="0.85"/></svg></span>PALSE: Plan-Aware Prefetch for Agentic LLM Serving at the Edge<br><span class="tag t-sub">submitted</span></td><td><span class="venue">IEEE/ACM SEC '26</span></td><td class="what">Edge serving middleware that reads the agent's reasoning trace as a prefetch oracle: plan reader, plan-conditioned prefetch, speculative coherence. Reports 90.5% SLO vs 74.1% for the strongest reactive baseline at 12 concurrent agents.</td></tr>
+      <tr><td class="name"><span class="pglogo" title="SCF" style="display:inline-flex;width:20px;height:20px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SCF logo" style="width:100%;height:100%"><title>SCF</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#8957e5" fill-opacity="0.10" stroke="#8957e5" stroke-width="1.6"/><path d="M10 12 h16 M10 18 h16 M10 24 h16 M10 30 h10" stroke="#8957e5" stroke-width="2"/><path d="M31 10 q5 1 5 6 v3 q0 3 3 3 q-3 0 -3 3 v3 q0 5 -5 6" fill="none" stroke="#8957e5" stroke-width="2"/></svg></span>SCF: Single-Call Fallacy (OS framing)<br><span class="tag t-sub">submission</span></td><td><span class="venue">AgenticOS @ SOSP '26</span></td><td class="what">Plan-level OS accounting for agents on MAST traces. Per-call accounting is blind to plan structure; the OS should expose the plan, not the call.</td></tr>
+      <tr><td class="name"><span class="pglogo" title="SkyCascade" style="display:inline-flex;width:20px;height:20px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SkyCascade logo" style="width:100%;height:100%"><title>SkyCascade</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#1f6feb" fill-opacity="0.10" stroke="#1f6feb" stroke-width="1.6"/><path d="M8 14 h18 l6 6 M14 22 h18 l6 6" fill="none" stroke="#1f6feb" stroke-width="2.2"/><circle cx="8" cy="14" r="2.6" fill="#1f6feb"/><circle cx="14" cy="22" r="2.6" fill="#1f6feb"/><circle cx="20" cy="30" r="2.6" fill="#1f6feb"/><path d="M20 30 h14" stroke="#1f6feb" stroke-width="2.2"/></svg></span>SkyCascade<br><span class="tag t-plan">in planning</span></td><td><span class="venue">MobiArch</span></td><td class="what">Device-edge-cloud speculative agent execution; cross-tier speculative agents for mobile LLM serving.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="measure">
+  <div class="eyebrow">measurement &amp; reliability</div>
+  <h2 class="s">What deployed agents actually do, measured</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th style="width:24%">System / title</th><th style="width:20%">Venue</th><th>What it is</th></tr></thead>
+    <tbody>
+      <tr><td class="name"><a href="confine.html">Confine</a><br><span class="tag t-sub">submitted</span></td><td><span class="venue">HotNets '26</span></td><td class="what">MAST annotator-agreement measurement plus a reliability-contract routing API (per-mode reliability vector, verdict interval, defer action) for LLM cascades. <a href="confine.html">Project page &rarr;</a></td></tr>
+      <tr><td class="name"><span class="pglogo" title="Wire" style="display:inline-flex;width:20px;height:20px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wire logo" style="width:100%;height:100%"><title>Wire</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#8fb1e6" fill-opacity="0.10" stroke="#8fb1e6" stroke-width="1.6"/><circle cx="10" cy="22" r="3" fill="#8fb1e6"/><circle cx="22" cy="22" r="3" fill="#8fb1e6"/><circle cx="34" cy="22" r="3" fill="#8fb1e6"/><path d="M13 22 h6 M25 22 h6" stroke="#8fb1e6" stroke-width="2"/></svg></span>Wire / Three LLMs<br><span class="tag t-plan">in planning</span></td><td><span class="venue">SIGMETRICS '27 (Fall R2)</span></td><td class="what">Packet-level measurement separating chat vs inference-serving vs agentic traffic. Three workloads, different on every network metric examined.</td></tr>
+      <tr><td class="name"><span class="pglogo" title="Gauge" style="display:inline-flex;width:20px;height:20px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gauge logo" style="width:100%;height:100%"><title>Gauge</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#e5534b" fill-opacity="0.10" stroke="#e5534b" stroke-width="1.6"/><path d="M8 30 a14 14 0 0 1 28 0" fill="none" stroke="#e5534b" stroke-width="2.4"/><path d="M22 30 L30 17" stroke="#e5534b" stroke-width="2.4" stroke-linecap="round"/><circle cx="22" cy="30" r="2.6" fill="#e5534b"/></svg></span><a href="gauge.html">Gauge</a><br><span class="tag t-sub">in submission</span></td><td><span class="venue">In submission</span></td><td class="what">Failure and safety measurement of deployed agents.</td></tr>
+    <tr><td class="name"><span class="pglogo" title="Reasoning Tax + TraceProbe" style="display:inline-flex;width:20px;height:20px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Reasoning Tax logo" style="width:100%;height:100%"><title>Reasoning Tax + TraceProbe</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#2ea043" fill-opacity="0.10" stroke="#2ea043" stroke-width="1.6"/><path d="M7 22 h20" stroke="#2ea043" stroke-width="2.6" stroke-dasharray="4 3"/><path d="M30 22 h7 m-3 -3 l3 3 l-3 3" stroke="#2ea043" stroke-width="2.6" fill="none"/><path d="M28 15 v14" stroke="#2ea043" stroke-width="2"/><path d="M13 33 q4 -5 9 -3" fill="none" stroke="#2ea043" stroke-width="1.6"/></svg></span>Reasoning Tax + TraceProbe<br><span class="tag t-sub">accepted</span></td><td><span class="venue">HotCarbon '26</span></td><td class="what">The hidden reasoning trace carries 87.1% of output tokens and 78.4% of operational carbon per agent task; a trace-length budget removes 56 to 71% of carbon at a 2.3-point accuracy cost. TraceProbe, a 90-line vLLM patch, exposes the trace-to-answer split in per-call telemetry at under 0.2% overhead.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="net">
+  <div class="eyebrow">networked &amp; radio-edge agents</div>
+  <h2 class="s">Agents over real links, and protocol synthesis</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th style="width:24%">System / title</th><th style="width:20%">Venue</th><th>What it is</th></tr></thead>
+    <tbody>
+      <tr><td class="name"><span class="pglogo" title="Patient Packets" style="display:inline-flex;width:20px;height:20px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Patient Packets logo" style="width:100%;height:100%"><title>Patient Packets</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#2ea043" fill-opacity="0.10" stroke="#2ea043" stroke-width="1.6"/><path d="M13 8 h18 M13 36 h18 M14 8 c0 9 16 9 16 14 c0 5 -16 5 -16 14 M30 8 c0 9 -16 9 -16 14 c0 5 16 5 16 14" fill="none" stroke="#2ea043" stroke-width="2"/></svg></span><a href="patient.html">Patient Packets</a><br><span class="tag t-plan">in planning</span></td><td><span class="venue">SoCC '26 (R2)</span></td><td class="what">Reliability-budgeted scheduler at the agent gateway: spends an application-declared byte budget for verification, retry, and judging with three rules and a (1+&epsilon;) bound; trades single-request latency for workflow reliability. <a href="patient.html">Project page &rarr;</a></td></tr>
+      <tr><td class="name"><span class="pglogo" title="Old Models" style="display:inline-flex;width:20px;height:20px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Old Models logo" style="width:100%;height:100%"><title>Old Models</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#8fb1e6" fill-opacity="0.10" stroke="#8fb1e6" stroke-width="1.6"/><path d="M8 22 h10 M18 22 L30 12 M18 22 L30 32" fill="none" stroke="#8fb1e6" stroke-width="2.2"/><path d="M30 12 h6 m0 0 l-3 -3 m3 3 l-3 3" stroke="#8fb1e6" stroke-width="1.8" fill="none"/><path d="M30 32 h6" stroke="#8fb1e6" stroke-width="1.8" stroke-dasharray="3 2"/></svg></span>Old Models / VarRouter<br><span class="tag t-plan">in planning</span></td><td><span class="venue">MLSys '27</span></td><td class="what">Multi-version LLM coexistence plus a version-aware routing primitive.</td></tr>
+      <tr><td class="name"><span class="pglogo" title="MAC-Agent" style="display:inline-flex;width:20px;height:20px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MAC-Agent logo" style="width:100%;height:100%"><title>MAC-Agent</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#bb8009" fill-opacity="0.10" stroke="#bb8009" stroke-width="1.6"/><path d="M9 13 h26 M9 22 h26 M9 31 h26" stroke="#bb8009" stroke-width="2"/><path d="M15 8 v28 M29 8 v28" stroke="#bb8009" stroke-width="2" opacity="0.6"/><circle cx="22" cy="22" r="2.4" fill="#bb8009"/></svg></span>MAC-Agent<br><span class="tag t-sub">submission</span></td><td><span class="venue">IEEE ICNP</span></td><td class="what">Safe MAC-protocol synthesis with an R0 epidemic-threshold safety certificate. Agentic modules BLOCKMINE (spec extraction) and DRIFTREASON (bounded drift diagnosis) around a masked tabular-RL core.</td></tr>
+      <tr><td class="name"><span class="pglogo" title="Loom" style="display:inline-flex;width:20px;height:20px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Loom logo" style="width:100%;height:100%"><title>Loom</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#bb8009" fill-opacity="0.10" stroke="#bb8009" stroke-width="1.6"/><path d="M9 13 h26 M9 22 h26 M9 31 h26" stroke="#bb8009" stroke-width="2"/><path d="M15 8 v28 M29 8 v28" stroke="#bb8009" stroke-width="2" opacity="0.6"/><circle cx="22" cy="22" r="2.4" fill="#bb8009"/></svg></span>Loom<br><span class="tag t-sub">in submission</span></td><td><span class="venue">In submission</span></td><td class="what">LLM agent for MAC-layer control.</td></tr>
+      <tr><td class="name"><span class="pglogo" title="Cardinal" style="display:inline-flex;width:20px;height:20px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cardinal logo" style="width:100%;height:100%"><title>Cardinal</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#1f6feb" fill-opacity="0.10" stroke="#1f6feb" stroke-width="1.6"/><path d="M22 34 V16 M22 16 l-7 7 M22 16 l7 7" stroke="#1f6feb" stroke-width="2.2" fill="none"/><path d="M12 12 q10 -8 20 0" fill="none" stroke="#1f6feb" stroke-width="1.8"/></svg></span>Cardinal<br><span class="tag t-plan">in planning</span></td><td><span class="venue">SIGCOMM</span></td><td class="what">LLM-driven MAC protocol synthesis under an R0 stability certificate. The dense-MAC depth anchor of the protocol-synthesis line.</td></tr>
+      <tr><td class="name"><span class="pglogo" title="Heddle" style="display:inline-flex;width:20px;height:20px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Heddle logo" style="width:100%;height:100%"><title>Heddle</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#bb8009" fill-opacity="0.10" stroke="#bb8009" stroke-width="1.6"/><path d="M10 10 v24 M34 10 v24" stroke="#bb8009" stroke-width="2.4"/><path d="M10 16 h24 M10 28 h24" stroke="#bb8009" stroke-width="1.6" opacity="0.6"/><circle cx="22" cy="22" r="3" fill="#bb8009"/></svg></span>Heddle<br><span class="tag t-plan">program, 3 papers</span></td><td><span class="venue">SIGCOMM line</span></td><td class="what">Agentic protocol-synthesis framework spanning Wi-Fi, 5G, NTN; a multi-paper program with an open block-level testbed.</td></tr>
+      <tr><td class="name"><span class="pglogo" title="OrbitMesh" style="display:inline-flex;width:20px;height:20px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="OrbitMesh logo" style="width:100%;height:100%"><title>OrbitMesh</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#8957e5" fill-opacity="0.10" stroke="#8957e5" stroke-width="1.6"/><ellipse cx="22" cy="22" rx="15" ry="6.5" fill="none" stroke="#8957e5" stroke-width="1.8"/><ellipse cx="22" cy="22" rx="15" ry="6.5" fill="none" stroke="#8957e5" stroke-width="1.8" transform="rotate(60 22 22)"/><ellipse cx="22" cy="22" rx="15" ry="6.5" fill="none" stroke="#8957e5" stroke-width="1.8" transform="rotate(120 22 22)"/><circle cx="22" cy="22" r="2.6" fill="#8957e5"/></svg></span>OrbitMesh<br><span class="tag t-plan">in planning</span></td><td><span class="venue"></span></td><td class="what">Four-tier device / cellular / cloud / direct-to-cell-satellite mobile LLM serving.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="privacy">
+  <div class="eyebrow">privacy &amp; safety of agents</div>
+  <h2 class="s">Threat models, leakage, and defenses</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th style="width:24%">System / title</th><th style="width:20%">Venue</th><th>What it is</th></tr></thead>
+    <tbody>
+      <tr><td class="name"><span class="pglogo" title="Beyond the Signal" style="display:inline-flex;width:20px;height:20px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Beyond the Signal logo" style="width:100%;height:100%"><title>Beyond the Signal</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#2ea043" fill-opacity="0.10" stroke="#2ea043" stroke-width="1.6"/><path d="M18 32 a4.5 4.5 0 0 0 9 0 c0 -4.5 4.5 -5.5 4.5 -10.5 a9 9 0 0 0 -18 0" fill="none" stroke="#2ea043" stroke-width="2"/><path d="M8 15 l6 6 m0 -6 l-6 6" stroke="#2ea043" stroke-width="1.8"/></svg></span>Beyond the Signal: Privacy in Agentic Voice Assistants<br><span class="tag t-sub">submission</span></td><td><span class="venue">SPSC '26 (short)</span></td><td class="what">Frames the four leakage channels that open once a voice assistant becomes an agent that plans, calls tools, and remembers across speakers.</td></tr>
+      <tr><td class="name"><span class="pglogo" title="Acoustic Context Injection" style="display:inline-flex;width:20px;height:20px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Acoustic Context Injection logo" style="width:100%;height:100%"><title>Acoustic Context Injection</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#e5534b" fill-opacity="0.10" stroke="#e5534b" stroke-width="1.6"/><rect x="18" y="8" width="8" height="14" rx="4" fill="none" stroke="#e5534b" stroke-width="2"/><path d="M13 18 a9 9 0 0 0 18 0 M22 27 v6" fill="none" stroke="#e5534b" stroke-width="2"/><path d="M30 26 l8 3 v4 c0 4 -3 6 -8 8 c-5 -2 -8 -4 -8 -8 v-4 z" fill="#0a0e14" stroke="#e5534b" stroke-width="1.8"/></svg></span>Acoustic Context Injection<br><span class="tag t-sub">submission</span></td><td><span class="venue">SPSC '26 (long)</span></td><td class="what">Attack plus the CI-Gate defense built around the agent's actions: tool calls, memory, paralinguistic inference. Systems version aimed next at PoPETs '27 and USENIX Security '27.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="proposed">
+  <div class="eyebrow">proposed, not yet written</div>
+  <h2 class="s">Ideas with a target</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th style="width:24%">Idea</th><th style="width:20%">Venue</th><th>What it is</th></tr></thead>
+    <tbody>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="reading">
+  <div class="eyebrow">the landscape</div>
+  <h2 class="s">Where this work sits</h2>
+  <p>The sections above are the work itself. The landmarks below place this network-systems and measurement lane against its neighbors, the 6G agent-to-agent vision and the agentic-NetOps line, so the boundary is clear. The page is meant to be read and cited as an entry point to the area.</p>
+
+  <div class="reads">
+    <div class="read"><div class="t">Toward Agentic AI Networking in 6G: A Generative Foundation Model-as-Agent Approach (AgentNet)</div><div class="v">IEEE Communications Magazine, 2025</div><div class="d">The 6G vision of a networking ecosystem for agents to discover, coordinate, and share knowledge. Network as the medium between agents.</div></div>
+    <div class="read"><div class="t">SANNet: A Semantic-Aware Agentic AI Networking Framework for Multi-Agent Cross-Layer Coordination</div><div class="v">2025</div><div class="d">Studies agentic systems from the communication-networking perspective; notes most agent work ignores the networking architecture.</div></div>
+    <div class="read"><div class="t">The Agentic-AI Core (A-Core): an AI-empowered core network for next-generation telecom</div><div class="v">Engineering / ICC Workshops, 2025</div><div class="d">A mission-oriented agentic core network. The telecom-infrastructure framing.</div></div>
+    <div class="read"><div class="t"><a href="https://os-for-agent.github.io/">AgenticOS: Operating Systems Design for AI Agents</a></div><div class="v">Workshop @ SOSP 2026</div><div class="d">OS primitives, isolation, scheduling, and observability for agent workloads. The OS-side neighbor.</div></div>
+    <div class="read"><div class="t"><a href="https://conferences.sigcomm.org/sigcomm/2026/naic/">NAIC: Networks for AI Computing</a></div><div class="v">Workshop @ SIGCOMM 2026</div><div class="d">Networks for training clusters: topology, routing, synchronization. Adjacent, but training-side rather than agent-workload-side.</div></div>
+    <div class="read"><div class="t">The Future of NetOps Is Agentic</div><div class="v">Gartner, 2026 (industry)</div><div class="d">Agents that operate the network. The NetOps framing, distinct from measuring and serving agent workloads.</div></div>
+  </div>
+
+  <div class="cite">
+    <div class="h">cite this page</div>
+    <code>Hannah B. Pasandi. "AgenticStack: Network Systems and Measurement for Deployable Agents."
+hanabhp.github.io/agentic_ai.html, 2026.</code>
+  </div>
+</section>
+
+<footer>
+  <div class="org">AgenticStack is a research agenda led by <b>Hannah B. Pasandi</b>.</div>
+  <p style="margin-top:6px">Scientist, UC Berkeley Sky Computing Lab &middot; <a href="mailto:h.pasandi@berkeley.edu">h.pasandi@berkeley.edu</a> &middot; <a href="index.html">home</a></p>
+  <p class="fineprint">Status legend: submitted, submission (preparing), in planning, proposed. One venue per paper; where a paper listed two venues, only the immediate target is shown. Verify each deadline against the current call. Taxonomy follows the control-plane / data-plane and runtime usage standard in systems and networking.</p>
+</footer>
+
+<script>
+function asRun(panel){
+  var pre=panel.querySelector('pre'); if(!pre) return;
+  if(!pre.dataset.raw){ pre.dataset.raw=pre.innerHTML; }
+  pre._run=(pre._run||0)+1; var tok=pre._run;
+  var lines=pre.dataset.raw.split('\n');
+  pre.innerHTML=lines.map(function(l){return '<span class="termline">'+(l.length?l:' ')+'</span>';}).join('');
+  pre.querySelectorAll('.termline').forEach(function(s,i){ setTimeout(function(){ if(pre._run===tok) s.classList.add('show'); }, i*70); });
+}
+function asTab(e,id){
+  var demo=e.target.closest('.demo');
+  demo.querySelectorAll('.tabs button').forEach(function(b){b.classList.remove('on');});
+  demo.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+  e.target.classList.add('on');
+  var el=demo.querySelector('#'+id); if(el){ el.classList.add('on'); asRun(el); }
+}
+document.addEventListener('DOMContentLoaded',function(){ document.querySelectorAll('.demo .panel.on').forEach(asRun); });
+</script>
+</body>
+</html>

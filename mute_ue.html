@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mute the UE: A Control-Plane Primitive for UE-Initiated Reachability Muting | Hannah B. Pasandi</title>
+<meta name="description" content="The UE as a peer with agency over its reachability: a five-byte primitive that cuts standby drain and signaling while paging loss stays within budget." />
+<meta name="author" content="Hannah B. Pasandi" />
+<style>
+:root{
+  --bg:#0a0e14; --bg-soft:#0e131c; --bg-card:#111722; --bg-card-hi:#16202e;
+  --line:#1e2734; --line-soft:#2a3646;
+  --ink:#eef2f7; --head:#ffffff; --mute:#8fb1e6;
+  --blue:#6ea8ff; --blue-soft:#9cc0ff;
+  --green:#5fd17a; --amber:#f0c25a; --purple:#c79bff; --rose:#ff9a8f;
+  --max:960px; --pad:clamp(16px,4vw,34px);
+  --mono:"JetBrains Mono","Fira Code","SF Mono","Menlo",monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-size:15px;line-height:1.65;color:var(--ink);background:var(--bg);
+  background-image:radial-gradient(circle at 88% -5%,rgba(199,155,255,0.08),transparent 55%);
+  -webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:var(--blue);text-decoration:none;transition:color .12s}
+a:hover{color:var(--blue-soft);text-decoration:underline;text-underline-offset:3px}
+
+nav.topbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:22px;
+  padding:12px var(--pad);background:rgba(10,14,20,0.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav.topbar .mark{font-family:var(--mono);font-weight:700;font-size:17px;letter-spacing:-.03em;color:var(--head)}
+nav.topbar .mark .dot{color:var(--purple)}
+nav.topbar .links{display:flex;flex-wrap:wrap;gap:8px 18px;overflow:visible;font-family:var(--mono);font-size:12.5px;scrollbar-width:thin}
+nav.topbar .links::-webkit-scrollbar{height:0}
+nav.topbar .links a{color:var(--blue-soft);white-space:nowrap}
+nav.topbar .links a:hover{color:var(--head);text-decoration:none}
+nav.topbar .home{margin-left:auto;color:var(--mute)}
+
+header.hero{padding:48px var(--pad) 20px;max-width:var(--max);margin:0 auto;text-align:center}
+.brand{font-family:Cambria,Georgia,'Times New Roman',serif;font-size:clamp(36px,8vw,50px);font-weight:700;letter-spacing:-.045em;line-height:1;color:var(--head);margin-bottom:8px}
+.brand .dot{color:var(--purple)}
+.tagline{font-family:var(--mono);font-size:13.5px;color:var(--blue-soft);margin-bottom:8px}
+.byline{font-size:14px;color:var(--ink)} .byline b{color:var(--head)}
+.hlinks{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px;font-family:var(--mono);font-size:12.5px;justify-content:center}
+.hlinks a{color:var(--blue);border:1px solid var(--line-soft);border-radius:7px;padding:5px 11px}
+.hlinks a:hover{color:var(--head);border-color:var(--blue);text-decoration:none}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;font-family:var(--mono);font-size:11px}
+.tags span{color:var(--blue-soft);border:1px solid var(--line);border-radius:5px;padding:2px 8px}
+
+.thesis{margin-top:26px;border:1px solid var(--line-soft);border-left:3px solid var(--purple);border-radius:0 14px 14px 0;background:var(--bg-card);padding:22px 24px}
+.thesis .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--purple);margin-bottom:9px;letter-spacing:.22em;text-transform:uppercase;font-size:11.5px}
+.thesis h2{font-size:clamp(18px,3vw,24px);line-height:1.34;font-weight:600;color:var(--head)}
+.thesis p{margin-top:11px;color:var(--ink);max-width:74ch}
+.thesis .one{font-family:var(--mono);color:var(--amber);font-size:13.5px;margin-top:13px}
+
+section{padding:42px var(--pad);max-width:var(--max);margin:0 auto;border-top:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-bottom:10px}
+h2.s{font-size:clamp(20px,3vw,27px);font-weight:600;letter-spacing:-.02em;margin-bottom:6px;color:var(--head)}
+p{margin:9px 0;color:var(--ink);max-width:74ch}
+p strong{color:var(--head)}
+figure{margin:22px 0}
+figcaption{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-top:8px}
+.b{display:block;padding-left:18px;position:relative;margin:8px 0;color:var(--ink);font-size:14px;max-width:74ch}
+.b:before{content:"\2022";position:absolute;left:0;color:var(--purple)}
+.note{border:1px solid var(--line-soft);border-radius:12px;background:var(--bg-card);padding:15px 18px;margin-top:16px}
+.note .h{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.api{margin-top:16px;border:1px solid var(--line);border-radius:12px;background:#06090e;padding:14px 18px}
+.api pre{margin:0;font-family:var(--mono);font-size:12.5px;line-height:1.7;white-space:pre-wrap;color:var(--ink)}
+.api .k{color:var(--purple)} .api .s{color:var(--green)} .api .c{color:var(--blue-soft)}
+footer{padding:44px var(--pad) 80px;max-width:var(--max);margin:0 auto;border-top:1px solid var(--line);font-size:13px;color:var(--ink)}
+footer a{color:var(--blue)}
+.fineprint{margin-top:14px;color:var(--mute);font-size:12px}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4M99RGCCZP"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4M99RGCCZP');</script>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Mute the UE: A Control-Plane Primitive for UE-Initiated Reachability Muting | Hannah B. Pasandi" />
+<meta property="og:description" content="The UE as a peer with agency over its reachability: a five-byte primitive that cuts standby drain and signaling while paging loss stays within budget." />
+<meta property="og:image" content="https://hanabhp.github.io/assets/og-card.png" />
+<meta name="twitter:card" content="summary_large_image" />
+</head>
+<body>
+<nav class="topbar">
+  <span class="mark"><span class="pglogo" title="Mute the UE" style="display:inline-flex;width:22px;height:22px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mute the UE logo" style="width:100%;height:100%"><title>Mute the UE</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#2ea043" fill-opacity="0.10" stroke="#2ea043" stroke-width="1.6"/><path d="M15 27 v-8 a7 7 0 0 1 14 0 v8 l3 4 H12 z" fill="none" stroke="#2ea043" stroke-width="2.2"/><path d="M19 34 a3 3 0 0 0 6 0" fill="none" stroke="#2ea043" stroke-width="2"/><path d="M9 9 L35 37" stroke="#2ea043" stroke-width="2.6" stroke-linecap="round"/></svg></span>Mute the UE<span class="dot">.</span></span>
+  <span class="links">
+    <a href="#assumption">the assumption</a>
+    <a href="#primitive">the primitive</a>
+    <a href="#family">the family</a>
+  </span>
+  <a class="home" href="thrusts/cellular_and_wireless_privacy.html">&larr; Privacy thrust</a>
+  <a class="home" href="index.html">Hannah B. Pasandi</a>
+</nav>
+
+<header class="hero">
+  <div class="brand"><span class="pglogo" title="Mute the UE" style="display:inline-flex;width:40px;height:40px;vertical-align:-9px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mute the UE logo" style="width:100%;height:100%"><title>Mute the UE</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#2ea043" fill-opacity="0.10" stroke="#2ea043" stroke-width="1.6"/><path d="M15 27 v-8 a7 7 0 0 1 14 0 v8 l3 4 H12 z" fill="none" stroke="#2ea043" stroke-width="2.2"/><path d="M19 34 a3 3 0 0 0 6 0" fill="none" stroke="#2ea043" stroke-width="2"/><path d="M9 9 L35 37" stroke="#2ea043" stroke-width="2.6" stroke-linecap="round"/></svg></span>Mute the UE<span class="dot">.</span></div>
+  <div class="tagline">reachability should be a negotiated schedule, not an obligation</div>
+  <div class="byline">a control-plane primitive for UE-initiated reachability muting &middot; <b>Hannah B. Pasandi</b>, UC Berkeley Sky Computing Lab</div>
+  <div class="pith"><p>Your phone pays real battery to answer every probe the network sends, and the devices trying hardest to save power pay the most. Mute lets the device declare a schedule of silence the network can plan against, five bytes on the wire, with paging loss held inside the operator's budget.</p></div>
+</header>
+
+<main>
+<section id="assumption">
+  <div class="eyebrow">the assumption</div>
+  <h2 class="s">Always-reachable is a tax the wrong devices pay</h2>
+  <p>Cellular protocols assume the UE answers whenever the control plane probes it. Measured on trace data, that assumption accounts for 23 percent of standby drain on the contested device population, and that population is 31 percent of UEs, not a long tail. The devices muting most aggressively today are exactly the ones paying the most.</p>
+</section>
+<section id="primitive">
+  <div class="eyebrow">the primitive</div>
+  <h2 class="s">Let the UE mute itself, on a schedule the network can plan against</h2>
+  <figure><svg viewBox="0 0 940 290" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:var(--mono)"><style>.flow{stroke-dasharray:6 5;animation:fl 1.6s linear infinite}@keyframes fl{to{stroke-dashoffset:-22}}.pulse{animation:pu 2.2s ease-in-out infinite}@keyframes pu{0%,100%{opacity:.5}50%{opacity:1}}@media (prefers-reduced-motion:reduce){.flow,.pulse{animation:none}}</style>
+<defs><marker id="mm" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8fb1e6"/></marker></defs>
+<rect x="30" y="95" width="190" height="90" rx="12" fill="#6ea8ff" fill-opacity="0.08" stroke="#1f6feb"/>
+<text x="125" y="128" fill="#eef2f7" font-size="12" text-anchor="middle">base station</text>
+<text x="125" y="148" fill="#8fb1e6" font-size="10" text-anchor="middle">paging &#183; probes &#183; reports</text>
+<line class="flow" x1="220" y1="120" x2="380" y2="120" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#mm)"/>
+<line class="flow" x1="220" y1="160" x2="380" y2="160" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#mm)"/>
+<rect x="380" y="85" width="170" height="110" rx="12" fill="#2ea043" fill-opacity="0.08" stroke="#2ea043" class="pulse"/>
+<text x="465" y="118" fill="#eef2f7" font-size="12" text-anchor="middle">Mute gate</text>
+<text x="465" y="138" fill="#a9e2bd" font-size="10" text-anchor="middle">1-byte enum + 4-byte hint</text>
+<text x="465" y="158" fill="#a9e2bd" font-size="10" text-anchor="middle">UE-declared schedule</text>
+<line class="flow" x1="550" y1="120" x2="650" y2="120" stroke="#2ea043" stroke-width="1.8" marker-end="url(#mm)"/>
+<line x1="550" y1="160" x2="600" y2="185" stroke="#e5534b" stroke-width="1.8" stroke-dasharray="3 4"/>
+<text x="612" y="200" fill="#f0b5b1" font-size="10">muted, by schedule</text>
+<rect x="650" y="85" width="250" height="70" rx="12" fill="none" stroke="#2ea043"/>
+<text x="775" y="112" fill="#d9f2e6" font-size="11" text-anchor="middle">standby drain recovered</text>
+<text x="775" y="132" fill="#a9e2bd" font-size="10" text-anchor="middle">paging loss held within 0.5%</text>
+<text x="775" y="235" fill="#8fb1e6" font-size="10.5" text-anchor="middle">signaling overhead -12% &#183; base-station radio energy -4% (worst-case mix)</text>
+</svg></figure>
+  <span class="b"><strong>Five bytes.</strong> A one-byte enum plus a four-byte schedule hint, exchanged between UE and serving base station; the paging scheduler plans against the declared mute schedule the way it already plans everything else, and degrades gracefully when the field is absent.</span>
+  <span class="b"><strong>What it buys.</strong> Recovers standby drain on the contested population while paging loss stays within the operator's 0.5 percent budget, cuts control-plane signaling overhead by 12 percent under the worst-case mix, and trims base-station radio energy by 4 percent.</span>
+  <div class="note"><div class="h">status</div><p style="margin:0">Mute the UE is in submission. It is deployable per-UE: production networks can adopt it incrementally.</p></div>
+</section>
+<section id="family">
+  <div class="eyebrow">the family</div>
+  <h2 class="s">Reachability is a privacy surface</h2>
+  <p>Mute sits in the <a href="thrusts/cellular_and_wireless_privacy.html">Cellular and Wireless Privacy</a> line: the control plane's right to interrupt is also its power to track, and a UE with agency over its reachability is a UE with a smaller footprint.</p>
+  <p style="font-style:italic;color:#9fb2c9">Reachability should be a negotiated schedule, not an obligation.</p>
+  <p><a href="thrusts/cellular_and_wireless_privacy.html">&larr; back to the Privacy thrust</a></p>
+</section>
+</main>
+
+<footer><div>&copy; 2026 Hannah B. Pasandi &middot; <a href="index.html">home</a></div></footer>
+</body>
+</html>

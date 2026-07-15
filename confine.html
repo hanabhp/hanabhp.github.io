@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Confine: Reliability Contracts for LLM Cascade Routing and Verifier Verdicts | Hannah B. Pasandi</title>
+<meta name="description" content="Confine turns a single verifier verdict into a routing contract with calibrated reliability, a verdict interval, and a defer action. It measures annotator agreement on MAST and exposes a reliability-contract routing API so a cascade router treats evaluation as a noisy control-plane signal rather than a fact." />
+<meta name="author" content="Hannah B. Pasandi" />
+<style>
+:root{
+  --bg:#0a0e14; --bg-soft:#0e131c; --bg-card:#111722; --bg-card-hi:#16202e;
+  --line:#1e2734; --line-soft:#2a3646;
+  --ink:#eef2f7; --head:#ffffff; --mute:#8fb1e6;
+  --blue:#6ea8ff; --blue-soft:#9cc0ff;
+  --green:#5fd17a; --amber:#f0c25a; --purple:#c79bff; --rose:#ff9a8f;
+  --max:960px; --pad:clamp(16px,4vw,34px);
+  --mono:"JetBrains Mono","Fira Code","SF Mono","Menlo",monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-size:15px;line-height:1.65;color:var(--ink);background:var(--bg);
+  background-image:radial-gradient(circle at 88% -5%,rgba(199,155,255,0.08),transparent 55%);
+  -webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:var(--blue);text-decoration:none;transition:color .12s}
+a:hover{color:var(--blue-soft);text-decoration:underline;text-underline-offset:3px}
+
+nav.topbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:22px;
+  padding:12px var(--pad);background:rgba(10,14,20,0.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav.topbar .mark{font-family:var(--mono);font-weight:700;font-size:17px;letter-spacing:-.03em;color:var(--head)}
+nav.topbar .mark .dot{color:var(--purple)}
+nav.topbar .links{display:flex;flex-wrap:wrap;gap:8px 18px;overflow:visible;font-family:var(--mono);font-size:12.5px;scrollbar-width:thin}
+nav.topbar .links::-webkit-scrollbar{height:0}
+nav.topbar .links a{color:var(--blue-soft);white-space:nowrap}
+nav.topbar .links a:hover{color:var(--head);text-decoration:none}
+nav.topbar .home{margin-left:auto;color:var(--mute)}
+
+header.hero{padding:48px var(--pad) 20px;max-width:var(--max);margin:0 auto;text-align:center}
+.brand{font-family:Cambria,Georgia,'Times New Roman',serif;font-size:clamp(36px,8vw,50px);font-weight:700;letter-spacing:-.045em;line-height:1;color:var(--head);margin-bottom:8px}
+.brand .dot{color:var(--purple)}
+.tagline{font-family:var(--mono);font-size:13.5px;color:var(--blue-soft);margin-bottom:8px}
+.byline{font-size:14px;color:var(--ink)} .byline b{color:var(--head)}
+.hlinks{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px;font-family:var(--mono);font-size:12.5px;justify-content:center}
+.hlinks a{color:var(--blue);border:1px solid var(--line-soft);border-radius:7px;padding:5px 11px}
+.hlinks a:hover{color:var(--head);border-color:var(--blue);text-decoration:none}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;font-family:var(--mono);font-size:11px}
+.tags span{color:var(--blue-soft);border:1px solid var(--line);border-radius:5px;padding:2px 8px}
+
+.thesis{margin-top:26px;border:1px solid var(--line-soft);border-left:3px solid var(--purple);border-radius:0 14px 14px 0;background:var(--bg-card);padding:22px 24px}
+.thesis .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--purple);margin-bottom:9px;letter-spacing:.22em;text-transform:uppercase;font-size:11.5px}
+.thesis h2{font-size:clamp(18px,3vw,24px);line-height:1.34;font-weight:600;color:var(--head)}
+.thesis p{margin-top:11px;color:var(--ink);max-width:74ch}
+.thesis .one{font-family:var(--mono);color:var(--amber);font-size:13.5px;margin-top:13px}
+
+section{padding:42px var(--pad);max-width:var(--max);margin:0 auto;border-top:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-bottom:10px}
+h2.s{font-size:clamp(20px,3vw,27px);font-weight:600;letter-spacing:-.02em;margin-bottom:6px;color:var(--head)}
+p{margin:9px 0;color:var(--ink);max-width:74ch}
+p strong{color:var(--head)}
+figure{margin:22px 0}
+figcaption{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-top:8px}
+.b{display:block;padding-left:18px;position:relative;margin:8px 0;color:var(--ink);font-size:14px;max-width:74ch}
+.b:before{content:"\2022";position:absolute;left:0;color:var(--purple)}
+.note{border:1px solid var(--line-soft);border-radius:12px;background:var(--bg-card);padding:15px 18px;margin-top:16px}
+.note .h{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.api{margin-top:16px;border:1px solid var(--line);border-radius:12px;background:#06090e;padding:14px 18px}
+.api pre{margin:0;font-family:var(--mono);font-size:12.5px;line-height:1.7;white-space:pre-wrap;color:var(--ink)}
+.api .k{color:var(--purple)} .api .s{color:var(--green)} .api .c{color:var(--blue-soft)}
+footer{padding:44px var(--pad) 80px;max-width:var(--max);margin:0 auto;border-top:1px solid var(--line);font-size:13px;color:var(--ink)}
+footer a{color:var(--blue)}
+.fineprint{margin-top:14px;color:var(--mute);font-size:12px}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4M99RGCCZP"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4M99RGCCZP');</script>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Confine: Reliability Contracts for LLM Cascade Routing | Hannah B. Pasandi" />
+<meta property="og:description" content="Per-mode reliability, a verdict interval, and a defer action: the smallest API change that gives cascade routers an honest signal." />
+<meta property="og:image" content="https://hanabhp.github.io/assets/og-card.png" />
+<meta name="twitter:card" content="summary_large_image" />
+</head>
+<body>
+
+<nav class="topbar">
+  <span class="mark"><span class="pglogo" title="Confine" style="display:inline-flex;width:22px;height:22px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Confine logo" style="width:100%;height:100%"><title>Confine</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#2ea043" fill-opacity="0.10" stroke="#2ea043" stroke-width="1.6"/><path d="M12 10 h-5 v24 h5 M32 10 h5 v24 h-5" fill="none" stroke="#2ea043" stroke-width="2.4"/><circle cx="22" cy="22" r="3.5" fill="#2ea043"/><path d="M14 22 h4 M26 22 h4" stroke="#2ea043" stroke-width="2" stroke-dasharray="2 2"/></svg></span>Confine<span class="dot">.</span></span>
+  <span class="links">
+    <a href="#idea">the idea</a>
+    <a href="#problem">the problem</a>
+    <a href="#contract">the contract</a>
+    <a href="#measure">measurement</a>
+  <a href="#bill">the bill</a>
+    <a href="#stack">in the stack</a>
+  </span>
+  <a class="home" href="agentic_ai.html">&larr; AgenticStack</a>
+  <a class="home" href="index.html">Hannah B. Pasandi</a>
+</nav>
+
+<header class="hero">
+  <div class="brand"><span class="pglogo" title="Confine" style="display:inline-flex;width:40px;height:40px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Confine logo" style="width:100%;height:100%"><title>Confine</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#2ea043" fill-opacity="0.10" stroke="#2ea043" stroke-width="1.6"/><path d="M12 10 h-5 v24 h5 M32 10 h5 v24 h-5" fill="none" stroke="#2ea043" stroke-width="2.4"/><circle cx="22" cy="22" r="3.5" fill="#2ea043"/><path d="M14 22 h4 M26 22 h4" stroke="#2ea043" stroke-width="2" stroke-dasharray="2 2"/></svg></span>Confine<span class="dot">.</span></div>
+  <div class="tagline">reliability contracts for LLM cascade routing</div>
+  <div class="byline">a project in the <a href="agentic_ai.html">AgenticStack</a> line &middot; led by <b>Hannah B. Pasandi</b></div>
+  <div class="hlinks">
+    <a href="agentic_ai.html">AgenticStack</a>
+    <a href="index.html">home</a>
+  </div>
+  <div class="tags"><span>llm cascades</span><span>reliability contract</span><span>verdict interval</span><span>defer</span><span>MAST</span><span>routing API</span><span>HotNets 2026</span></div>
+
+  <div class="thesis" id="idea">
+    <div class="eyebrow">the idea</div>
+    <h2>A verifier verdict is a measurement, not a fact. Confine turns it into a routing contract with calibrated reliability, a verdict interval, and a defer action.</h2>
+    <p>In an LLM cascade, a cheap model answers, a verifier judges, and a router decides whether to accept or escalate. Today that router treats the verifier's verdict as ground truth. Confine instead measures how reliable each verdict mode actually is and hands the router a contract: a per-mode reliability vector, an interval around the verdict, and an explicit defer action when reliability is too low. The router consumes evaluation as a noisy signal it can reason about, rather than a fact it must obey.</p>
+    <div class="one">treat evaluation as a control-plane signal, not a verdict to trust.</div>
+  </div>
+</header>
+
+<section id="problem">
+  <div class="eyebrow">the problem</div>
+  <h2 class="s">A single verdict hides its own uncertainty</h2>
+  <p>Cascade routers assume the verifier is right. But verifiers disagree with each other and with human annotators, and the disagreement is not uniform: some verdict modes are reliable, others are close to coin flips. When the router cannot see that spread, two failures follow. It accepts wrong answers from low-reliability modes, and it escalates good answers it should have kept, paying for the strongest model when it did not need to.</p>
+  <p>Measured on the human-labeled subset of MAST, per-mode reliability (Gwet's AC1) spans 0.76 to 1.00 across 14 production failure modes, with four modes below 0.85. The contested modes are not the long tail: three of the four sit above 0.25 prevalence, and a single reviewer misses about 5 percent of confirmed failures overall but 17 to 20 percent on these highest-prevalence contested classes. The router is noisiest exactly where it spends its time.</p>
+  <span class="b"><strong>Verdict-as-truth.</strong> The router has one bit where it needs a distribution.</span>
+  <span class="b"><strong>No defer path.</strong> With only accept or escalate, there is no honest "I don't know" that routes to a human or a safe fallback.</span>
+  <span class="b"><strong>Uncalibrated cost.</strong> Escalation policy is tuned to an average verifier, not to the reliability of the specific mode that produced this verdict.</span>
+</section>
+
+<section id="contract">
+  <div class="eyebrow">the contract</div>
+  <h2 class="s">Reliability vector, verdict interval, defer action</h2>
+  <p>Confine replaces the single verdict with a small contract the router consumes at decision time. The contract carries three things: how reliable this verdict mode is, how wide the uncertainty is around the verdict, and what to do when reliability falls below a threshold.</p>
+  <figure>
+    <svg viewBox="0 0 940 330" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:var(--mono)">
+      <defs><marker id="c" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8fb1e6"/></marker></defs>
+      <rect x="30" y="120" width="150" height="64" rx="10" fill="#6ea8ff" fill-opacity="0.08" stroke="#1f6feb"/>
+      <text x="105" y="148" fill="#eef2f7" font-size="12" text-anchor="middle">cheap model</text>
+      <text x="105" y="166" fill="#8fb1e6" font-size="10" text-anchor="middle">draft answer</text>
+      <rect x="230" y="120" width="160" height="64" rx="10" fill="#5fd17a" fill-opacity="0.10" stroke="#2ea043"/>
+      <text x="310" y="148" fill="#eef2f7" font-size="12" text-anchor="middle">verifier</text>
+      <text x="310" y="166" fill="#8fb1e6" font-size="10" text-anchor="middle">verdict + mode</text>
+      <rect x="440" y="92" width="210" height="120" rx="12" fill="#c79bff" fill-opacity="0.08" stroke="#8957e5"/>
+      <text x="545" y="116" fill="#c79bff" font-size="12.5" text-anchor="middle" font-weight="700">reliability contract</text>
+      <text x="455" y="140" fill="#eef2f7" font-size="11">reliability vector r(mode)</text>
+      <text x="455" y="160" fill="#eef2f7" font-size="11">verdict interval [lo, hi]</text>
+      <text x="455" y="180" fill="#f0c25a" font-size="11">defer if r &lt; threshold</text>
+      <rect x="710" y="120" width="200" height="64" rx="10" fill="#f0c25a" fill-opacity="0.09" stroke="#bb8009"/>
+      <text x="810" y="142" fill="#eef2f7" font-size="12" text-anchor="middle">router decision</text>
+      <text x="810" y="160" fill="#8fb1e6" font-size="10" text-anchor="middle">accept / escalate / defer</text>
+      <line x1="180" y1="152" x2="228" y2="152" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#c)"/>
+      <line x1="390" y1="152" x2="438" y2="152" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#c)"/>
+      <line x1="650" y1="152" x2="708" y2="152" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#c)"/>
+      <text x="470" y="250" fill="#8fb1e6" font-size="11">The router never sees a bare verdict; it sees a contract it can reason about.</text>
+    </svg>
+    <figcaption>Fig 1 - Confine sits between the verifier and the router, carrying reliability instead of a bare verdict.</figcaption>
+  </figure>
+  <div class="api"><pre><span class="c"># the router consumes a contract, not a verdict</span>
+contract = confine.evaluate(answer, verifier_mode)
+<span class="k">contract.reliability</span>   <span class="c"># per-mode reliability vector</span>
+<span class="k">contract.interval</span>      <span class="c"># [lo, hi] around the verdict</span>
+<span class="k">contract.defer</span>         <span class="c"># True when reliability &lt; threshold</span>
+
+<span class="k">if</span> contract.defer:
+    route_to_human_or_fallback()
+<span class="k">elif</span> contract.interval.lo &gt;= accept_bar:
+    <span class="s">accept()</span>
+<span class="k">else</span>:
+    escalate()</pre></div>
+  <p>Deployment cost is small. The reliability vector ships as a 600-byte record per calibration window from a rotating 50-to-200-cell audit set, the interval adds about 150 bytes per request (about 1 Gbps at one million requests per second), and the recommended commit threshold is 0.8. At measured contested prevalence the defer rate sits between 5 and 12 percent, about 80 to 200 ms of additional p95, with backpressure above an operator-set ceiling.</p>
+</section>
+
+<section id="measure">
+  <div class="eyebrow">measurement</div>
+  <h2 class="s">Grounded in annotator agreement on MAST</h2>
+  <p>The reliability numbers are not assumed; they are measured. Confine studies annotator agreement on MAST and uses that disagreement structure to calibrate per-mode reliability. The result is a reliability vector tied to evidence about how often each verdict mode agrees with careful human judgment, which is what makes the contract trustworthy enough for the router to act on.</p>
+  <span class="b"><strong>Noise floor.</strong> A calibrated selection loop places the routing layer's noise floor at a 3 to 5 percent true quality gap; at a 2 percent gap the worst-case workload picks wrong 26.8 percent of the time, and a reliability-aware fix recovers about two points (26.8 to 24.8), honest but modest.</span>
+  <span class="b"><strong>Prompts do not fix it.</strong> On a balanced 112-cell diagnostic, an uncertainty-aware judge rubric raises recall from 23 to 41 percent but raises false positives from 7 to 21 percent, and defers on under 1 percent of cells.</span>
+  <span class="b"><strong>Interval, not retry.</strong> Capture-recapture puts the three-annotator undercount near 1.0x: coverage is nearly complete and reproducibility is the gap, so the right primitive is an interval around the verdict, not another reviewer.</span>
+  <span class="b"><strong>Stable at pilot scale.</strong> Across all 19 leave-one-out folds the contested set is identical (Jaccard 1.00, Kendall tau 0.985), so the routing rule does not depend on which traces.</span>
+  <div class="note">
+    <div class="h">status</div>
+    <p style="margin:0">Confine is under submission at <strong>HotNets 2026</strong>. Headline findings above; the full protocol, statistics, and caveats are in the paper.</p>
+  </div>
+</section>
+
+<section id="bill">
+  <div class="eyebrow">the bill</div>
+  <h2 class="s">One noisy gate, four operator currencies</h2>
+  <p>Each tier of the cascade pays for the same unreliable verdict in its own unit. The paper grounds four bills:</p>
+  <span class="b"><strong>Wrong selection.</strong> 26.8 percent worst-case wrong picks at a 2 percent true gap, exactly the regime where most agent improvements live.</span>
+  <span class="b"><strong>Cloud tier.</strong> Roughly 52 kgCO2 per million requests of wasted heavy-tier compute at a worst-case 26 percent wasted-escalation rate.</span>
+  <span class="b"><strong>Edge tier.</strong> 0.7 to 1.1 seconds of additional p95 tail under a 2 second SLO with a 4 second retry cost.</span>
+  <span class="b"><strong>Device tier.</strong> About 0.6 W of sustained draft waste at a Jetson-class power envelope with a 5 percent wrong-accept rate.</span>
+  <p>Four readings of the same noisy gate, in four operator units.</p>
+</section>
+
+<section id="stack">
+  <div class="eyebrow">in the stack</div>
+  <h2 class="s">Confine is the reliability-contract primitive of AgenticStack</h2>
+  <p>Across the <a href="agentic_ai.html">AgenticStack</a> agenda, each project supplies one contract the agent control plane needs. Confine is the reliability contract: it is how a router consumes uncertainty, intervals, and a defer action instead of trusting a verdict. In the stack, Single-Call Fallacy sets the unit of accounting (the plan), Patient spends a reliability budget at the gateway, and Confine measures where to spend it: per-mode reliability on the signal the router consumes.</p>
+  <p style="font-style:italic;color:#9fb2c9">Every layer that consumes an AI-generated signal needs a contract on its reliability, not an assumption of it.</p>
+  <p><a href="agentic_ai.html">&larr; back to AgenticStack</a></p>
+</section>
+
+<footer>
+  <div class="org">Confine is part of the <b>AgenticStack</b> line, led by <b>Hannah B. Pasandi</b>.</div>
+  <p style="margin-top:6px">Scientist, UC Berkeley Sky Computing Lab &middot; <a href="mailto:h.pasandi@berkeley.edu">h.pasandi@berkeley.edu</a> &middot; <a href="agentic_ai.html">AgenticStack</a> &middot; <a href="index.html">home</a></p>
+  <p class="fineprint">This page describes a system under submission; specific measurements appear in the paper. Reliability-contract, verdict-interval, and defer terminology follows the project's own framing.</p>
+</footer>
+
+</body>
+</html>
