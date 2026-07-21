@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>People | Hannah B. Pasandi</title>
+<meta name="description" content="Students, mentees, advisors, and collaborators of Hannah B. Pasandi." />
+<meta name="author" content="Hannah B. Pasandi" />
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="People | Hannah B. Pasandi" />
+<meta property="og:description" content="The students I advise and the advisors and collaborators I am lucky to work with." />
+<meta property="og:image" content="https://hanabhp.github.io/assets/og-card.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root{
+  --bg:#0a0e14; --bg-soft:#0e131c; --bg-card:#111722; --bg-card-hi:#16202e;
+  --line:#1e2734; --line-soft:#2a3646;
+  --ink:#eef2f7; --head:#ffffff; --mute:#8fb1e6;
+  --blue:#6ea8ff; --blue-soft:#9cc0ff;
+  --green:#5fd17a; --amber:#f0c25a; --purple:#c79bff; --rose:#ff9a8f;
+  --max:1000px; --pad:clamp(16px,4vw,34px);
+  --mono:"JetBrains Mono","Fira Code","SF Mono","Menlo",monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-size:15px;line-height:1.65;color:var(--ink);background:var(--bg);
+  background-image:radial-gradient(circle at 88% -5%,rgba(110,168,255,0.08),transparent 55%);
+  -webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:var(--blue);text-decoration:none;transition:color .12s}
+a:hover{color:var(--blue-soft);text-decoration:underline;text-underline-offset:3px}
+a:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+nav.topbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:22px;
+  padding:12px var(--pad);background:rgba(10,14,20,0.82);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line)}
+nav.topbar .mark{font-family:var(--mono);font-weight:700;font-size:17px;letter-spacing:-.03em;color:var(--head)}
+nav.topbar .mark .dot{color:var(--blue)}
+nav.topbar .links{display:flex;flex-wrap:wrap;gap:8px 18px;font-family:var(--mono);font-size:12.5px}
+nav.topbar .links a{color:var(--blue-soft);white-space:nowrap;position:relative;padding-bottom:3px}
+nav.topbar .links a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--blue);transition:width .22s ease}
+nav.topbar .links a:hover{color:var(--head);text-decoration:none}
+nav.topbar .links a:hover::after{width:100%}
+nav.topbar .home{margin-left:auto;color:var(--mute);font-family:var(--mono);font-size:12.5px}
+
+header.hero{padding:48px var(--pad) 8px;max-width:var(--max);margin:0 auto;text-align:center}
+.brand{font-family:Cambria,Georgia,'Times New Roman',serif;font-size:clamp(34px,7vw,46px);font-weight:700;letter-spacing:-.045em;line-height:1.05;color:var(--head);margin-bottom:8px}
+.brand .dot{color:var(--blue)}
+.tagline{font-family:var(--mono);font-size:13.5px;color:var(--blue-soft);margin-bottom:8px}
+.byline{font-size:14px;color:var(--ink)} .byline b{color:var(--head)}
+
+.thesis{margin:26px auto 0;max-width:var(--max);border:1px solid var(--line-soft);border-left:3px solid var(--green);border-radius:0 14px 14px 0;background:var(--bg-card);padding:20px 24px;text-align:left}
+.thesis .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+.thesis p{color:var(--ink);max-width:80ch}
+.hero .thesiswrap{padding:0 var(--pad)}
+
+section{padding:38px var(--pad);max-width:var(--max);margin:0 auto;border-top:1px solid var(--line)}
+section:first-of-type{border-top:none}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-bottom:10px}
+h2.s{font-size:clamp(20px,3vw,26px);font-weight:600;letter-spacing:-.02em;margin-bottom:4px;color:var(--head)}
+.secnote{color:var(--ink);max-width:74ch;margin-bottom:6px}
+
+.prims{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:12px;margin-top:16px}
+.prim{position:relative;border:1px solid var(--line);border-radius:12px;background:var(--bg-card);padding:38px 16px 16px;transition:background .15s ease}
+.prim:hover{background:var(--bg-card-hi)}
+.prim h4{font-size:15px;color:var(--head);margin-bottom:5px}
+.prim p{font-size:13px;margin:0;color:var(--ink)}
+.prim .tags{position:absolute;top:11px;right:12px;left:12px;display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;margin:0}
+.tag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 8px;border-radius:5px;white-space:nowrap}
+.t-acc{background:rgba(95,209,122,.16);color:var(--green)}
+.t-sub{background:rgba(110,168,255,.16);color:var(--blue)}
+.t-prog{background:rgba(240,194,90,.16);color:var(--amber)}
+.t-new{background:rgba(199,155,255,.16);color:var(--purple)}
+.t-ind{background:rgba(255,154,143,.18);color:var(--rose)}
+
+footer{padding:40px var(--pad) 80px;max-width:var(--max);margin:0 auto;border-top:1px solid var(--line);font-size:13px;color:var(--ink)}
+footer a{color:var(--blue)}
+.fineprint{margin-top:14px;color:var(--mute);font-size:12px;font-family:var(--mono)}
+@media(max-width:640px){nav.topbar{gap:14px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4M99RGCCZP"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4M99RGCCZP');</script>
+</head>
+<style>.pout{font-size:12px;color:#8fa3bd;margin-top:8px;border-top:1px dashed #223047;padding-top:7px}.pinst{font-size:12px;color:#7e93ad}</style>
+<body>
+<nav class="topbar">
+  <span class="mark">hp<span class="dot">.</span></span>
+  <span class="links">
+    <a href="index.html">home</a>
+    <a href="agentic_ai.html">agenticstack</a>
+    <a href="thrusts/self_driving_llm_serving.html">llm serving</a>
+    <a href="thrusts/cascade_safe_learning.html">safe learning</a>
+    <a href="thrusts/direct_to_cell_satellite.html">satellite</a>
+  </span>
+  <span class="home">portfolio</span>
+</nav>
+<header class="hero">
+  <h1>People<span class="dot">.</span></h1>
+  <p class="sub">The students I advise, and the advisors and collaborators I am lucky to work with. If you want to join this page, my inbox has a soft spot for hard problems: <a href="mailto:h.pasandi@berkeley.edu">h.pasandi@berkeley.edu</a>.</p>
+</header>
+<main>
+<section id="students">
+  <div class="eyebrow">01 &#183; students and mentees</div>
+  <h2 class="s">The students I advise</h2>
+  <div class="prims"><div class="prim"><h4>Mahsa Tavasoli</h4><p>Ph.D. student, North Carolina A&amp;T (committee member)</p><p class="pout">Lead author, rural connected-vehicle communication survey, IEEE Access 2025; lead author, CAN intrusion detection for rural CAVs, ACM CoNEXT '25 Student Workshop.</p></div><div class="prim"><h4>Radwan Rouzky</h4><p>Ph.D. student, North Carolina A&amp;T</p><p class="pout">Lead author, smart-farming data-governance review, Information Processing in Agriculture, 2026.</p></div><div class="prim"><h4>Mohammad Sepahi</h4><p>Rivian, formerly Old Dominion University (Master's thesis mentor)</p><p class="pout">Coauthor, VIN2VICTIM, USENIX VehicleSec '26.</p></div><div class="prim"><h4>Nourchene (Noor) Bargaoui</h4><p>Co-advised with Prof. Tamer Nadeem</p></div></div>
+</section>
+<section id="collaborators">
+  <div class="eyebrow">02 &#183; advisors and collaborators</div>
+  <h2 class="s">The people this work is built with</h2>
+  <div class="prims"><div class="prim"><h4><a href="https://people.eecs.berkeley.edu/~istoica/" target="_blank">Prof. Ion Stoica</a></h4><p>Professor of EECS</p><p class="pinst">UC Berkeley</p></div><div class="prim"><h4><a href="https://people.eecs.berkeley.edu/~sylvia/" target="_blank">Prof. Sylvia Ratnasamy</a></h4><p>Professor of CS</p><p class="pinst">UC Berkeley</p></div><div class="prim"><h4><a href="https://www.icsi.berkeley.edu/icsi/people/shenker" target="_blank">Prof. Scott Shenker</a></h4><p>Professor of EECS</p><p class="pinst">UC Berkeley</p></div><div class="prim"><h4><a href="https://music.lab.vcu.edu/" target="_blank">Prof. Tamer Nadeem</a></h4><p>Professor of CS (PhD Advisor)</p><p class="pinst">VCU</p></div><div class="prim"><h4><a href="https://wimnet.ee.columbia.edu/people/gil-zussman/" target="_blank">Prof. Gil Zussman</a></h4><p>Kenneth Brayer Professor</p><p class="pinst">Columbia University</p></div><div class="prim"><h4><a href="https://team.inria.fr/agora/" target="_blank">Dr. Juan A. Fraire</a></h4><p>Researcher, Agora Team</p><p class="pinst">INRIA Lyon</p></div><div class="prim"><h4><a href="https://perso.citi-lab.fr/hrivano/" target="_blank">Prof. Herv&eacute; Rivano</a></h4><p>University Professor</p><p class="pinst">INSA Lyon / INRIA</p></div><div class="prim"><h4><a href="https://lig-membres.imag.fr/rousseau/" target="_blank">Prof. Franck Rousseau</a></h4><p>Associate Professor</p><p class="pinst">Univ. Grenoble Alpes</p></div><div class="prim"><h4>Prof. Haniyeh B. Pasandi</h4><p>Associate Professor</p><p class="pinst"></p></div><div class="prim"><h4>Prof. Mohsen Lesani</h4><p>Associate Professor</p><p class="pinst">UC Santa Cruz</p></div><div class="prim"><h4>Prof. Zhaowei Tan</h4><p>Assistant Professor</p><p class="pinst">UC Riverside</p></div><div class="prim"><h4>Prof. Tianyin Xu</h4><p>Associate Professor</p><p class="pinst">UIUC</p></div><div class="prim"><h4>Farideh Parastar</h4><p>Collaborator, MSc</p><p class="pinst"></p></div></div>
+</section>
+</main>
+<footer><div>&copy; 2026 Hannah B. Pasandi &middot; <a href="index.html">home</a> &middot; <a href="research.html">research portfolio</a></div></footer>
+</body>
+</html>

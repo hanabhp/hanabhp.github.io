@@ -301,7 +301,23 @@
     }
     .thrust-tile:hover { transform: translateY(-5px); box-shadow: 0 12px 28px rgba(0,0,0,0.2); }
     .thrust-tile img { width: 100%; height: auto; display: block; }
-  </style>
+  
+/* --- open research portfolio (homepage) --- */
+#portfolio .rp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:14px 0 6px}
+#portfolio .rp-card{position:relative;border:1px solid #e6e0e0;border-radius:12px;background:#ffffff;padding:40px 16px 16px;transition:box-shadow .15s ease}
+#portfolio .rp-card:hover{box-shadow:0 4px 14px rgba(92,0,0,0.08)}
+#portfolio .rp-card h4{font-size:15px;color:#222;margin:0 0 5px}
+#portfolio .rp-card p{font-size:13px;color:#4a4a4a;margin:0;line-height:1.55}
+#portfolio .rp-tags{position:absolute;top:11px;right:12px;left:12px;display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+#portfolio .tag{display:inline-block;font-family:'SF Mono',Menlo,monospace;font-size:10px;font-weight:600;padding:2px 8px;border-radius:5px;white-space:nowrap}
+#portfolio .t-acc{background:rgba(25,135,84,.12);color:#1a7f4b}
+#portfolio .t-sub{background:rgba(13,110,253,.10);color:#0b5ed7}
+#portfolio .t-prog{background:rgba(240,173,78,.22);color:#8a5a00}
+#portfolio .t-new{background:rgba(111,66,193,.12);color:#6f42c1}
+#portfolio .t-ind{background:rgba(220,53,69,.10);color:#b02a37}
+#portfolio .rp-group{font-family:'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--red-primary);margin:26px 0 2px}
+#portfolio .rp-gtitle{font-size:1.05rem;font-weight:600;color:#222;margin-bottom:4px}
+</style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Hannah B. Pasandi","alternateName":["Hannaneh B. Pasandi","Hannaneh Barahouei Pasandi","Hana Pasandi"],"jobTitle":"Research Scholar Fellow","affiliation":{"@type":"Organization","name":"UC Berkeley Sky Computing Lab"},"url":"https://hanabhp.github.io/","email":"mailto:h.pasandi@berkeley.edu","sameAs":["https://github.com/hanabhp","https://scholar.google.com/citations?user=8B25UksAAAAJ"],"knowsAbout":["agentic AI systems","LLM serving","network protocols","wireless privacy","autonomous vehicles","satellite networks"]}
 </script>
@@ -329,7 +345,8 @@
             <a href="#research" class="nav-link-custom">Research</a>
             <a href="#research" class="nav-link-custom">Projects</a>
             <a href="#publications" class="nav-link-custom">Publications</a>
-            <a href="#advisors" class="nav-link-custom">Collaborators</a>
+            <a class="nav-link" href="people.html">People</a>
+            <a href="people.html" class="nav-link-custom">Collaborators</a>
             <a href="#contact" class="nav-link-custom">Contact</a>
           </div>
         </nav>
@@ -346,7 +363,7 @@
             <a href="#research" class="nav-link-custom py-2">Research</a>
             <a href="#research" class="nav-link-custom py-2">Projects</a>
             <a href="#publications" class="nav-link-custom py-2">Publications</a>
-            <a href="#advisors" class="nav-link-custom py-2">Collaborators</a>
+            <a href="people.html" class="nav-link-custom py-2">Collaborators</a>
             <a href="#contact" class="nav-link-custom py-2">Contact</a>
           </div>
         </nav>
@@ -381,6 +398,10 @@
         </p>
 
         <p class="mb-3">
+          Our everyday life increasingly runs on two intertwined infrastructures. Networks carry our calls, our work, and our payments; AI agents are beginning to act across them on our behalf. I design and build systems that keep both trustworthy, predictable, accountable, and safe by design. Such an objective is fascinatingly challenging and complex, since real deployments are chains of layers, radio schedulers, satellite links, serving stacks, agent plans, that look independent yet carry hidden dependencies that must be understood, captured, and acted on; otherwise a guarantee that holds at one layer quietly collapses at the next, and in these systems a quiet collapse is a safety event, a dropped emergency call, a drone flying on a stale plan, an agent committing an unverified action. My research draws from networking, distributed systems, machine learning, security, and formal methods, model checking, SMT-based verification, and runtime certificates, a toolkit I first trained in during my master's in Grenoble.
+        </p>
+
+        <p class="mb-3">
           My research interests are network protocol synthesis and certification, LLM serving and scheduling across device, edge, cloud, and direct-to-cell satellite tiers, plan-level accounting and reliability for agentic AI, cellular and voice privacy, and the security of connected vehicles and UAVs.
         </p>
 
@@ -392,8 +413,12 @@
           One principle, two arenas. In <span style="font-weight: bold; color: var(--red-primary);">networks</span>, <a href="tenet.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">teNET</a> deploys only protocol compositions that carry a certificate they cannot collapse, and <a href="agentic_ai.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">OrbitMesh</a> turns direct-to-cell satellite into a first-class serving tier for LLM requests. In <a href="agentic_ai.html" style="font-weight: bold; color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">AI agents</a>, where the unit of work is now the <span style="font-weight: bold; color: var(--red-primary);">plan</span> rather than the single call, <a href="patient.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Patient</a>, <a href="confine.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Confine</a>, and <a href="gauge.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Gauge</a> schedule, route, and evaluate at the plan level. <a href="agentic_ai.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Loom</a> is both arenas in one system: an LLM agent held inside a safety certificate while it composes a live wireless MAC layer.
         </p>
         <p class="mb-3">
-          The same discipline extends to connected vehicles and smart farming through the students I advise: Mahsa Tavasoli's rural connected-vehicle communication survey (IEEE Access '25), Mohammad Sepahi's co-authored VIN2VICTIM (USENIX VehicleSec '26), and Radwan Rouzky's smart-farming data-governance review (Information Processing in Agriculture '26).
+          The same discipline extends to connected vehicles and smart farming through the students I advise; meet them, and everyone I am lucky to work with, on the <a href="people.html">People</a> page.
         </p>
+
+        <div class="mb-3" style="border:1px solid #d7e3f4;background:#f4f8fd;border-left:4px solid #1f4e79;border-radius:10px;padding:14px 16px;font-style:italic;color:#1f4e79;">
+          I am always looking for motivated undergrad and grad students, and other collaborators around the world, to work with! Please check my <a href="research.html" style="color:#1f4e79;font-weight:700;">Research Portfolio</a>, and if a project interests you, feel free to email me with the project name in the subject.
+        </div>
 
         <div class="card-custom mt-4" style="background-color: #f5f5f5;">
           <h3 class="h5 fw-bold mb-3" style="color: var(--red-primary);">Impact at Scale</h3>
@@ -515,7 +540,57 @@
   </section>
 
 <!-- Publications -->
-  <section id="publications" class="py-5 bg-white">
+  
+<section id="portfolio" class="py-5" style="background:#fbf9f9">
+  <div class="container">
+    <h2 class="h3 fw-bold text-center mb-2">Open Research Portfolio</h2>
+    
+    
+    <div class="rp-group">01 · systems</div>
+<div class="rp-gtitle">The execution and serving layer for agents</div>
+<div class="rp-grid">
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-acc">accepted · nsdi</span></div><h4>CacheCatalyst</h4><p>Serving recomputes overlapping context across requests instead of reusing it; the cache that could carry the load is thrown away.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · pacmi</span></div><h4>The Single-Call Fallacy</h4><p>Per-call metrics grade agentic systems healthy while whole plans fail. Nothing in the stack accounts at the level of the plan the user asked for.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · pacmi</span></div><h4>EffectLog, the Crash at Step Thirteen</h4><p>An agent that dies mid-plan cannot tell which external effects already landed, so restart means redo or double-do.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · pacmi</span><span class="tag t-new">new</span></div><h4>GPU Fleet Contract</h4><p>Learned systems assume datacenter-grade GPUs. The commodity fleet the world actually owns fails in ways training loops do not survive, priced with production failure data from Meta's Llama 3 Herd report.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · agenticos @ sosp</span></div><h4>Patient Bytes</h4><p>Agent plans are scheduled one call at a time. A plan-level budget covers the retries, verification, and waste that single-call scheduling never sees. Full version in progress.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · hotnets</span></div><h4>Confine</h4><p>Failure labels for agents assume annotators agree on what broke. Measured agreement varies by failure mode, and routing needs reliability contracts that survive the disagreement.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · sec</span></div><h4>PALSE</h4><p>Agent steps stall waiting for state the plan already announced. PALSE reads the plan while generation is in flight and stages what the next step needs at the edge.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review</span></div><h4>OrbitMesh</h4><p>Inference serving stops at the cloud edge while direct-to-cell satellites sit overhead as compute nobody schedules. A four-tier serving path for agent workloads includes the satellite.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · mobihoc</span></div><h4>Tether</h4><p>A room of idle Apple silicon sits beside a phone paying cloud latency for every agent token. Tether routes inference across the personal device mesh.</p></div>
+  </div><div class="rp-group">02 · ml for systems</div>
+<div class="rp-gtitle">Learning that systems can afford to trust</div>
+<div class="rp-grid">
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-acc">accepted + presented · hotcarbon</span></div><h4>The Reasoning Tax</h4><p>Reasoning tokens never appear in carbon accounting; test-time thinking is off the books.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">in submission · aaai</span></div><h4>VETO</h4><p>Safe RL still learns by violating. Systems that cannot afford a single violation cannot use it. VETO acts only when a verified ensemble agrees the action is safe.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-prog">in progress</span></div><h4>INTACT</h4><p>No theory predicts when cooperating learned agents snap under distribution shift; operators discover the phase transition by outage.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-prog">in progress</span></div><h4>SPECTRA</h4><p>Multi-tier LLM serving reacts to 5G handovers and thermal throttling after they hit. At mobile timescales reaction is too late; prediction has a thirty-second window.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-prog">in progress</span></div><h4>BlackWidow</h4><p>RL for rate and power control learns by violating the limits the RAN exists to hold. A decision-time mask removes violating actions from play, so it learns clean.</p></div>
+  </div><div class="rp-group">03 · networked systems</div>
+<div class="rp-gtitle">The roots, now pointed at orbit</div>
+<div class="rp-grid">
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-prog">in progress</span></div><h4>SpaceHandover</h4><p>Direct-to-cell LEO handovers strike mid-session with no warning, at orbital cadence. An O-RAN Near-RT RIC rApp predicts them with a GBM and LLM pair.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-prog">in progress</span></div><h4>SpaceWindow</h4><p>Satellite IoT uplinks transmit blind into poor passes, spending the scarcest link budget there is. Pass-aware deferral waits for the right window across two orbits.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-prog">in progress</span></div><h4>SpaceREGULATE</h4><p>A LEO constellation crosses jurisdictions every few minutes. No mechanism keeps data flows legal while they move.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-prog">in progress</span></div><h4>SkyCascade</h4><p>Mobile LLM requests route on latency alone while carbon differs by an order of magnitude across device, edge, and cloud. Full version in progress.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · hotnets</span></div><h4>MuteTheUE</h4><p>Cellular signaling includes a path that can quiet a device. The paper asks who can trigger it and at what cost.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · hotnets</span></div><h4>Lead Time</h4><p>A network can only act on what it sees early enough. Lead Time measures how far ahead predictions land against the cost of acting on them.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · conext</span></div><h4>Predict Once, Track Forever</h4><p>One trained predictor turns sparse mobility signals into persistent tracking.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-ind">industry · Rivian</span><span class="tag t-prog">in progress</span></div><h4>GPS Spoofing</h4><p>Vehicles navigate on a signal anyone can forge. With Rivian, detecting GPS spoofing before the planner believes the lie.</p></div>
+  </div><div class="rp-group">04 · agentic ai for networking</div>
+<div class="rp-gtitle">The push, agents inside the network itself</div>
+<div class="rp-grid">
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-prog">in progress</span></div><h4>Loom</h4><p>MAC layers freeze at standardization time and conditions do not. Loom lets an LLM agent recompose a live wireless MAC while a safety certificate keeps every action inside proven bounds.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">in submission · infocom</span></div><h4>MacAgent</h4><p>Learned MAC controllers act unmasked, so one bad action reaches the air. A safety mask filters actions before transmission.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · mobihoc</span></div><h4>Arachne</h4><p>Protocol synthesis emits code, not guarantees. Arachne composes MAC protocols from verified blocks, and every composition carries an interference-safety proof.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · hotnets</span></div><h4>Vouch</h4><p>Agents propose changes to systems they should never control directly. Vouch splits proposer from deployment license; a small certificate, not the model, decides what may run.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-prog">in progress</span><span class="tag t-new">new</span></div><h4>On the Wire, Three LLMs</h4><p>Networks treat LLM traffic as one workload. Measured at packet level, it is three, and designs tuned for chat mis-serve the agentic traffic growing fastest.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-prog">in progress</span><span class="tag t-new">new</span></div><h4>AgenticRAN</h4><p>RAN automation is adopting LLM agents with no effect contract and no plan-level accounting. The RIC is about to run agents blind.</p></div>
+  </div>
+  </div>
+</section>
+
+<section id="publications" class="py-5 bg-white">
     <div class="container">
       <h2 class="h3 fw-bold text-center mb-5">Selected Publications</h2>
 
@@ -774,69 +849,7 @@
   </section>
 
   <!-- Advisors & Collaborators -->
-  <section id="advisors" class="py-5" style="background-color: #f9fafb;">
-    <div class="container">
-      <h2 class="h3 fw-bold text-center mb-5">Advisors and Collaborators</h2>
-      <div class="row g-3">
-        <div class="col-lg-3 col-md-4 col-6">
-          <div class="advisor-card">
-            <div class="fw-semibold">Prof. Ion Stoica</div>
-            <div class="small text-muted">Professor of EECS</div>
-            <div class="small" style="color: var(--red-primary);">UC Berkeley</div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-6">
-          <div class="advisor-card">
-            <div class="fw-semibold">Prof. Sylvia Ratnasamy</div>
-            <div class="small text-muted">Professor of CS</div>
-            <div class="small" style="color: var(--red-primary);">UC Berkeley</div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-6">
-          <div class="advisor-card">
-            <div class="fw-semibold">Prof. Scott Shenker</div>
-            <div class="small text-muted">Professor of EECS</div>
-            <div class="small" style="color: var(--red-primary);">UC Berkeley</div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-6">
-          <div class="advisor-card">
-            <div class="fw-semibold">Prof. Tamer Nadeem</div>
-            <div class="small text-muted">Professor of CS (PhD Advisor)</div>
-            <div class="small" style="color: var(--red-primary);">VCU</div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-6">
-          <div class="advisor-card">
-            <div class="fw-semibold">Prof. Gil Zussman</div>
-            <div class="small text-muted">Kenneth Brayer Professor</div>
-            <div class="small" style="color: var(--red-primary);">Columbia University</div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-6">
-          <div class="advisor-card">
-            <div class="fw-semibold">Dr. Juan A. Fraire</div>
-            <div class="small text-muted">Researcher, Agora Team</div>
-            <div class="small" style="color: var(--red-primary);">INRIA Lyon</div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-6">
-          <div class="advisor-card">
-            <div class="fw-semibold">Prof. Hervé Rivano</div>
-            <div class="small text-muted">University Professor</div>
-            <div class="small" style="color: var(--red-primary);">INSA Lyon / INRIA</div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-6">
-          <div class="advisor-card">
-            <div class="fw-semibold">Prof. Franck Rousseau</div>
-            <div class="small text-muted">Associate Professor</div>
-            <div class="small" style="color: var(--red-primary);">Univ. Grenoble Alpes</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  
 
   <!-- Contact -->
   <section id="contact" class="py-5 hero-gradient text-white">

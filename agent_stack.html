@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Agent Stack: a reference model, composition laws, and a measurement agenda</title>
+<meta name="description" content="Explorable project page for The Agent Stack: reference model, composition laws, live simulators, coverage analysis, and a measurement agenda for agentic AI systems.">
+<style>
+:root{
+  --paper:#201F1D; --card:#2A2927; --card2:#262523; --ink:#E8E6DE; --muted:#B4B2A9; --hint:#8A8880;
+  --line:#3B3936; --line-strong:#4A4844;
+  --teal:#5DCAA5; --teal-deep:#9FE1CB; --teal-fill:#085041; --teal-mid:#0F6E56;
+  --amber:#FAC775; --amber-bright:#EF9F27; --amber-fill:#633806;
+  --purple:#CECBF6; --purple-fill:#3C3489;
+  --coral:#F0997B; --coral-fill:#712B13;
+  --blue:#85B7EB; --blue-fill:#0C447C;
+  --mono:ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7}
+a{color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line-strong)}
+a:hover{border-bottom-color:var(--teal)}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--purple);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-weight:500;line-height:1.25}
+.wide{max-width:1100px;margin:0 auto;padding:0 22px}
+section{padding:60px 0;border-top:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--hint)}
+.kicker{font-family:var(--mono);font-size:13px;color:var(--teal);margin-bottom:10px}
+h2{font-size:27px;margin:6px 0 14px}
+h3{font-size:18px;margin:0 0 8px}
+p.lede{font-size:17.5px;color:var(--muted);max-width:72ch}
+.mono{font-family:var(--mono)}
+output,.num{font-variant-numeric:tabular-nums}
+
+nav{position:sticky;top:0;z-index:50;background:rgba(32,31,29,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:1100px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;gap:15px;flex-wrap:wrap}
+.brand{font-weight:500;border:none;color:var(--ink)}
+.brand .mono{color:var(--teal)}
+.nav-in a.nl{border:none;color:var(--muted);font-size:14px;padding-bottom:2px;border-bottom:2px solid transparent}
+.nav-in a.nl:hover{color:var(--ink)}
+.nav-in a.nl.on{color:var(--ink);border-bottom-color:var(--teal)}
+.nav-spacer{flex:1}
+
+header.hero{padding:70px 0 54px}
+.hero h1{font-size:clamp(34px,6vw,56px);letter-spacing:-.02em}
+.hero .sub{font-size:19px;color:var(--muted);max-width:66ch;margin:16px 0 22px}
+.authors{color:var(--muted);font-size:15px;margin-bottom:6px}
+.affil{color:var(--hint);font-size:14px;margin-bottom:20px}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 14px}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line-strong);background:var(--card);color:var(--ink);padding:9px 16px;border-radius:999px;font-size:14px}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.companion{font-size:13.5px;color:var(--hint);margin:0 0 24px;max-width:72ch}
+.companion b{color:var(--muted);font-weight:500}
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-size:12.5px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 10px;color:var(--muted)}
+.chip b{color:var(--ink);font-weight:500}
+.hero-stack{display:flex;flex-direction:column;gap:6px;margin-top:34px;max-width:560px}
+.hs-row{height:13px;border-radius:3px;background:#33312E;opacity:0;transform:translateX(-14px)}
+@media (prefers-reduced-motion:no-preference){.hs-row{animation:slidein .5s ease forwards}}
+@media (prefers-reduced-motion:reduce){.hs-row{opacity:1;transform:none}}
+@keyframes slidein{to{opacity:1;transform:none}}
+.hs-row.t{background:var(--teal-fill);border:1px solid var(--teal)}
+.hs-row.a{background:var(--amber-fill);border:1px solid var(--amber-bright)}
+.hs-cap{font-family:var(--mono);font-size:12px;color:var(--hint);margin-top:8px}
+
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+.card h3{font-size:16px}
+.card p{font-size:14.5px;color:var(--muted)}
+.card .crit{font-family:var(--mono);font-size:12.5px;color:var(--teal);margin-top:10px;display:block}
+.tagline{font-family:var(--mono);font-size:12px;color:var(--hint)}
+
+/* reading order strip */
+.flow{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;align-items:center}
+.fstep{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13.5px;color:var(--muted)}
+.fstep .n{font-family:var(--mono);font-size:11px;color:var(--teal)}
+.farrow{color:var(--hint);font-size:13px}
+
+/* canon */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 18px}
+.filters button{border:1px solid var(--line-strong);background:var(--card);border-radius:999px;padding:7px 13px;font-size:13px;color:var(--muted)}
+.filters button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.canon{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.pc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;text-align:left;width:100%;transition:border-color .15s;color:var(--ink)}
+.pc:hover{border-color:var(--ink)}
+.pc .pt{font-weight:500;font-size:15px}
+.pc .pm{font-family:var(--mono);font-size:11.5px;color:var(--hint);margin:2px 0 0}
+.pc .body{display:none;margin-top:10px;border-top:1px solid var(--line);padding-top:10px}
+.pc.open .body{display:block}
+.pc .body p{font-size:13.5px;color:var(--muted);margin-bottom:6px}
+.pc .body b{font-weight:500;color:var(--ink)}
+.pc .tag{display:inline-block;font-family:var(--mono);font-size:10.5px;border-radius:5px;padding:1px 7px;margin-left:6px;vertical-align:2px}
+.tag.study{background:var(--blue-fill);color:var(--blue)}
+.tag.bench{background:var(--teal-fill);color:var(--teal-deep)}
+.tag.engine{background:var(--coral-fill);color:var(--coral)}
+.tag.theory{background:var(--purple-fill);color:var(--purple)}
+.tag.data{background:var(--amber-fill);color:var(--amber)}
+.hintline{font-size:13px;color:var(--hint);margin-top:12px}
+
+/* patterns */
+.pat{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin:20px 0}
+.pat .card .stat{font-family:var(--mono);font-size:22px;color:var(--teal);margin-bottom:4px}
+.ptable{width:100%;border-collapse:collapse;margin-top:6px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.ptable th,.ptable td{padding:11px 14px;border-top:1px solid var(--line);font-size:14px;text-align:left;vertical-align:top}
+.ptable th{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--hint);border-top:none}
+.ptable td:first-child{color:var(--ink);font-weight:500;min-width:170px}
+.ptable td{color:var(--muted)}
+
+/* stack */
+.stackzone{display:grid;grid-template-columns:minmax(300px,460px) 1fr;gap:24px;align-items:start}
+@media(max-width:820px){.stackzone{grid-template-columns:1fr}.dossier{position:static}}
+.layers{display:flex;flex-direction:column}
+.layer{position:relative;background:var(--card);border:1px solid var(--line-strong);border-radius:8px;padding:10px 14px;text-align:left;width:100%;transition:border-color .15s, background .15s;color:var(--ink)}
+.layer:hover{border-color:var(--ink)}
+.layer.active{background:var(--blue-fill);border-color:var(--blue)}
+.layer .lt{font-weight:500;font-size:15px}
+.layer .ls{font-size:13px;color:var(--muted)}
+.layer.active .ls{color:var(--blue)}
+.bnd{height:19px;display:flex;align-items:center;justify-content:center;position:relative}
+.bnd::before{content:"";position:absolute;left:6px;right:6px;top:50%;border-top:2px dashed var(--teal)}
+.bnd.unk::before{border-top-color:var(--amber-bright)}
+.bnd button{position:relative;z-index:1;font-family:var(--mono);font-size:11px;background:var(--paper);border:1px solid var(--amber-bright);color:var(--amber);border-radius:999px;padding:1px 8px}
+.bnd button:hover{background:var(--amber-fill)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:13px;color:var(--muted)}
+.lg{display:inline-flex;align-items:center;gap:8px}
+.lg i{display:inline-block;width:26px;border-top:2px dashed var(--teal)}
+.lg.unk i{border-top-color:var(--amber-bright)}
+.dossier{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;position:sticky;top:80px}
+.dossier .dt{font-weight:500;font-size:17px;margin-bottom:2px}
+.dossier .ds{font-family:var(--mono);font-size:12px;color:var(--hint);margin-bottom:12px}
+.dossier h4{font-size:12.5px;font-family:var(--mono);letter-spacing:.05em;text-transform:uppercase;margin:12px 0 4px}
+.dossier h4.known{color:var(--teal)}
+.dossier h4.missing{color:var(--amber)}
+.dossier p{font-size:14.5px;color:var(--muted)}
+.dossier .works{font-family:var(--mono);font-size:12.5px;color:var(--hint);margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+
+/* heatmap */
+.hm{display:grid;grid-template-columns:150px repeat(5,1fr);gap:5px;margin-top:20px;max-width:760px}
+.hm .hhead{font-family:var(--mono);font-size:12.5px;color:var(--hint);text-align:center;padding-bottom:2px}
+.hm .hrow{font-family:var(--mono);font-size:12.5px;color:var(--muted);display:flex;align-items:center;justify-content:flex-end;padding-right:8px}
+.hm .hcell{border-radius:6px;height:34px;border:1px solid var(--line);background:var(--card);transition:transform .1s}
+.hm .hcell:hover{transform:scale(1.06)}
+.hm .c1{background:var(--card2)}
+.hm .c2{background:#0B4636}
+.hm .c3{background:var(--teal-mid);border-color:var(--teal)}
+.hm .c0{background:#3A2C15;border:1px dashed var(--amber-bright)}
+.hm .hcell.sel{outline:2px solid var(--ink)}
+.hmnote{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px;font-size:14px;color:var(--muted);max-width:760px}
+.hmleg{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:12.5px;color:var(--hint);align-items:center}
+.hmleg span i{display:inline-block;width:16px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:5px;border:1px solid var(--line)}
+.hmleg .l0 i{background:#3A2C15;border:1px dashed var(--amber-bright)}
+.hmleg .l1 i{background:var(--card2)} .hmleg .l2 i{background:#0B4636} .hmleg .l3 i{background:var(--teal-mid);border-color:var(--teal)}
+
+/* laws */
+.law{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px;margin-bottom:18px}
+.law .lhead{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:4px}
+.law .lnum{font-family:var(--mono);font-size:12px;color:var(--paper);background:var(--purple);border-radius:6px;padding:2px 8px}
+.law .formula{font-family:var(--mono);font-size:13.5px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px 12px;display:inline-block;margin:8px 0 14px;color:var(--ink)}
+.controls{display:flex;gap:22px;flex-wrap:wrap;margin:10px 0 6px}
+.ctrl{min-width:180px;flex:1}
+.ctrl label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:4px;gap:8px}
+.ctrl label output{font-family:var(--mono);color:var(--ink)}
+input[type=range]{width:100%;accent-color:#AFA9EC}
+.readouts{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+.ro{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:10px 14px;min-width:132px}
+.ro .rv{font-family:var(--mono);font-size:20px;font-variant-numeric:tabular-nums}
+.ro .rl{font-size:12px;color:var(--hint)}
+.ro.good .rv{color:var(--teal)} .ro.bad .rv{color:var(--coral)} .ro.warn .rv{color:var(--amber)}
+.plot{width:100%;height:auto;display:block;margin-top:6px}
+.seg{display:inline-flex;border:1px solid var(--line-strong);border-radius:999px;overflow:hidden;margin:6px 8px 6px 0}
+.seg button{border:none;background:transparent;padding:7px 14px;font-size:13px;color:var(--muted)}
+.seg button.on{background:var(--ink);color:var(--paper)}
+.check{font-size:13.5px;color:var(--muted);display:inline-flex;gap:7px;align-items:center}
+.verdict{margin-top:12px;font-size:14.5px;border-left:3px solid var(--line-strong);padding:2px 0 2px 12px;color:var(--muted)}
+.verdict.helps{border-left-color:var(--teal)} .verdict.hurts{border-left-color:var(--coral)}
+.finePrint{font-size:12.5px;color:var(--hint);margin-top:10px}
+.play{border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:7px 16px;font-size:13.5px}
+
+/* agenda */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button{border:1px solid var(--line-strong);background:var(--card);border-radius:999px;padding:8px 14px;font-size:13.5px;color:var(--muted)}
+.tabs button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.dn{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:720px){.dn{grid-template-columns:1fr}}
+.dn .col{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.dn h4{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.dn .done h4{color:var(--teal)} .dn .need h4{color:var(--amber)}
+.dn ul{list-style:none}
+.dn li{font-size:14px;color:var(--muted);padding:6px 0;border-top:1px solid var(--line)}
+.dn li:first-of-type{border-top:none}
+.dn li .w{font-family:var(--mono);font-size:12px;color:var(--hint)}
+.problems{counter-reset:pr}
+.problems .card{position:relative;padding-left:52px}
+.problems .card::before{counter-increment:pr;content:counter(pr,decimal-leading-zero);position:absolute;left:16px;top:16px;font-family:var(--mono);font-size:13px;color:var(--amber)}
+
+/* constants + staffing */
+.const{width:100%;border-collapse:collapse;margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.const th,.const td{padding:11px 14px;border-top:1px solid var(--line);font-size:14px;text-align:left}
+.const th{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--hint);border-top:none}
+.const td.val{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.status{font-family:var(--mono);font-size:11.5px;border-radius:6px;padding:2px 8px}
+.status.live{background:var(--teal-fill);color:var(--teal-deep)}
+.status.tbm{background:var(--amber-fill);color:var(--amber)}
+
+/* timeline 9 months */
+.tl{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;margin-top:16px}
+.tl .ph{border-radius:6px;padding:7px 10px;font-size:12.5px;font-family:var(--mono)}
+.ph.p1{grid-row:1;grid-column:1/span 3;background:var(--blue-fill);color:var(--blue)}
+.ph.e1{grid-row:2;grid-column:3/span 4;background:var(--teal-fill);color:var(--teal-deep)}
+.ph.e2{grid-row:3;grid-column:3/span 4;background:var(--teal-fill);color:var(--teal-deep)}
+.ph.e3{grid-row:4;grid-column:3/span 4;background:var(--teal-fill);color:var(--teal-deep)}
+.ph.p3{grid-row:5;grid-column:5/span 3;background:var(--amber-fill);color:var(--amber)}
+.ph.p4{grid-row:6;grid-column:7/span 3;background:var(--purple-fill);color:var(--purple)}
+.tl2{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--hint);margin-top:6px}
+
+.roles{display:flex;gap:6px;flex-wrap:wrap}
+.role{font-family:var(--mono);font-size:11.5px;border:1px solid var(--line-strong);border-radius:6px;padding:2px 8px;color:var(--muted)}
+pre{background:#171614;color:#E8E6DE;border-radius:12px;padding:18px;overflow:auto;font-family:var(--mono);font-size:13px;line-height:1.6;border:1px solid var(--line)}
+.copybar{display:flex;justify-content:flex-end;margin-bottom:-40px;position:relative;z-index:2;padding-right:10px}
+.copybar button{background:#3A3836;color:#E8E6DE;border:1px solid #55524E;border-radius:8px;padding:6px 12px;font-size:12.5px;margin-top:8px}
+footer{padding:40px 0 60px;color:var(--hint);font-size:13.5px}
+footer a{color:var(--muted)}
+</style>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="The Agent Stack: a reference model, composition laws, and a measurement agenda" />
+<meta property="og:description" content="A reference model for agentic systems: eight layers, seven boundaries, a composition calculus, and a measurement agenda across twenty-five works." />
+<meta property="og:image" content="https://hanabhp.github.io/assets/og-card.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4M99RGCCZP"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4M99RGCCZP');</script>
+</head>
+<body>
+<div style="max-width:1100px;margin:0 auto;padding:12px 20px 0"><a href="index.html" style="color:#8fb1e6;font-size:14px;text-decoration:none">&larr; Hannah B. Pasandi</a> &nbsp;·&nbsp; <a href="research.html" style="color:#8fb1e6;font-size:14px;text-decoration:none">Research Portfolio</a></div>
+
+<nav aria-label="Page">
+  <div class="nav-in">
+    <a class="brand" href="#top"><span class="mono">▤</span> The Agent Stack</a>
+    <span class="nav-spacer"></span>
+    <a class="nl" href="#problem" data-s="problem">Problem</a>
+    <a class="nl" href="#canon" data-s="canon">Evidence</a>
+    <a class="nl" href="#stack" data-s="stack">Model</a>
+    <a class="nl" href="#laws" data-s="laws">Laws</a>
+    <a class="nl" href="#measure" data-s="measure">Experiments</a>
+    <a class="nl" href="#observatory" data-s="observatory">Instruments</a>
+    <a class="nl" href="#agenda" data-s="agenda">Agenda</a>
+    <a class="nl" href="#plan" data-s="plan">Plan</a>
+    <a class="nl" href="#team" data-s="team">Team</a>
+    <a class="nl" href="#bibtex" data-s="bibtex">BibTeX</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wide">
+    <div class="eyebrow">Research project · 2026 · an explorable page: every figure below is live</div>
+    <h1>The Agent Stack</h1>
+    <p class="sub">A reference model, composition laws, and a measurement agenda for agentic AI systems. Read it like a paper. Operate it like an instrument.</p>
+    <div class="authors">Hannah B. Pasandi and et al. · <a href="mailto:h.pasandi@berkeley.edu">h.pasandi@berkeley.edu</a></div>
+    <div class="affil"><sup>1</sup>UC Berkeley · <sup>2</sup>[Partner institution]</div>
+    <div class="btnrow">
+      <a class="btn primary" href="#">Paper (PDF)</a>
+      <a class="btn" href="#">arXiv</a>
+      <a class="btn" href="#">Code</a>
+      <a class="btn" href="#">Data &amp; constants</a>
+      <a class="btn" href="#bibtex">BibTeX</a>
+    </div>
+    <p class="companion"><b>Companion artifacts of this project:</b> the AgentTrace measurement schema, and the AgentMetrics workshop proposed for SIGMETRICS 2027. Both are introduced in the plan below.</p>
+    <div class="chips">
+      <span class="chip"><b>8</b> layers, <b>2</b> planes</span>
+      <span class="chip"><b>6</b> laws, <b>5</b> live below</span>
+      <span class="chip"><b>25</b> works surveyed</span>
+      <span class="chip"><b>5</b> research axes</span>
+      <span class="chip"><b>10</b> open problems</span>
+    </div>
+    <div class="hero-stack" aria-hidden="true" id="heroStack"></div>
+    <div class="hs-cap">teal boundaries: failure modes documented in prior work · amber boundaries: predicted by this model, not yet studied</div>
+  </div>
+</header>
+
+<section id="abstract" style="border-top:1px solid var(--line)">
+  <div class="wide">
+    <div class="kicker">In one minute</div>
+    <h2>The field has facts. It needs laws.</h2>
+    <p class="lede">MAP surveyed how practitioners build agents. MAST cataloged how curated systems fail. HAL standardized evaluation. vLLM and Agentix made execution fast. None of them answers three questions: what the system is, why it behaves the way it does, and what the field should measure next. This project answers all three, with a layered reference model, a composition calculus, and a meta-measurement fitted on public data alone.</p>
+    <div class="flow" aria-label="How the argument proceeds">
+      <span class="fstep"><span class="n">01</span> Evidence: the canon</span><span class="farrow">→</span>
+      <span class="fstep"><span class="n">02</span> Model: the stack</span><span class="farrow">→</span>
+      <span class="fstep"><span class="n">03</span> Laws</span><span class="farrow">→</span>
+      <span class="fstep"><span class="n">04</span> Experiments</span><span class="farrow">→</span>
+      <span class="fstep"><span class="n">05</span> Instruments &amp; constants</span><span class="farrow">→</span>
+      <span class="fstep"><span class="n">06</span> Agenda &amp; plan</span>
+    </div>
+    <p style="margin-top:14px;font-size:14px;color:var(--hint);max-width:72ch">The page follows the argument in order. The ten open problems appear at the end because they are conclusions of the analysis, not premises of it.</p>
+  </div>
+</section>
+
+<section id="problem">
+  <div class="wide">
+    <div class="kicker">Problem statement</div>
+    <h2>The gap, why now, and what the entire literature missed</h2>
+    <p class="lede" style="margin-bottom:14px"><b style="color:var(--ink);font-weight:500">Objective.</b> This project establishes the measurement science of AI agent systems: not whether agents can do tasks, but how well they work, how consistently, at what cost, and with what statistical rigor. <b style="color:var(--ink);font-weight:500">The problem.</b> The field can build and deploy agents, but it cannot yet characterize how they behave once deployed. No shared measurement methodology, reporting standard, or open trace corpus exists for agent systems.</p>
+    <p class="lede" style="margin-bottom:14px"><b style="color:var(--ink);font-weight:500">Why now.</b> Deployment is outpacing understanding, and the distance is measurable. Gartner projects that 40 percent of enterprise applications will embed task-specific AI agents by the end of 2026, up from less than 5 percent in 2025. On the other side of the ledger, MAP surveyed 306 practitioners across 26 domains and analyzed 86 deployed or pilot systems: 61.3 percent of deployed agents were never compared against any baseline, 74.2 percent are evaluated by manual human inspection, and practitioners rank reliability, scalability, latency, and cost as their single largest challenge.</p>
+    <p class="lede" style="margin-bottom:16px"><b style="color:var(--ink);font-weight:500">What the whole literature missed, and why it matters.</b> Benchmarks measure task accuracy but not workload structure. Reliability work, from pass^k to HAL, runs on benchmark logs, not production data. Serving research fabricates its workloads, because no public agent execution trace exists. Field studies report self-reported percentages, not distributions, tails, or time series. And nothing ties the pieces together. Measurement is the precondition for systems science: the Borg, Alibaba, and Azure trace releases each seeded a decade of research, and agents have no equivalent. This project builds the model, the laws, and the instruments that close the gap.</p>
+    <div class="chips">
+      <span class="chip"><b>40%</b> of enterprise apps with agents by end 2026 (Gartner)</span>
+      <span class="chip"><b>61.3%</b> of deployed agents never compared to a baseline (MAP)</span>
+      <span class="chip"><b>74.2%</b> evaluated by manual inspection (MAP)</span>
+      <span class="chip"><b>0</b> public in-the-wild agent trace corpora</span>
+    </div>
+  </div>
+</section>
+
+<section id="canon">
+  <div class="wide">
+    <div class="kicker">01 · Evidence</div>
+    <h2>The canon: twenty-five works, surveyed and mapped</h2>
+    <p class="lede" style="margin-bottom:14px">The literature review as cards instead of paragraphs. Each card opens to its core finding and the way this project uses it. Full citations live in the paper.</p>
+    <div class="filters" id="canonFilters"></div>
+    <div class="canon" id="canonGrid"></div>
+    <div class="hintline">Select any card to open it.</div>
+
+    <h2 style="margin-top:52px">What the survey shows: four patterns</h2>
+    <p class="lede" style="margin-bottom:6px">Reading the twenty-five works together, four regularities emerge. The chart below is computed directly from the cards above.</p>
+    <div class="pat">
+      <div class="card"><div class="stat num">≈2 yrs</div><h3>Building precedes measuring</h3><p>Engines cluster in 2023 to 2024. Studies and methodology cluster in 2025 to 2026. The field is entering its measurement phase now.</p></div>
+      <div class="card"><div class="stat num">2 / 8</div><h3>Two layers absorb most attention</h3><p>Model and orchestration dominate the literature. Context and memory has almost no coverage of any kind.</p></div>
+      <div class="card"><div class="stat num">3 / 3</div><h3>Failures are boundary phenomena</h3><p>Every documented failure category sits at an interface between layers, none inside a layer.</p></div>
+      <div class="card"><div class="stat num">5 works</div><h3>Scalar metrics are the shared critique</h3><p>Five works independently show that a single accuracy number misleads. None yet replaces it.</p></div>
+    </div>
+    <svg id="canonChart" class="plot" viewBox="0 0 640 260" role="img" aria-label="works per year by type"></svg>
+    <table class="ptable" style="margin-top:22px">
+      <tr><th>Pattern</th><th>Evidence in the canon</th><th>Consequence for this project</th></tr>
+      <tr><td>Building precedes measuring</td><td>Engines peak in 2023 to 2024; studies, harnesses, and methodology peak in 2025 to 2026.</td><td>The measurement phase has begun; this project supplies its model, laws, and instruments.</td></tr>
+      <tr><td>Attention concentrates at two layers</td><td>The coverage map below shows dense columns at the model and orchestration layers and a nearly empty row at context and memory.</td><td>The model directs effort to the empty cells, beginning with context-state failures (class B2).</td></tr>
+      <tr><td>Failures live at boundaries</td><td>All three documented failure categories in MAST map onto layer interfaces.</td><td>The boundary principle, and four predicted failure classes B1 to B4 at the unstudied interfaces.</td></tr>
+      <tr><td>Single numbers mislead</td><td>Five works reach this conclusion independently, from pass^k collapse to cost-blind evaluation.</td><td>Law 2 replaces the scalar with the solvability spectrum; AgentReport makes the replacement reportable.</td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wide">
+    <div class="kicker">02 · Model</div>
+    <h2>The reference model: eight layers, seven boundaries</h2>
+    <p class="lede" style="margin-bottom:10px">The layers and boundaries are defined by this project; they are a contribution, not an inheritance. The model earns its keep by mapping: every surveyed work lands on a layer or a boundary. At three boundaries, prior work (MAST) has documented the failure modes. At the remaining four, the model predicts failure classes that no study has yet examined.</p>
+    <p class="lede" style="margin-bottom:24px">Select a layer to open its dossier: what is established, what is open, and the key works.</p>
+    <div class="stackzone">
+      <div>
+        <div class="layers" id="layers"></div>
+        <div class="legend">
+          <span class="lg"><i></i> failure modes documented (MAST)</span>
+          <span class="lg unk"><i></i> failure modes predicted, not yet studied</span>
+        </div>
+      </div>
+      <div class="dossier" id="dossier" aria-live="polite"></div>
+    </div>
+
+    <h2 style="margin-top:56px">Coverage analysis: where the literature is dense and where it is empty</h2>
+    <p class="lede">Each cell scores published coverage from 0 to 3, across five kinds of work. Select a cell. The empty cells are the point.</p>
+    <div class="hm" id="heatmap" role="grid" aria-label="coverage heatmap"></div>
+    <div class="hmleg">
+      <span class="l0"><i></i>0 · gap</span><span class="l1"><i></i>1 · sparse</span><span class="l2"><i></i>2 · active</span><span class="l3"><i></i>3 · dense</span>
+    </div>
+    <div class="hmnote" id="hmNote" aria-live="polite">Select any cell to read its status.</div>
+  </div>
+</section>
+
+<section id="laws">
+  <div class="wide">
+    <div class="kicker">03 · Laws</div>
+    <h2>The composition calculus</h2>
+    <p class="lede" style="margin-bottom:24px">Six laws govern how reliability, cost, and latency compose across steps, retries, verifiers, and agents. Five are implemented below from their closed forms; the tail law requires simulation. Each control sets a parameter of the law, and every readout follows from it.</p>
+
+    <div class="law">
+      <div class="lhead"><span class="lnum">Law 1</span><h3>The horizon law</h3></div>
+      <p style="color:var(--muted);font-size:14.5px">Under a constant per-minute hazard rate λ, survival over a task of length L is exponential. The 50% horizon is where half of attempts still succeed.</p>
+      <div class="formula">S(L) = e^(−λ·L) &nbsp;·&nbsp; h₅₀ = ln 2 / λ</div>
+      <div class="controls">
+        <div class="ctrl"><label>hazard rate λ, per minute <output id="lamOut">0.020</output></label><input type="range" id="lam" min="0.004" max="0.12" step="0.002" value="0.02" aria-label="hazard rate"></div>
+      </div>
+      <svg id="horizonPlot" class="plot" viewBox="0 0 640 240" role="img" aria-label="survival curve"></svg>
+      <div class="readouts">
+        <div class="ro good"><div class="rv" id="h50">34.7 min</div><div class="rl">50% horizon h₅₀</div></div>
+        <div class="ro"><div class="rv" id="s60">30%</div><div class="rl">survival at 60 min</div></div>
+        <div class="ro warn"><div class="rv" id="s240">1%</div><div class="rl">survival at 4 hours</div></div>
+      </div>
+      <div class="finePrint">Fit target: METR task-length data, per domain. H1: λ is a stable, estimable constant per domain.</div>
+    </div>
+
+    <div class="law">
+      <div class="lhead"><span class="lnum">Law 2</span><h3>The solvability spectrum</h3></div>
+      <p style="color:var(--muted);font-size:14.5px">Each task has a hidden per-run success probability q. Reliability curves are moment transforms of the distribution of q. The three worlds below share the same accuracy, 60%. Watch them separate.</p>
+      <div class="formula">pass@1 = E[q] &nbsp;·&nbsp; passᵏ = E[qᵏ] &nbsp;·&nbsp; pass@k = 1 − E[(1−q)ᵏ]</div>
+      <div>
+        <span class="seg" role="group" aria-label="world selector">
+          <button class="on" data-w="all">All three</button>
+          <button data-w="coin">Coin-flip</button>
+          <button data-w="bimodal">Bimodal</button>
+          <button data-w="middle">Messy middle</button>
+        </span>
+        <label class="check"><input type="checkbox" id="showAtK"> overlay pass@k (best of k)</label>
+      </div>
+      <svg id="specPlot" class="plot" viewBox="0 0 640 260" role="img" aria-label="reliability curves"></svg>
+      <div class="readouts">
+        <div class="ro"><div class="rv">60%</div><div class="rl">pass@1, all worlds</div></div>
+        <div class="ro bad"><div class="rv" id="p8coin">1.7%</div><div class="rl">pass⁸, coin-flip</div></div>
+        <div class="ro warn"><div class="rv" id="p8mid">14%</div><div class="rl">pass⁸, messy middle</div></div>
+        <div class="ro good"><div class="rv" id="p8bi">47%</div><div class="rl">pass⁸, bimodal</div></div>
+      </div>
+      <div class="finePrint">One accuracy number keeps the first moment of the distribution and discards the rest. H2: benchmarks are bimodal; production is not.</div>
+    </div>
+
+    <div class="law">
+      <div class="lhead"><span class="lnum">Law 3</span><h3>The verification law</h3></div>
+      <p style="color:var(--muted);font-size:14.5px">A generator succeeds with probability p per attempt. A verifier accepts correct work at rate t and incorrect work at rate f. Retry until accepted.</p>
+      <div class="formula">P(correct | accepted) = p·t / (p·t + (1−p)·f) &nbsp;·&nbsp; E[attempts] = 1 / (p·t + (1−p)·f)</div>
+      <div class="controls">
+        <div class="ctrl"><label>generator success p <output id="pOut">0.30</output></label><input type="range" id="pGen" min="0.05" max="0.95" step="0.05" value="0.30"></div>
+        <div class="ctrl"><label>verifier true-accept t <output id="tOut">0.90</output></label><input type="range" id="tVer" min="0.50" max="1.00" step="0.02" value="0.90"></div>
+        <div class="ctrl"><label>verifier false-accept f <output id="fOut">0.10</output></label><input type="range" id="fVer" min="0.00" max="0.50" step="0.01" value="0.10"></div>
+      </div>
+      <div class="readouts">
+        <div class="ro" id="roCorrect"><div class="rv" id="vCorrect">79%</div><div class="rl">accepted output correct</div></div>
+        <div class="ro"><div class="rv" id="vAttempts">2.9×</div><div class="rl">expected attempts (cost)</div></div>
+      </div>
+      <div class="verdict" id="vVerdict"></div>
+      <div class="finePrint">Formalizes the verification failure category in MAST and the human-verification burden in MAP. H3: measured (t, f) predicts end-to-end reliability.</div>
+    </div>
+
+    <div class="law">
+      <div class="lhead"><span class="lnum">Law 5</span><h3>The retry-tail simulator</h3></div>
+      <p style="color:var(--muted);font-size:14.5px">A program runs n steps. Each attempt fails with probability q and is retried up to R times. Attempt costs vary modestly. Watch a modest system grow a heavy tail, then check the p99.</p>
+      <div class="controls">
+        <div class="ctrl"><label>steps n <output id="tsN">12</output></label><input type="range" id="tsNin" min="4" max="30" step="1" value="12"></div>
+        <div class="ctrl"><label>attempt failure q <output id="tsQ">0.15</output></label><input type="range" id="tsQin" min="0.02" max="0.40" step="0.01" value="0.15"></div>
+        <div class="ctrl"><label>retry limit R <output id="tsR">3</output></label><input type="range" id="tsRin" min="0" max="5" step="1" value="3"></div>
+      </div>
+      <span class="seg"><button class="on" id="axLin">linear x</button><button id="axLog">log x</button></span>
+      <svg id="tailPlot" class="plot" viewBox="0 0 640 240" role="img" aria-label="cost histogram"></svg>
+      <div class="readouts">
+        <div class="ro"><div class="rv" id="tMed">·</div><div class="rl">median cost</div></div>
+        <div class="ro warn"><div class="rv" id="tP99">·</div><div class="rl">p99 cost</div></div>
+        <div class="ro" id="roRatio"><div class="rv" id="tRatio">·</div><div class="rl">p99 / median</div></div>
+        <div class="ro bad"><div class="rv" id="tFail">·</div><div class="rl">programs failed</div></div>
+      </div>
+      <div class="verdict" id="tVerdict"></div>
+      <div class="finePrint">3,000 simulated programs, seeded and reproducible. H5: agent cost tails are policy-induced, not model-induced. The fit target is real trace data.</div>
+    </div>
+
+    <div class="law">
+      <div class="lhead"><span class="lnum">Law 6</span><h3>The coordination threshold</h3></div>
+      <p style="color:var(--muted);font-size:14.5px">n agents vote. With probability ρ their errors are perfectly correlated; otherwise independent. Coordination also multiplies token cost.</p>
+      <div class="formula">P = ρ·p + (1−ρ)·P_majority(n, p) &nbsp;·&nbsp; cost = n · (1 + overhead)</div>
+      <div class="controls">
+        <div class="ctrl"><label>single-agent success p <output id="maP">0.60</output></label><input type="range" id="maPin" min="0.30" max="0.90" step="0.05" value="0.60"></div>
+        <div class="ctrl"><label>agents n <output id="maN">3</output></label><input type="range" id="maNin" min="1" max="9" step="2" value="3"></div>
+        <div class="ctrl"><label>error correlation ρ <output id="maR">0.40</output></label><input type="range" id="maRin" min="0" max="1" step="0.05" value="0.40"></div>
+        <div class="ctrl"><label>coordination overhead <output id="maO">+50%</output></label><input type="range" id="maOin" min="0" max="2" step="0.1" value="0.5"></div>
+      </div>
+      <div class="readouts">
+        <div class="ro"><div class="rv" id="maSingle">60%</div><div class="rl">one agent</div></div>
+        <div class="ro" id="roCommittee"><div class="rv" id="maCommittee">62%</div><div class="rl">committee</div></div>
+        <div class="ro warn"><div class="rv" id="maCost">4.5×</div><div class="rl">token cost</div></div>
+      </div>
+      <div class="verdict" id="maVerdict"></div>
+      <div class="finePrint">A simplified mixture model, stated as such. Production reports put multi-agent near 15× the tokens of chat; MAST finds gains often minimal. H6: measured correlations explain when committees win.</div>
+    </div>
+  </div>
+</section>
+
+<section id="measure">
+  <div class="wide">
+    <div class="kicker">04 · Experiments</div>
+    <h2>Three controlled experiments, fitted on public data</h2>
+    <p class="lede">No private dataset sits on the critical path. The laws are fitted on public artifacts, then completed by three experiments.</p>
+    <div class="grid g3" style="margin-top:20px">
+      <div class="card"><div class="tagline">E1 · variance</div><h3>Decompose the randomness</h3><p>Nested design over sampling seed, serving condition (default vs batch-invariant kernels), environment repetition, and prompt paraphrase. The first separation of model, substrate, environment, and specification variance.</p></div>
+      <div class="card"><div class="tagline">E2 · drift</div><h3>Replay the world</h3><p>Freeze agents and replay archived environment snapshots, month by month, to estimate decay rates for the drift boundary. Retrospective replay means no waiting for calendar time.</p></div>
+      <div class="card"><div class="tagline">E3 · verifiers</div><h3>Price the judges</h3><p>Measure (t, f) for unit tests, LLM judges, and human spot checks across domains. Validate the verification law end to end.</p></div>
+    </div>
+    <p style="margin-top:18px;font-size:14px;color:var(--muted)">Public evidence base: <span class="chip">MAST-Data</span> <span class="chip">HAL logs</span> <span class="chip">METR runs</span> <span class="chip">τ-bench</span> <span class="chip">SWE-bench</span> <span class="chip">WebArena</span> <span class="chip">GAIA</span> <span class="chip">BFCL</span> <span class="chip">AgentDojo</span> <span class="chip">AIOpsLab</span></p>
+  </div>
+</section>
+
+<section id="observatory">
+  <div class="wide">
+    <div class="kicker">05 · Instruments</div>
+    <h2>Two instruments and the constants dashboard</h2>
+
+    <div class="law" style="margin-top:16px">
+      <div class="lhead"><span class="lnum">Demo</span><h3>Token amplification cascade</h3></div>
+      <p style="color:var(--muted);font-size:14.5px">One user request becomes many calls. Each step makes one model call plus tool calls; carrying context makes every later call heavier. Press play.</p>
+      <div class="controls">
+        <div class="ctrl"><label>agent steps <output id="apS">6</output></label><input type="range" id="apSin" min="1" max="12" step="1" value="6"></div>
+        <div class="ctrl"><label>tool calls per step <output id="apF">2</output></label><input type="range" id="apFin" min="0" max="3" step="1" value="2"></div>
+        <div class="ctrl"><label>tokens per model call <output id="apT">1500</output></label><input type="range" id="apTin" min="500" max="4000" step="250" value="1500"></div>
+      </div>
+      <label class="check"><input type="checkbox" id="apCarry" checked> carry full context to every step</label>
+      <button class="play" id="apPlay" style="margin-left:12px">Play cascade</button>
+      <svg id="apPlot" class="plot" viewBox="0 0 640 200" role="img" aria-label="amplification cascade"></svg>
+      <div class="readouts">
+        <div class="ro"><div class="rv" id="apCalls">18</div><div class="rl">calls per request</div></div>
+        <div class="ro warn"><div class="rv" id="apTok">·</div><div class="rl">total tokens</div></div>
+        <div class="ro" id="roAmp"><div class="rv" id="apAmp">·</div><div class="rl">× one chat turn (800 tok)</div></div>
+      </div>
+      <div class="finePrint">The amplification factor is a proposed workload metric. Fit target: real traces via the measurement plane.</div>
+    </div>
+
+    <div class="law">
+      <div class="lhead"><span class="lnum">Demo</span><h3>Drift observatory</h3></div>
+      <p style="color:var(--muted);font-size:14.5px">Freeze an agent. Let the world move. Scrub the months and watch success decay. Illustrative synthetic data; experiment E2 measures the real curve.</p>
+      <div class="controls">
+        <div class="ctrl"><label>environment half-life <output id="drH">9 mo</output></label><input type="range" id="drHin" min="2" max="24" step="1" value="9"></div>
+        <div class="ctrl"><label>months since freeze <output id="drM">6</output></label><input type="range" id="drMin" min="0" max="12" step="1" value="6"></div>
+      </div>
+      <svg id="drPlot" class="plot" viewBox="0 0 640 220" role="img" aria-label="drift curve"></svg>
+      <div class="readouts">
+        <div class="ro good"><div class="rv">74%</div><div class="rl">success at freeze</div></div>
+        <div class="ro" id="roDrift"><div class="rv" id="drNow">·</div><div class="rl" id="drLbl">at month 6</div></div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:34px">The constants of agentic computing</h3>
+    <p style="color:var(--muted);font-size:14.5px;max-width:72ch">The table the project exists to fill. Four rows are wired to the widgets above, so the dashboard moves as you explore; the rest await experiments E1 to E3.</p>
+    <table class="const">
+      <tr><th>Constant</th><th>Value</th><th>Status</th><th>Source</th></tr>
+      <tr><td>50% task horizon h₅₀</td><td class="val" id="cH50">34.7 min</td><td><span class="status live">live from Law 1</span></td><td>METR fits, per domain</td></tr>
+      <tr><td>Solvability spectrum shape</td><td class="val">?</td><td><span class="status tbm">to be measured</span></td><td>Law 2 fits on benchmark reruns</td></tr>
+      <tr><td>Verifier accepted-correct rate</td><td class="val" id="cVer">79%</td><td><span class="status live">live from Law 3</span></td><td>Experiment E3</td></tr>
+      <tr><td>Cost tail index (p99 / median)</td><td class="val" id="cTail">·</td><td><span class="status live">live from Law 5</span></td><td>Experiment E1 + traces</td></tr>
+      <tr><td>Multi-agent break-even ρ</td><td class="val">?</td><td><span class="status tbm">to be measured</span></td><td>Law 6 fits</td></tr>
+      <tr><td>Drift half-life, per domain</td><td class="val" id="cDrift">9 mo</td><td><span class="status live">live from the observatory</span></td><td>Experiment E2</td></tr>
+      <tr><td>Variance shares: model / substrate / environment / spec</td><td class="val">? / ? / ? / ?</td><td><span class="status tbm">to be measured</span></td><td>Experiment E1</td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="agenda">
+  <div class="wide">
+    <div class="kicker">06 · Agenda</div>
+    <h2>Gap analysis across five research axes</h2>
+    <p class="lede" style="margin-bottom:8px">The five axes are an organizing framework defined by this project; they emerge from where the twenty-five surveyed works cluster. For each axis, Established lists published results with their sources, and Open lists what no published work yet establishes: these are the targets this project sets for itself and for the community. Measurement science remains an axis of its own because it is the cross-cutting plane the other four consume.</p>
+    <div class="tabs" id="axisTabs" role="tablist"></div>
+    <div class="dn" id="axisPanel"></div>
+    <h2 style="margin-top:44px">Ten open problems, as conclusions</h2>
+    <p class="lede" style="margin-bottom:6px">Each problem follows from the model, the coverage analysis, or a law. They close the argument; they do not open it.</p>
+    <div class="grid g2 problems" style="margin-top:14px" id="problems"></div>
+  </div>
+</section>
+
+<section id="plan">
+  <div class="wide">
+    <div class="kicker">Execution</div>
+    <h2>Nine months with three students; the floor is thinking and writing</h2>
+    <p class="lede" style="margin-bottom:10px">The three experiments are independent, so they parallelize perfectly across students. The model, the calculus, and the writing do not parallelize; they set the floor. Retrospective environment replay removes the calendar-time constraint from the drift experiment.</p>
+    <div class="tl" aria-label="timeline">
+      <div class="ph p1">Model + calculus</div>
+      <div class="ph e1">E1 variance (student A)</div>
+      <div class="ph e2">E2 drift (student B)</div>
+      <div class="ph e3">E3 verifiers (student C)</div>
+      <div class="ph p3">Synthesis + gap analysis</div>
+      <div class="ph p4">Write · circulate · submit</div>
+    </div>
+    <div class="tl2"><span>month 1</span><span>3</span><span>5</span><span>7</span><span>9</span></div>
+    <table class="const" style="margin-top:22px;max-width:760px">
+      <tr><th>Team</th><th>Duration</th><th>What changes</th></tr>
+      <tr><td>2 PhD students</td><td class="val">12 months</td><td>Experiments run in sequence; slowest realistic plan.</td></tr>
+      <tr><td>3 PhD students</td><td class="val">9 months</td><td>E1, E2, E3 in parallel; the default plan above.</td></tr>
+      <tr><td>4 students + postdoc</td><td class="val">7 months</td><td>Adds fit-and-analysis bandwidth; modeling and writing set the floor.</td></tr>
+    </table>
+    <p style="margin-top:18px;font-size:14.5px;color:var(--muted);max-width:72ch">Budget for the nine-month default: about $420K. Minimum-viable at $180K: one student, experiment E1 only, laws fitted on existing public logs. Venues: SIGMETRICS/POMACS or SOSP/OSDI for the results; a CACM view piece for the agenda; community debut at the proposed AgentMetrics workshop, SIGMETRICS 2027. The AgentTrace schema ships with the measurement plane in month 3.</p>
+  </div>
+</section>
+
+<section id="team">
+  <div class="wide">
+    <div class="kicker">Team · tentative</div>
+    <h2>One anchor per layer</h2>
+    <p class="lede" style="margin-bottom:20px">The stack dictates the guest list. This team is tentative: every entry below is a prospective collaborator to be invited, and no participation has been confirmed.</p>
+    <div class="grid g3">
+      <div class="card"><h3>Compute &amp; GPU</h3><p>NVIDIA inference performance · Google TPU serving · Meta AI infrastructure</p><div class="roles"><span class="role">L1</span><span class="role">E1</span><span class="role">B4</span></div></div>
+      <div class="card"><h3>Serving &amp; determinism</h3><p>Agentix / vLLM authors · Azure Research systems · Mooncake team · Thinking Machines</p><div class="roles"><span class="role">L2</span><span class="role">B1</span></div></div>
+      <div class="card"><h3>Orchestration &amp; context</h3><p>DSPy / GEPA authors · MemGPT founders · BFCL lead</p><div class="roles"><span class="role">L4 to L6</span></div></div>
+      <div class="card"><h3>Protocols &amp; networking</h3><p>MCP team (Anthropic) · A2A team (Google) · OpenTelemetry GenAI leads</p><div class="roles"><span class="role">L7</span><span class="role">narrow waist</span></div></div>
+      <div class="card"><h3>Agents for systems &amp; networks</h3><p>UIUC systems reliability (Tianyin Xu's group; Yinfang Chen, AIOpsLab) · MSR AIOps · IBM ITBench · datacenter network diagnosis groups</p><div class="roles"><span class="role">axes 2 and 4</span><span class="role">trust calculus</span></div></div>
+      <div class="card"><h3>Theory &amp; queueing</h3><p>Mor Harchol-Balter (CMU) · Adam Wierman (Caltech) · Christina Lee Yu (Cornell)</p><div class="roles"><span class="role">laws</span><span class="role">tails</span></div></div>
+      <div class="card"><h3>Evaluation science</h3><p>Princeton HAL group · UIUC benchmarking · Sierra (τ-bench) · ETH security · METR</p><div class="roles"><span class="role">planes</span><span class="role">spectra</span></div></div>
+      <div class="card"><h3>Frontier labs</h3><p>Anthropic Clio &amp; agent engineering · OpenAI evaluation teams</p><div class="roles"><span class="role">L8</span><span class="role">usage measurement</span></div></div>
+      <div class="card"><h3>Field-study anchors</h3><p>MAP and MAST author teams: Berkeley Sky Lab and IBM</p><div class="roles"><span class="role">foundation</span><span class="role">co-authors</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="bibtex">
+  <div class="wide">
+    <div class="kicker">Cite</div>
+    <h2>BibTeX</h2>
+    <div class="copybar"><button id="copyBib">Copy</button></div>
+    <pre id="bibBlock">@misc{agentstack2026,
+  title  = {The Agent Stack: A Reference Model, Composition Laws,
+            and a Measurement Agenda for Agentic AI Systems},
+  author = {Pasandi, Hannah B. and et al.},
+  year   = {2026},
+  note   = {Project page: https://your-domain.github.io/agent-stack}
+}</pre>
+  </div>
+</section>
+
+<footer>
+  <div class="wide">
+    <p>Contact: <a href="mailto:h.pasandi@berkeley.edu">h.pasandi@berkeley.edu</a></p>
+    <p style="margin-top:8px">All design and content are original to this project.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var C={grid:'#33312E',axis:'#4A4844',lab:'#8A8880',teal:'#5DCAA5',tealDeep:'#9FE1CB',amber:'#EF9F27',amberT:'#FAC775',coral:'#F0997B',purple:'#AFA9EC',blue:'#85B7EB'};
+
+/* hero mini stack */
+var hs=document.getElementById('heroStack');
+var kinds=['','t','t','t','a','a','a','a'];
+for(var i=0;i<8;i++){var r=document.createElement('div');r.className='hs-row '+(i>0?kinds[i]:'');r.style.animationDelay=(i*0.07)+'s';hs.appendChild(r);}
+
+/* ---------- canon ---------- */
+var CANON=[
+ {n:'MAP',y:2025,g:'study',f:'306 practitioners, 26 domains: production agents are short, prompted, human-checked; reliability is challenge one.',i:'Autonomy is bounded by reliability; the human layer is part of the system.'},
+ {n:'MAST',y:2025,g:'study',f:'1,600+ annotated traces yield 14 failure modes in 3 categories; multi-agent gains often minimal.',i:'Failures are interface phenomena, and the taxonomy covers only some interfaces.'},
+ {n:'AI Agents That Matter',y:2024,g:'study',f:'Agent evals are cost-blind, unreproducible, and overfit.',i:'Reporting standards are missing; AgentReport answers this.'},
+ {n:'Agent reliability line',y:2026,g:'study',f:'Consistency, predictability, robustness, and abstention are separable reliability dimensions.',i:'Reliability is multi-dimensional; the spectrum makes it estimable.'},
+ {n:'Barbarians at the Gate',y:2025,g:'study',f:'AI is transforming how systems research itself is done.',i:'Measurement-first, data-rich methods are the way in.'},
+ {n:'τ-bench',y:2024,g:'bench',f:'pass^k collapses far below single-run accuracy.',i:'Reliability is a curve, not a number; Law 2 names its estimand.'},
+ {n:'SWE-bench',y:2024,g:'bench',f:'Real GitHub issues as the coding agent yardstick.',i:'A spectrum-estimation target with public trajectories.'},
+ {n:'WebArena · OSWorld',y:2024,g:'bench',f:'Realistic web and OS environments for agents.',i:'Environment realism enables drift replay (E2).'},
+ {n:'GAIA',y:2023,g:'bench',f:'General assistant tasks that are easy for humans, hard for agents.',i:'A cross-domain anchor for hazard-rate fits.'},
+ {n:'Gorilla · BFCL',y:2024,g:'bench',f:'Tool-calling accuracy is measurable and imperfect.',i:'The tools boundary has a working instrument.'},
+ {n:'AgentDojo',y:2024,g:'bench',f:'Prompt-injection attack success is measurable in dynamic environments.',i:'Security is a per-boundary observable.'},
+ {n:'HAL',y:2026,g:'bench',f:'A standardized harness; billions of tokens of released agent logs.',i:'The public logs the laws are fitted on.'},
+ {n:'AIOpsLab',y:2025,g:'bench',f:'Fault-injecting cloud environments for evaluating ops agents.',i:'The agents-for-systems axis has its testbed.'},
+ {n:'vLLM',y:2023,g:'engine',f:'Paged KV memory transformed serving throughput.',i:'The serving layer has its own laws and its own leaks.'},
+ {n:'DistServe · Splitwise',y:2024,g:'engine',f:'Disaggregation and phase splitting; goodput as objective; Azure traces released.',i:'Goodput extends to task goodput; compute structure is measurable.'},
+ {n:'Parrot',y:2024,g:'engine',f:'Application-level semantics unlock large serving gains.',i:'Cross-layer information is the win; the planes exist for it.'},
+ {n:'Agentix (Autellix)',y:2026,g:'engine',f:'Programs, not calls, as the scheduling unit: 4 to 15× throughput.',i:'The program is the unit of measurement too.'},
+ {n:'Defeating nondeterminism',y:2025,g:'engine',f:'Batch-variant kernels make outputs depend on co-scheduled strangers.',i:'Failure class B1; determinism becomes a serving SLO.'},
+ {n:'More LLM calls · Monkeys',y:2024,g:'theory',f:'Compound-call scaling is non-monotone; repeated sampling has a coverage law.',i:'Composition has laws; Law 4 unifies them via the spectrum.'},
+ {n:'FrugalGPT · RouteLLM',y:2024,g:'theory',f:'Cost-quality frontiers and learned routing work.',i:'The control plane exists and optimizes; it needs constants.'},
+ {n:'DSPy · GEPA',y:2025,g:'theory',f:'Systems improve by reading their own execution traces.',i:'The trace is the gradient; the measurement plane feeds the control plane.'},
+ {n:'MemGPT',y:2023,g:'theory',f:'Memory hierarchies for agents, by analogy to an OS.',i:'Context is a layer with undocumented failure modes (B2).'},
+ {n:'The trace tradition',y:2020,g:'data',f:'Borg, Alibaba, and Azure releases each created a research field.',i:'Instruments precede science; open problem 10.'},
+ {n:'Clio',y:2024,g:'data',f:'Privacy-preserving aggregate analysis of real AI usage.',i:'The template for safe release of language-bearing data.'},
+ {n:'MCP · A2A · OTel GenAI',y:2025,g:'data',f:'Tool and agent protocols plus telemetry conventions exist.',i:'The plumbing exists; the narrow waist and the datasets do not.'}
+];
+var GROUPS=[['all','All'],['study','Studies & taxonomies'],['bench','Benchmarks & harnesses'],['engine','Engines & substrate'],['theory','Theory & optimizers'],['data','Data & protocols']];
+var GCOLOR={study:C.blue,bench:C.teal,engine:C.coral,theory:C.purple,data:C.amber};
+var cf=document.getElementById('canonFilters'),cg=document.getElementById('canonGrid'),cSel='all';
+function renderCanon(){
+  cg.innerHTML='';
+  CANON.forEach(function(c){
+    if(cSel!=='all'&&c.g!==cSel)return;
+    var b=document.createElement('button');b.className='pc';
+    b.innerHTML='<div class="pt">'+c.n+'<span class="tag '+c.g+'">'+c.g+'</span></div>'
+      +'<div class="pm num">'+c.y+'</div>'
+      +'<div class="body"><p><b>Finding.</b> '+c.f+'</p><p><b>Used here.</b> '+c.i+'</p></div>';
+    b.addEventListener('click',function(){b.classList.toggle('open');});
+    cg.appendChild(b);
+  });
+}
+GROUPS.forEach(function(g){
+  var b=document.createElement('button');b.textContent=g[1];if(g[0]==='all')b.classList.add('on');
+  b.addEventListener('click',function(){
+    cSel=g[0];cf.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');renderCanon();
+  });
+  cf.appendChild(b);
+});
+renderCanon();
+
+/* canon chart: works per year by type, computed from CANON */
+(function(){
+  var years=[2020,2023,2024,2025,2026],order=['study','bench','engine','theory','data'];
+  var counts={};years.forEach(function(y){counts[y]={study:0,bench:0,engine:0,theory:0,data:0};});
+  CANON.forEach(function(c){if(counts[c.y])counts[c.y][c.g]++;});
+  var W=640,H=260,mL=46,mB=34,mT=16,mR=150,pw=W-mL-mR,ph=H-mT-mB;
+  var maxT=0;years.forEach(function(y){var t=0;order.forEach(function(g){t+=counts[y][g];});if(t>maxT)maxT=t;});
+  var s='<line x1="'+mL+'" y1="'+(H-mB)+'" x2="'+(W-mR+10)+'" y2="'+(H-mB)+'" stroke="'+C.axis+'"/>';
+  [0,4,8,12].forEach(function(v){if(v<=maxT){var y=H-mB-v/maxT*ph;s+='<line x1="'+mL+'" y1="'+y+'" x2="'+(W-mR+10)+'" y2="'+y+'" stroke="'+C.grid+'"/><text x="'+(mL-8)+'" y="'+(y+4)+'" fill="'+C.lab+'" font-size="12" font-family="ui-monospace,monospace" text-anchor="end">'+v+'</text>';}});
+  var bw=Math.min(56,pw/years.length*0.6);
+  years.forEach(function(y,i){
+    var x=mL+(i+0.5)*(pw/years.length)-bw/2, acc=0;
+    order.forEach(function(g){
+      var v=counts[y][g];if(!v)return;
+      var h=v/maxT*ph;
+      s+='<rect x="'+x+'" y="'+(H-mB-acc-h)+'" width="'+bw+'" height="'+(h-1)+'" rx="2" fill="'+GCOLOR[g]+'"/>';
+      acc+=h;
+    });
+    s+='<text x="'+(x+bw/2)+'" y="'+(H-12)+'" fill="'+C.lab+'" font-size="12" font-family="ui-monospace,monospace" text-anchor="middle">'+y+'</text>';
+  });
+  var LNAMES={study:'studies',bench:'benchmarks',engine:'engines',theory:'theory',data:'data & protocols'};
+  order.forEach(function(g,i){
+    var ly=mT+14+i*22;
+    s+='<rect x="'+(W-mR+26)+'" y="'+(ly-9)+'" width="14" height="11" rx="2" fill="'+GCOLOR[g]+'"/>';
+    s+='<text x="'+(W-mR+46)+'" y="'+ly+'" fill="'+C.lab+'" font-size="12" font-family="ui-monospace,monospace">'+LNAMES[g]+'</text>';
+  });
+  s+='<text x="'+mL+'" y="'+(mT-2)+'" fill="'+C.lab+'" font-size="12" font-family="ui-monospace,monospace">works per year, by type</text>';
+  document.getElementById('canonChart').innerHTML=s;
+})();
+
+/* ---------- stack ---------- */
+var LAYERS=[
+ {t:'L8 · Human and organization',s:'oversight, verification, accountability',
+  known:'Production agents are short and human-checked; 74% of teams evaluate primarily with humans; reliability is the top declared challenge (MAP).',
+  missing:'The verification-cost ratio is unmeasured. Intervention rates have no standard definition. Oversight has no metric of its own.',
+  works:'MAP · agent-reliability line'},
+ {t:'L7 · Multi-agent protocols',s:'MCP, A2A, handoffs',
+  known:'Inter-agent misalignment is a documented failure category (MAST). Protocols exist: MCP for tools, A2A for agents.',
+  missing:'No narrow waist. No congestion or flow control for token streams. No naming, discovery, or trust across organizations.',
+  works:'MAST · MCP · A2A · OTel GenAI'},
+ {t:'L6 · Orchestration and programs',s:'workflows, DSPy, Agentix programs',
+  known:'The program is the scheduling unit: 4 to 15× throughput from program-aware serving. Specification failures are documented. Trace-reflective optimizers work.',
+  missing:'No agent-native checkpoint, branch, or replay. No fair multi-tenant program scheduling. No cross-layer SLO contracts.',
+  works:'Agentix · Parrot · DSPy · GEPA · MAST'},
+ {t:'L5 · Tools and environment',s:'APIs, browsers, code',
+  known:'Tool-call accuracy is measurable (Gorilla, BFCL). Injection attack success rates are measurable (AgentDojo).',
+  missing:'Predicted class B3: environment drift. Tools version, sites change, agents decay; the decay rate is unmeasured. Experiment E2 targets it.',
+  works:'Gorilla · BFCL · AgentDojo'},
+ {t:'L4 · Context and memory',s:'retrieval, KV state, MemGPT',
+  known:'Memory hierarchies exist as architecture (MemGPT). Paged KV memory is solved at the serving level.',
+  missing:'Predicted class B2: context-state failures. Stale state, lossy summarization, self-poisoned retrieval, undocumented as a class. The emptiest row of the coverage map.',
+  works:'MemGPT · vLLM'},
+ {t:'L3 · Model',s:'the LLM itself',
+  known:'Repeated sampling follows a coverage law. Compound-call scaling is provably non-monotone under mixed difficulty.',
+  missing:'The solvability spectrum (Law 2) is unestimated for every major benchmark.',
+  works:'Large Language Monkeys · Are More LLM Calls'},
+ {t:'L2 · Serving',s:'batching, routing, vLLM',
+  known:'Paging, disaggregation, goodput objectives, learned routing: a mature literature.',
+  missing:'Predicted class B1: serving-induced behavioral variance. Batch-variant kernels make outputs depend on co-scheduled strangers. Determinism is not yet an SLO.',
+  works:'vLLM · DistServe · RouteLLM · Thinking Machines'},
+ {t:'L1 · Compute',s:'GPUs, energy, interconnect',
+  known:'Phase structure of inference is characterized; Azure released LLM inference traces alongside it.',
+  missing:'Predicted class B4: compute-layer variability. Kernel choice, precision, and hardware generation sit inside the behavioral loop. Energy per resolved task is unaccounted.',
+  works:'Splitwise · the cluster-trace tradition'}
+];
+var BOUND=[{after:0,kind:'known'},{after:1,kind:'known'},{after:2,kind:'known'},
+           {after:3,kind:'unk',b:'B3 drift'},{after:4,kind:'unk',b:'B2 context'},
+           {after:5,kind:'unk',b:'B1 serving variance'},{after:6,kind:'unk',b:'B4 compute'}];
+var layersEl=document.getElementById('layers'),dossier=document.getElementById('dossier');
+function renderDossier(ix){
+  var L=LAYERS[ix];
+  dossier.innerHTML='<div class="dt">'+L.t+'</div><div class="ds">'+L.s+'</div>'
+   +'<h4 class="known">Established</h4><p>'+L.known+'</p>'
+   +'<h4 class="missing">Open</h4><p>'+L.missing+'</p>'
+   +'<div class="works">key works · '+L.works+'</div>';
+  layersEl.querySelectorAll('.layer').forEach(function(b){b.classList.toggle('active',+b.dataset.ix===ix);});
+}
+LAYERS.forEach(function(L,ix){
+  var b=document.createElement('button');b.className='layer';b.dataset.ix=ix;
+  b.innerHTML='<div class="lt">'+L.t+'</div><div class="ls">'+L.s+'</div>';
+  b.addEventListener('click',function(){renderDossier(ix);});
+  layersEl.appendChild(b);
+  var bd=null;for(var j=0;j<BOUND.length;j++){if(BOUND[j].after===ix)bd=BOUND[j];}
+  if(bd){var d=document.createElement('div');d.className='bnd'+(bd.kind==='unk'?' unk':'');
+    if(bd.b){var lb=document.createElement('button');lb.textContent=bd.b;
+      lb.addEventListener('click',function(){renderDossier(ix+1);});d.appendChild(lb);}
+    layersEl.appendChild(d);}
+});
+renderDossier(6);
+
+/* ---------- heatmap ---------- */
+var COLS=['Build','Measure','Failures','Theory','Open data'];
+var ROWS=['L8','L7','L6','L5','L4','L3','L2','L1'];
+var VALS=[[1,2,2,0,1],[2,1,3,0,0],[3,2,2,1,1],[2,2,1,0,1],[2,0,0,0,0],[3,3,1,2,2],[3,2,1,1,1],[3,2,0,1,2]];
+var NOTES={
+ '4-1':'L4 × Measure, 0 of 3. No benchmark isolates context and memory behavior. Open ground.',
+ '4-2':'L4 × Failures, 0 of 3. Predicted class B2: context-state failures, undocumented anywhere.',
+ '4-3':'L4 × Theory, 0 of 3. No formal model of memory degradation in agents.',
+ '4-4':'L4 × Open data, 0 of 3. No public dataset exposes agent memory state.',
+ '1-3':'L7 × Theory, 0 of 3. Coordination has no quantitative theory. Law 6 opens it.',
+ '1-4':'L7 × Open data, 0 of 3. No public inter-agent traffic data exists at all.',
+ '0-3':'L8 × Theory, 0 of 3. Oversight and verification have no formal model. Law 3 is the entry.',
+ '7-2':'L1 × Failures, 0 of 3. Predicted class B4: compute-layer variability, uncharacterized.',
+ '2-0':'L6 × Build, 3 of 3. Agentix, Parrot, DSPy: the densest cell in the stack.',
+ '5-1':'L3 × Measure, 3 of 3. The benchmark literature lives here, and mostly only here.',
+ '6-0':'L2 × Build, 3 of 3. vLLM, DistServe, routing: mature engineering.',
+ '1-2':'L7 × Failures, 3 of 3. MAST territory: inter-agent misalignment, documented.'
+};
+var hm=document.getElementById('heatmap'),hmNote=document.getElementById('hmNote');
+hm.appendChild(document.createElement('div'));
+COLS.forEach(function(c){var h=document.createElement('div');h.className='hhead';h.textContent=c;hm.appendChild(h);});
+ROWS.forEach(function(rn,ri){
+  var rl=document.createElement('div');rl.className='hrow';rl.textContent=rn;hm.appendChild(rl);
+  COLS.forEach(function(cn,ci){
+    var v=VALS[ri][ci];
+    var c=document.createElement('button');c.className='hcell c'+v;
+    c.setAttribute('aria-label',rn+' by '+cn+', coverage '+v+' of 3');
+    c.addEventListener('click',function(){
+      hm.querySelectorAll('.hcell').forEach(function(x){x.classList.remove('sel');});
+      c.classList.add('sel');
+      var key=ri+'-'+ci;
+      hmNote.textContent=NOTES[key]||(rn+' × '+cn+', coverage '+v+' of 3. '+(v===0?'A gap: no published work maps here.':v===3?'Dense: see the canon explorer for the works mapped here.':'Partially covered; see the canon explorer.'));
+    });
+    hm.appendChild(c);
+  });
+});
+
+/* ---------- svg helpers ---------- */
+function line(x1,y1,x2,y2,c,w,dash){return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+c+'" stroke-width="'+(w||1)+'"'+(dash?' stroke-dasharray="'+dash+'"':'')+'/>';}
+function txt(x,y,s,c,anchor,size){return '<text x="'+x+'" y="'+y+'" fill="'+(c||'#8A8880')+'" font-size="'+(size||12)+'" font-family="ui-monospace,monospace" text-anchor="'+(anchor||'start')+'">'+s+'</text>';}
+function poly(pts,c,w,dash){return '<polyline points="'+pts+'" fill="none" stroke="'+c+'" stroke-width="'+(w||2.5)+'"'+(dash?' stroke-dasharray="'+dash+'"':'')+' stroke-linejoin="round" stroke-linecap="round"/>';}
+function rect(x,y,w,h,c,rx){return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+c+'" rx="'+(rx||2)+'"/>';}
+
+/* ---------- Law 1 ---------- */
+var lam=document.getElementById('lam');
+function drawHorizon(){
+  var l=+lam.value;
+  document.getElementById('lamOut').textContent=l.toFixed(3);
+  var W=640,H=240,mL=52,mB=30,mT=14,mR=14,pw=W-mL-mR,ph=H-mT-mB,Lmax=240,s='';
+  s+=line(mL,mT,mL,H-mB,C.axis)+line(mL,H-mB,W-mR,H-mB,C.axis);
+  [0,0.5,1].forEach(function(v){var y=H-mB-v*ph;s+=line(mL,y,W-mR,y,C.grid);s+=txt(mL-8,y+4,Math.round(v*100)+'%',C.lab,'end');});
+  [0,60,120,180,240].forEach(function(m){s+=txt(mL+m/Lmax*pw,H-10,m+'m',C.lab,'middle');});
+  var pts=[],h50=Math.log(2)/l;
+  for(var m=0;m<=Lmax;m+=2){pts.push((mL+m/Lmax*pw).toFixed(1)+','+(H-mB-Math.exp(-l*m)*ph).toFixed(1));}
+  if(h50<=Lmax){var xh=mL+h50/Lmax*pw;s+=line(xh,mT,xh,H-mB,C.amber,1.5,'5 4');s+=txt(xh+6,mT+14,'h50',C.amberT);}
+  s+=poly(pts.join(' '),C.teal);
+  document.getElementById('horizonPlot').innerHTML=s;
+  var h50txt=(h50>=100?Math.round(h50):h50.toFixed(1))+' min';
+  document.getElementById('h50').textContent=h50txt;
+  document.getElementById('cH50').textContent=h50txt;
+  document.getElementById('s60').textContent=Math.round(Math.exp(-l*60)*100)+'%';
+  var s4=Math.exp(-l*240)*100;
+  document.getElementById('s240').textContent=(s4<1?s4.toFixed(1):Math.round(s4))+'%';
+}
+lam.addEventListener('input',drawHorizon);drawHorizon();
+
+/* ---------- Law 2 ---------- */
+var WORLDS={
+ coin:{name:'coin-flip',color:C.coral,q:[[0.6,1]]},
+ middle:{name:'messy middle',color:C.amber,q:[[0.2,.2],[0.4,.2],[0.6,.2],[0.8,.2],[1.0,.2]]},
+ bimodal:{name:'bimodal',color:C.teal,q:[[0.97,.6],[0.045,.4]]}
+};
+function passk(w,k){var s=0;w.q.forEach(function(x){s+=Math.pow(x[0],k)*x[1];});return s;}
+function passatk(w,k){var s=0;w.q.forEach(function(x){s+=Math.pow(1-x[0],k)*x[1];});return 1-s;}
+var specSel='all',showAtK=document.getElementById('showAtK');
+function drawSpec(){
+  var W=640,H=260,mL=52,mB=32,mT=14,mR=14,pw=W-mL-mR,ph=H-mT-mB,K=10,s='';
+  s+=line(mL,mT,mL,H-mB,C.axis)+line(mL,H-mB,W-mR,H-mB,C.axis);
+  [0,0.25,0.5,0.75,1].forEach(function(v){var y=H-mB-v*ph;s+=line(mL,y,W-mR,y,C.grid);s+=txt(mL-8,y+4,Math.round(v*100)+'%',C.lab,'end');});
+  for(var k=1;k<=K;k++){s+=txt(mL+(k-1)/(K-1)*pw,H-12,'k='+k,C.lab,'middle',11);}
+  var keys=specSel==='all'?['coin','middle','bimodal']:[specSel];
+  keys.forEach(function(key){
+    var w=WORLDS[key],pts=[],pts2=[];
+    for(var k=1;k<=K;k++){
+      var x=(mL+(k-1)/(K-1)*pw).toFixed(1);
+      pts.push(x+','+(H-mB-passk(w,k)*ph).toFixed(1));
+      pts2.push(x+','+(H-mB-passatk(w,k)*ph).toFixed(1));
+    }
+    s+=poly(pts.join(' '),w.color);
+    if(showAtK.checked)s+=poly(pts2.join(' '),w.color,1.8,'4 4');
+    var last=pts[pts.length-1].split(',');
+    s+=txt(Math.min(+last[0]+6,W-4),+last[1]+4,w.name,w.color,'start',12);
+  });
+  if(showAtK.checked)s+=txt(mL+6,mT+14,'dashed = pass@k (best of k) · solid = pass^k (all of k)',C.lab,'start',11);
+  document.getElementById('specPlot').innerHTML=s;
+  document.getElementById('p8coin').textContent=(passk(WORLDS.coin,8)*100).toFixed(1)+'%';
+  document.getElementById('p8mid').textContent=Math.round(passk(WORLDS.middle,8)*100)+'%';
+  document.getElementById('p8bi').textContent=Math.round(passk(WORLDS.bimodal,8)*100)+'%';
+}
+document.querySelectorAll('.seg button[data-w]').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.seg button[data-w]').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');specSel=b.dataset.w;drawSpec();
+  });
+});
+showAtK.addEventListener('change',drawSpec);
+drawSpec();
+
+/* ---------- Law 3 ---------- */
+var pGen=document.getElementById('pGen'),tVer=document.getElementById('tVer'),fVer=document.getElementById('fVer');
+function drawVer(){
+  var p=+pGen.value,t=+tVer.value,f=+fVer.value;
+  document.getElementById('pOut').textContent=p.toFixed(2);
+  document.getElementById('tOut').textContent=t.toFixed(2);
+  document.getElementById('fOut').textContent=f.toFixed(2);
+  var A=p*t+(1-p)*f, corr=A>0?p*t/A:0, att=A>0?1/A:Infinity;
+  document.getElementById('vCorrect').textContent=Math.round(corr*100)+'%';
+  document.getElementById('cVer').textContent=Math.round(corr*100)+'%';
+  document.getElementById('vAttempts').textContent=(att===Infinity?'∞':att.toFixed(1)+'×');
+  document.getElementById('roCorrect').className='ro '+(corr>=0.9?'good':corr>=0.7?'warn':'bad');
+  var v=document.getElementById('vVerdict');
+  if(f<=0.02&&t>=0.8){v.className='verdict helps';v.textContent='A strict verifier turns a weak generator into a reliable pipeline. You pay in attempts, not in correctness.';}
+  else if(corr<0.7){v.className='verdict hurts';v.textContent='The false-accept rate dominates. Below about 70% accepted-correct, the verifier is the bottleneck; improve f before touching the generator.';}
+  else{v.className='verdict';v.textContent='Balanced regime: correctness is governed jointly by p and f. Fit target for experiment E3.';}
+}
+[pGen,tVer,fVer].forEach(function(x){x.addEventListener('input',drawVer);});
+drawVer();
+
+/* ---------- Law 5 ---------- */
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+var tsNin=document.getElementById('tsNin'),tsQin=document.getElementById('tsQin'),tsRin=document.getElementById('tsRin');
+var axLog=false;
+function simTail(){
+  var n=+tsNin.value,q=+tsQin.value,R=+tsRin.value;
+  document.getElementById('tsN').textContent=n;
+  document.getElementById('tsQ').textContent=q.toFixed(2);
+  document.getElementById('tsR').textContent=R;
+  var seed=Math.floor(n*1000+q*100000+R*17),rnd=mulberry32(seed);
+  var T=3000,costs=[],fails=0;
+  for(var t=0;t<T;t++){
+    var total=0,failed=false;
+    for(var s=0;s<n;s++){
+      var a=0,ok=false;
+      while(a<=R){
+        var u1=rnd(),u2=rnd();
+        var z=Math.sqrt(-2*Math.log(u1+1e-12))*Math.cos(6.2831853*u2);
+        total+=Math.exp(0.4*z);
+        a++;
+        if(rnd()>=q){ok=true;break;}
+      }
+      if(!ok){failed=true;break;}
+    }
+    if(failed)fails++;
+    costs.push(total);
+  }
+  costs.sort(function(a,b){return a-b;});
+  var med=costs[Math.floor(T*0.5)],p99=costs[Math.floor(T*0.99)];
+  document.getElementById('tMed').textContent=med.toFixed(1);
+  document.getElementById('tP99').textContent=p99.toFixed(1);
+  var ratio=p99/med;
+  document.getElementById('tRatio').textContent=ratio.toFixed(1)+'×';
+  document.getElementById('cTail').textContent=ratio.toFixed(1)+'×';
+  document.getElementById('roRatio').className='ro '+(ratio>3?'bad':ratio>2?'warn':'good');
+  document.getElementById('tFail').textContent=(fails/T*100).toFixed(1)+'%';
+  var v=document.getElementById('tVerdict');
+  if(ratio>3){v.className='verdict hurts';v.textContent='Heavy tail: the p99 program costs '+ratio.toFixed(1)+'× the median. The retry policy, not the model, made this distribution.';}
+  else{v.className='verdict helps';v.textContent='Tame tail at this setting. Raise the failure rate or the retry limit and watch it grow.';}
+  var W=640,H=240,mL=52,mB=30,mT=14,mR=14,pw=W-mL-mR,ph=H-mT-mB,B=36,s2='';
+  var lo=costs[0],hi=p99*1.35;
+  var bins=new Array(B).fill(0);
+  function pos(x){
+    if(axLog){var l0=Math.log(lo),l1=Math.log(hi);return (Math.log(Math.max(x,lo))-l0)/(l1-l0);}
+    return (x-lo)/(hi-lo);
+  }
+  costs.forEach(function(c2){var p=pos(Math.min(c2,hi));var b=Math.min(B-1,Math.max(0,Math.floor(p*B)));bins[b]++;});
+  var bm=Math.max.apply(null,bins);
+  s2+=line(mL,H-mB,W-mR,H-mB,C.axis);
+  for(var b=0;b<B;b++){
+    var bw=pw/B-2,x=mL+b*(pw/B)+1,h=bins[b]/bm*ph;
+    s2+=rect(x,H-mB-h,bw,h,b/B>pos(med)?C.coral:C.teal);
+  }
+  var xm=mL+pos(med)*pw,x9=mL+pos(p99)*pw;
+  s2+=line(xm,mT,xm,H-mB,C.tealDeep,1.5,'5 4')+txt(xm+5,mT+14,'median',C.tealDeep);
+  s2+=line(x9,mT,x9,H-mB,C.coral,1.5,'5 4')+txt(Math.min(x9+5,W-70),mT+14,'p99',C.coral);
+  s2+=txt(mL,H-10,axLog?'cost (log scale) →':'cost →',C.lab);
+  document.getElementById('tailPlot').innerHTML=s2;
+}
+[tsNin,tsQin,tsRin].forEach(function(x){x.addEventListener('input',simTail);});
+document.getElementById('axLin').addEventListener('click',function(){axLog=false;this.classList.add('on');document.getElementById('axLog').classList.remove('on');simTail();});
+document.getElementById('axLog').addEventListener('click',function(){axLog=true;this.classList.add('on');document.getElementById('axLin').classList.remove('on');simTail();});
+simTail();
+
+/* ---------- Law 6 ---------- */
+function comb(n,k){var r=1;for(var i=1;i<=k;i++){r=r*(n-k+i)/i;}return r;}
+function majority(n,p){if(n===1)return p;var need=Math.floor(n/2)+1,s=0;for(var i=need;i<=n;i++){s+=comb(n,i)*Math.pow(p,i)*Math.pow(1-p,n-i);}return s;}
+var maPin=document.getElementById('maPin'),maNin=document.getElementById('maNin'),maRin=document.getElementById('maRin'),maOin=document.getElementById('maOin');
+function drawMA(){
+  var p=+maPin.value,n=+maNin.value,r=+maRin.value,o=+maOin.value;
+  document.getElementById('maP').textContent=p.toFixed(2);
+  document.getElementById('maN').textContent=n;
+  document.getElementById('maR').textContent=r.toFixed(2);
+  document.getElementById('maO').textContent='+'+Math.round(o*100)+'%';
+  var P=r*p+(1-r)*majority(n,p),cost=n*(1+o);
+  document.getElementById('maSingle').textContent=Math.round(p*100)+'%';
+  document.getElementById('maCommittee').textContent=Math.round(P*100)+'%';
+  document.getElementById('maCost').textContent=cost.toFixed(1)+'×';
+  var gain=(P-p)*100;
+  document.getElementById('roCommittee').className='ro '+(gain>3?'good':gain<0.5?'bad':'warn');
+  var v=document.getElementById('maVerdict');
+  if(n===1){v.className='verdict';v.textContent='One agent. This is the baseline everything must beat, per token.';}
+  else if(gain<=0.5){v.className='verdict hurts';v.textContent='The committee adds '+cost.toFixed(1)+'× the tokens for +'+gain.toFixed(1)+' points. At this correlation, coordination is pure overhead; this is the regime MAST documents.';}
+  else if(gain/cost>2){v.className='verdict helps';v.textContent='+'+gain.toFixed(1)+' points at '+cost.toFixed(1)+'× tokens. Errors are decorrelated enough that the committee pays for itself.';}
+  else{v.className='verdict';v.textContent='+'+gain.toFixed(1)+' points at '+cost.toFixed(1)+'× tokens. Marginal. The break-even correlation is the constant this law exists to measure.';}
+}
+[maPin,maNin,maRin,maOin].forEach(function(x){x.addEventListener('input',drawMA);});
+drawMA();
+
+/* ---------- amplification ---------- */
+var apSin=document.getElementById('apSin'),apFin=document.getElementById('apFin'),apTin=document.getElementById('apTin'),apCarry=document.getElementById('apCarry');
+var apTimer=null;
+function apCompute(){
+  var s=+apSin.value,f=+apFin.value,T=+apTin.value,carry=apCarry.checked;
+  var calls=s*(1+f);
+  var tok=s*T+s*f*300+(carry?0.5*T*s*(s-1)/2:0);
+  return {s:s,f:f,T:T,calls:calls,tok:tok};
+}
+function apRender(upTo){
+  var d=apCompute();
+  var W=640,H=200,mL=90,mT=20,rowH=Math.min(24,(H-40)/Math.max(d.s,1)),svg='';
+  svg+='<circle cx="40" cy="'+(mT+8)+'" r="8" fill="'+C.purple+'"/>'+txt(40,mT+34,'user',C.purple,'middle',11);
+  for(var i=0;i<d.s;i++){
+    var y=mT+i*rowH+8,shown=(upTo===undefined||i<upTo);
+    if(!shown)continue;
+    svg+=line(56,mT+8,mL-14,y,C.axis,0.8);
+    svg+='<circle cx="'+mL+'" cy="'+y+'" r="7" fill="'+C.teal+'"/>';
+    for(var j=0;j<d.f;j++){svg+='<circle cx="'+(mL+26+j*20)+'" cy="'+y+'" r="5" fill="'+C.amber+'"/>';}
+    svg+=txt(mL+26+d.f*20+8,y+4,'step '+(i+1),C.lab,'start',11);
+  }
+  svg+=txt(mL,H-6,'model call',C.tealDeep,'middle',11);
+  svg+=txt(W-14,mT+8,'tool calls in amber',C.amberT,'end',11);
+  document.getElementById('apPlot').innerHTML=svg;
+  var frac=(upTo===undefined)?1:Math.min(1,upTo/d.s);
+  document.getElementById('apS').textContent=d.s;
+  document.getElementById('apF').textContent=d.f;
+  document.getElementById('apT').textContent=d.T;
+  document.getElementById('apCalls').textContent=Math.round(d.calls*frac);
+  var tk=Math.round(d.tok*frac);
+  document.getElementById('apTok').textContent=tk>=1000?(tk/1000).toFixed(1)+'k':tk;
+  var amp=d.tok*frac/800;
+  document.getElementById('apAmp').textContent=amp.toFixed(1)+'×';
+  document.getElementById('roAmp').className='ro '+(amp>15?'bad':amp>6?'warn':'good');
+}
+function apPlayAnim(){
+  if(apTimer)clearInterval(apTimer);
+  var d=apCompute();
+  if(reduced){apRender();return;}
+  var i=0;
+  apTimer=setInterval(function(){i++;apRender(i);if(i>=d.s){clearInterval(apTimer);apTimer=null;}},160);
+}
+[apSin,apFin,apTin].forEach(function(x){x.addEventListener('input',function(){apRender();});});
+apCarry.addEventListener('change',function(){apRender();});
+document.getElementById('apPlay').addEventListener('click',apPlayAnim);
+apRender();
+
+/* ---------- drift ---------- */
+var drHin=document.getElementById('drHin'),drMin=document.getElementById('drMin');
+function drawDrift(){
+  var h=+drHin.value,m=+drMin.value;
+  document.getElementById('drH').textContent=h+' mo';
+  document.getElementById('drM').textContent=m;
+  document.getElementById('cDrift').textContent=h+' mo';
+  var W=640,H=220,mL=52,mB=30,mT=14,mR=14,pw=W-mL-mR,ph=H-mT-mB,s='';
+  s+=line(mL,mT,mL,H-mB,C.axis)+line(mL,H-mB,W-mR,H-mB,C.axis);
+  [0,0.25,0.5,0.75].forEach(function(v){var y=H-mB-v/0.8*ph;s+=line(mL,y,W-mR,y,C.grid);s+=txt(mL-8,y+4,Math.round(v*100)+'%',C.lab,'end');});
+  for(var mm=0;mm<=12;mm+=3){s+=txt(mL+mm/12*pw,H-10,mm+'mo',C.lab,'middle');}
+  function S(x){return 0.74*Math.pow(0.5,x/h)+0.015*Math.sin(x*2.1);}
+  var pts=[];
+  for(var x=0;x<=12;x+=0.25){pts.push((mL+x/12*pw).toFixed(1)+','+(H-mB-S(x)/0.8*ph).toFixed(1));}
+  s+=poly(pts.join(' '),C.amber);
+  var xm=mL+m/12*pw,ym=H-mB-S(m)/0.8*ph;
+  s+=line(xm,mT,xm,H-mB,C.lab,1,'4 4');
+  s+='<circle cx="'+xm+'" cy="'+ym+'" r="5" fill="'+C.amber+'"/>';
+  document.getElementById('drPlot').innerHTML=s;
+  document.getElementById('drNow').textContent=Math.round(S(m)*100)+'%';
+  document.getElementById('drLbl').textContent='at month '+m;
+  document.getElementById('roDrift').className='ro '+(S(m)>0.6?'good':S(m)>0.45?'warn':'bad');
+}
+[drHin,drMin].forEach(function(x){x.addEventListener('input',drawDrift);});
+drawDrift();
+
+/* ---------- agenda: five axes ---------- */
+var AXES=[
+ {name:'Systems for agents',
+  done:[['Paged KV memory','vLLM'],['Goodput disaggregation','DistServe · Splitwise'],['Program-aware scheduling','Agentix · Parrot'],['Agent memory hierarchies','MemGPT'],['Distributed substrate','Ray']],
+  need:[['Agent-native checkpoint, branch, replay of full state',''],['Determinism as a serving SLO','after Thinking Machines'],['Fair multi-tenant program scheduling',''],['Energy and carbon per resolved task',''],['Cross-layer SLO contracts','']]},
+ {name:'Agents for systems',
+  done:[['AIOps agent evaluation with fault injection','AIOpsLab, MLSys 2025'],['AI-driven systems research itself','Barbarians at the Gate'],['Trace-reflective optimizers tuning systems','GEPA']],
+  need:[['A trust calculus for agents holding root: blast radius, reversibility',''],['Counterfactual replay before actuation',''],['Verifier constants for infrastructure actions','Law 3'],['Agent SRE benchmarks tied to production incident distributions','']]},
+ {name:'Networking for agents',
+  done:[['Tool protocol','MCP'],['Agent protocol','A2A'],['Telemetry conventions','OpenTelemetry GenAI']],
+  need:[['The narrow waist: which minimal interface plays the role IP played',''],['Congestion and flow control for token streams',''],['Naming, discovery, and trust across organizations',''],['Agent traffic characterization in datacenters and WANs',''],['Federation measurement','']]},
+ {name:'Agents for networking',
+  done:[['Dialogue-based datacenter network diagnosis','NetAssistant, NSDI 2024'],['AI-driven network incident management','HotNets 2023 line'],['Cloud ops agents with network faults','AIOpsLab overlap']],
+  need:[['Intent-to-configuration agents with verified safety',''],['Blast-radius and rollback metrics for network changes',''],['Closed-loop telemetry-to-action benchmarks on realistic topologies',''],['Measured agent participation in control planes','']]},
+ {name:'Measurement science',
+  done:[['Task benchmarks','SWE-bench · WebArena · GAIA · τ-bench'],['Standardized harness','HAL'],['Reliability dimensions','Princeton line'],['Field study','MAP'],['Failure annotation at scale','MAST'],['Task horizons','METR'],['Privacy-preserving usage analysis','Clio']],
+  need:[['Solvability-spectrum estimation as standard practice','Law 2'],['Variance decomposition as standard practice','E1'],['Drift observatories','E2'],['A reporting checklist with teeth','AgentReport'],['Open in-the-wild traces','the Borg tradition']]}
+];
+var tabs=document.getElementById('axisTabs'),panel=document.getElementById('axisPanel');
+function renderAxis(ix){
+  var a=AXES[ix];
+  function lis(arr){return arr.map(function(x){return '<li>'+x[0]+(x[1]?' <span class="w">· '+x[1]+'</span>':'')+'</li>';}).join('');}
+  panel.innerHTML='<div class="col done"><h4>Established (published)</h4><ul>'+lis(a.done)+'</ul></div><div class="col need"><h4>Open (this project\'s targets)</h4><ul>'+lis(a.need)+'</ul></div>';
+  tabs.querySelectorAll('button').forEach(function(b,i){b.classList.toggle('on',i===ix);});
+}
+AXES.forEach(function(a,ix){
+  var b=document.createElement('button');b.textContent=a.name;b.setAttribute('role','tab');
+  b.addEventListener('click',function(){renderAxis(ix);});tabs.appendChild(b);
+});
+renderAxis(0);
+
+var PROBS=[
+ 'Estimate the solvability spectrum for every major benchmark.',
+ 'Decompose agent outcome variance into layer contributions.',
+ 'Define and standardize determinism levels as serving SLOs.',
+ 'Measure verifier constants (t, f) across verifier designs.',
+ 'Establish per-domain hazard rates and their improvement trend.',
+ 'Derive and validate the multi-agent break-even condition.',
+ 'Characterize agent traffic as a network workload; find the narrow waist.',
+ 'Define blast-radius metrics for agents operating infrastructure and networks.',
+ 'Build the drift observatory: longitudinal frozen-agent replay.',
+ 'Release the first open in-the-wild agent trace corpus.'
+];
+document.getElementById('problems').innerHTML=PROBS.map(function(p){return '<div class="card"><p style="color:var(--ink)">'+p+'</p></div>';}).join('');
+
+/* ---------- bibtex copy ---------- */
+document.getElementById('copyBib').addEventListener('click',function(){
+  var t=document.getElementById('bibBlock').textContent,btn=this;
+  function ok(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy';},1600);}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,ok);}
+  else{var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);ok();}
+});
+
+/* ---------- scrollspy ---------- */
+var links={};
+document.querySelectorAll('.nav-in a.nl').forEach(function(a){links[a.dataset.s]=a;});
+if('IntersectionObserver' in window){
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting&&links[e.target.id]){
+        Object.keys(links).forEach(function(k){links[k].classList.remove('on');});
+        links[e.target.id].classList.add('on');
+      }
+    });
+  },{rootMargin:'-40% 0px -55% 0px'});
+  Object.keys(links).forEach(function(id){var el=document.getElementById(id);if(el)obs.observe(el);});
+}
+})();
+</script>
+</body>
+</html>

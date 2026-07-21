@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Research Portfolio | Hannah B. Pasandi</title>
+<meta name="description" content="Current research portfolio of Hannah B. Pasandi across four lines: systems for agents, ML for systems, networked systems, and agentic AI for networking." />
+<meta name="author" content="Hannah B. Pasandi" />
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Research Portfolio | Hannah B. Pasandi" />
+<meta property="og:description" content="Four live research lines with open projects for motivated students: systems for agents, ML for systems, networked systems, and agentic AI for networking." />
+<meta property="og:image" content="https://hanabhp.github.io/assets/og-card.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+:root{
+  --bg:#0a0e14; --bg-soft:#0e131c; --bg-card:#111722; --bg-card-hi:#16202e;
+  --line:#1e2734; --line-soft:#2a3646;
+  --ink:#eef2f7; --head:#ffffff; --mute:#8fb1e6;
+  --blue:#6ea8ff; --blue-soft:#9cc0ff;
+  --green:#5fd17a; --amber:#f0c25a; --purple:#c79bff; --rose:#ff9a8f;
+  --max:1000px; --pad:clamp(16px,4vw,34px);
+  --mono:"JetBrains Mono","Fira Code","SF Mono","Menlo",monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-size:15px;line-height:1.65;color:var(--ink);background:var(--bg);
+  background-image:radial-gradient(circle at 88% -5%,rgba(110,168,255,0.08),transparent 55%);
+  -webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:var(--blue);text-decoration:none;transition:color .12s}
+a:hover{color:var(--blue-soft);text-decoration:underline;text-underline-offset:3px}
+a:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+nav.topbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:22px;
+  padding:12px var(--pad);background:rgba(10,14,20,0.82);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line)}
+nav.topbar .mark{font-family:var(--mono);font-weight:700;font-size:17px;letter-spacing:-.03em;color:var(--head)}
+nav.topbar .mark .dot{color:var(--blue)}
+nav.topbar .links{display:flex;flex-wrap:wrap;gap:8px 18px;font-family:var(--mono);font-size:12.5px}
+nav.topbar .links a{color:var(--blue-soft);white-space:nowrap;position:relative;padding-bottom:3px}
+nav.topbar .links a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--blue);transition:width .22s ease}
+nav.topbar .links a:hover{color:var(--head);text-decoration:none}
+nav.topbar .links a:hover::after{width:100%}
+nav.topbar .home{margin-left:auto;color:var(--mute);font-family:var(--mono);font-size:12.5px}
+
+header.hero{padding:48px var(--pad) 8px;max-width:var(--max);margin:0 auto;text-align:center}
+.brand{font-family:Cambria,Georgia,'Times New Roman',serif;font-size:clamp(34px,7vw,46px);font-weight:700;letter-spacing:-.045em;line-height:1.05;color:var(--head);margin-bottom:8px}
+.brand .dot{color:var(--blue)}
+.tagline{font-family:var(--mono);font-size:13.5px;color:var(--blue-soft);margin-bottom:8px}
+.byline{font-size:14px;color:var(--ink)} .byline b{color:var(--head)}
+
+.thesis{margin:26px auto 0;max-width:var(--max);border:1px solid var(--line-soft);border-left:3px solid var(--green);border-radius:0 14px 14px 0;background:var(--bg-card);padding:20px 24px;text-align:left}
+.thesis .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+.thesis p{color:var(--ink);max-width:80ch}
+.hero .thesiswrap{padding:0 var(--pad)}
+
+section{padding:38px var(--pad);max-width:var(--max);margin:0 auto;border-top:1px solid var(--line)}
+section:first-of-type{border-top:none}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-bottom:10px}
+h2.s{font-size:clamp(20px,3vw,26px);font-weight:600;letter-spacing:-.02em;margin-bottom:4px;color:var(--head)}
+.secnote{color:var(--ink);max-width:74ch;margin-bottom:6px}
+
+.prims{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:12px;margin-top:16px}
+.prim{position:relative;border:1px solid var(--line);border-radius:12px;background:var(--bg-card);padding:38px 16px 16px;transition:background .15s ease}
+.prim:hover{background:var(--bg-card-hi)}
+.prim h4{font-size:15px;color:var(--head);margin-bottom:5px}
+.prim p{font-size:13px;margin:0;color:var(--ink)}
+.prim .tags{position:absolute;top:11px;right:12px;left:12px;display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;margin:0}
+.tag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 8px;border-radius:5px;white-space:nowrap}
+.t-acc{background:rgba(95,209,122,.16);color:var(--green)}
+.t-sub{background:rgba(110,168,255,.16);color:var(--blue)}
+.t-prog{background:rgba(240,194,90,.16);color:var(--amber)}
+.t-new{background:rgba(199,155,255,.16);color:var(--purple)}
+.t-ind{background:rgba(255,154,143,.18);color:var(--rose)}
+
+footer{padding:40px var(--pad) 80px;max-width:var(--max);margin:0 auto;border-top:1px solid var(--line);font-size:13px;color:var(--ink)}
+footer a{color:var(--blue)}
+.fineprint{margin-top:14px;color:var(--mute);font-size:12px;font-family:var(--mono)}
+@media(max-width:640px){nav.topbar{gap:14px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4M99RGCCZP"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4M99RGCCZP');</script>
+</head>
+<body>
+
+<nav class="topbar">
+  <span class="mark">hp<span class="dot">.</span></span>
+  <span class="links">
+    <a href="index.html">home</a>
+    <a href="people.html">people</a>
+    <a href="agentic_ai.html">agenticstack</a>
+    <a href="thrusts/self_driving_llm_serving.html">llm serving</a>
+    <a href="thrusts/cascade_safe_learning.html">safe learning</a>
+    <a href="thrusts/direct_to_cell_satellite.html">satellite</a>
+  </span>
+  <span class="home">portfolio</span>
+</nav>
+
+<header class="hero">
+  <div class="brand">Research Portfolio<span class="dot">.</span></div>
+  <div class="tagline">Systems · ML for Systems · Networked Systems · Agentic AI for Networking</div>
+  <div class="byline"><b>Hannah B. Pasandi</b> · Sky Computing Lab, UC Berkeley</div>
+</header>
+<div class="hero thesiswrap">
+  <div class="thesis">
+    <div class="eyebrow">the through line</div>
+    <p>I build the systems and networking layer underneath agentic AI. The work runs in four lines, from the serving and execution runtime for agents, through learning that systems can afford to trust, to networked systems pointed at orbit, and finally agents placed inside the network itself.</p>
+    <p style="margin-top:9px">One direction with two-way traffic. Networked systems built for agents, and agents held safely inside networked systems.</p>
+  </div>
+</div>
+
+<div class="hero thesiswrap" style="margin-top:12px">
+  <div class="thesis" style="border-left-color:var(--purple)">
+    <div class="eyebrow" style="color:var(--purple)">for students</div>
+    <p>How to read this page. <span style="color:var(--green);font-weight:600">Green</span> is accepted work, <span style="color:var(--blue);font-weight:600">blue</span> is under review, <span style="color:var(--amber);font-weight:600">amber</span> is in progress and open, and the <span style="color:var(--purple);font-weight:600">purple pill</span> marks the newest lines. Every card is a live project, not an archive.</p>
+    <p style="margin-top:9px">I am always looking for motivated undergrad and grad students, and other collaborators around the world, to work with! If one of these problems pulls at you, email me with the project name in the subject and one paragraph on what you would try first.</p>
+    <p style="margin-top:9px;font-family:var(--mono);font-size:13px"><a href="mailto:h.pasandi@berkeley.edu">h.pasandi@berkeley.edu</a></p>
+  </div>
+</div>
+
+<section id="systems">
+  <div class="eyebrow">01 · systems</div>
+  <h2 class="s">The execution and serving layer for agents</h2>
+  <p style="font-size:13px;color:#8fa3bd;margin:4px 0 0">See also <a href="agent_stack.html" style="color:#8fb1e6">The Agent Stack</a>, the reference model and measurement agenda tying these together.</p>
+  <div class="prims">
+    <div class="prim"><div class="tags"><span class="tag t-acc">accepted · nsdi</span></div><h4>CacheCatalyst</h4><p>Serving recomputes overlapping context across requests instead of reusing it; the cache that could carry the load is thrown away.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-sub">under review · pacmi</span></div><h4>The Single-Call Fallacy</h4><p>Per-call metrics grade agentic systems healthy while whole plans fail. Nothing in the stack accounts at the level of the plan the user asked for.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-sub">under review · pacmi</span></div><h4>EffectLog, the Crash at Step Thirteen</h4><p>An agent that dies mid-plan cannot tell which external effects already landed, so restart means redo or double-do.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-sub">under review · pacmi</span><span class="tag t-new">new</span></div><h4>GPU Fleet Contract</h4><p>Learned systems assume datacenter-grade GPUs. The commodity fleet the world actually owns fails in ways training loops do not survive, priced with production failure data from Meta's Llama 3 Herd report.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-sub">under review · agenticos @ sosp</span></div><h4>Patient Bytes</h4><p>Agent plans are scheduled one call at a time. A plan-level budget covers the retries, verification, and waste that single-call scheduling never sees. Full version in progress.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-sub">under review · hotnets</span></div><h4>Confine</h4><p>Failure labels for agents assume annotators agree on what broke. Measured agreement varies by failure mode, and routing needs reliability contracts that survive the disagreement.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-sub">under review · sec</span></div><h4>PALSE</h4><p>Agent steps stall waiting for state the plan already announced. PALSE reads the plan while generation is in flight and stages what the next step needs at the edge.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-sub">under review</span></div><h4>OrbitMesh</h4><p>Inference serving stops at the cloud edge while direct-to-cell satellites sit overhead as compute nobody schedules. A four-tier serving path for agent workloads includes the satellite.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-sub">under review · mobihoc</span></div><h4>Tether</h4><p>A room of idle Apple silicon sits beside a phone paying cloud latency for every agent token. Tether routes inference across the personal device mesh.</p></div>
+  </div>
+</section>
+
+<section id="ml4sys">
+  <div class="eyebrow">02 · ml for systems</div>
+  <h2 class="s">Learning that systems can afford to trust</h2>
+  <div class="prims">
+    <div class="prim"><div class="tags"><span class="tag t-acc">accepted + presented · hotcarbon</span></div><h4>The Reasoning Tax</h4><p>Reasoning tokens never appear in carbon accounting; test-time thinking is off the books.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-sub">in submission · aaai</span></div><h4>VETO</h4><p>Safe RL still learns by violating. Systems that cannot afford a single violation cannot use it. VETO acts only when a verified ensemble agrees the action is safe.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-prog">in progress</span></div><h4>INTACT</h4><p>No theory predicts when cooperating learned agents snap under distribution shift; operators discover the phase transition by outage.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-prog">in progress</span></div><h4>SPECTRA</h4><p>Multi-tier LLM serving reacts to 5G handovers and thermal throttling after they hit. At mobile timescales reaction is too late; prediction has a thirty-second window.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-prog">in progress</span></div><h4>BlackWidow</h4><p>RL for rate and power control learns by violating the limits the RAN exists to hold. A decision-time mask removes violating actions from play, so it learns clean.</p></div>
+  </div>
+</section>
+
+<section id="netsys">
+  <div class="eyebrow">03 · networked systems</div>
+  <h2 class="s">The roots, now pointed at orbit</h2>
+  <div class="prims">
+    <div class="prim"><div class="tags"><span class="tag t-prog">in progress</span></div><h4>SpaceHandover</h4><p>Direct-to-cell LEO handovers strike mid-session with no warning, at orbital cadence. An O-RAN Near-RT RIC rApp predicts them with a GBM and LLM pair.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-prog">in progress</span></div><h4>SpaceWindow</h4><p>Satellite IoT uplinks transmit blind into poor passes, spending the scarcest link budget there is. Pass-aware deferral waits for the right window across two orbits.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-prog">in progress</span></div><h4>SpaceREGULATE</h4><p>A LEO constellation crosses jurisdictions every few minutes. No mechanism keeps data flows legal while they move.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-prog">in progress</span></div><h4>SkyCascade</h4><p>Mobile LLM requests route on latency alone while carbon differs by an order of magnitude across device, edge, and cloud. Full version in progress.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-sub">under review · hotnets</span></div><h4>MuteTheUE</h4><p>Cellular signaling includes a path that can quiet a device. The paper asks who can trigger it and at what cost.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-sub">under review · hotnets</span></div><h4>Lead Time</h4><p>A network can only act on what it sees early enough. Lead Time measures how far ahead predictions land against the cost of acting on them.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-sub">under review · conext</span></div><h4>Predict Once, Track Forever</h4><p>One trained predictor turns sparse mobility signals into persistent tracking.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-ind">industry · Rivian</span><span class="tag t-prog">in progress</span></div><h4>GPS Spoofing</h4><p>Vehicles navigate on a signal anyone can forge. With Rivian, detecting GPS spoofing before the planner believes the lie.</p></div>
+  </div>
+</section>
+
+<section id="agentnet">
+  <div class="eyebrow">04 · agentic ai for networking</div>
+  <h2 class="s">The push, agents inside the network itself</h2>
+  <div class="prims">
+    <div class="prim"><div class="tags"><span class="tag t-prog">in progress</span></div><h4>Loom</h4><p>MAC layers freeze at standardization time and conditions do not. Loom lets an LLM agent recompose a live wireless MAC while a safety certificate keeps every action inside proven bounds.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-sub">in submission · infocom</span></div><h4>MacAgent</h4><p>Learned MAC controllers act unmasked, so one bad action reaches the air. A safety mask filters actions before transmission.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-sub">under review · mobihoc</span></div><h4>Arachne</h4><p>Protocol synthesis emits code, not guarantees. Arachne composes MAC protocols from verified blocks, and every composition carries an interference-safety proof.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-sub">under review · hotnets</span></div><h4>Vouch</h4><p>Agents propose changes to systems they should never control directly. Vouch splits proposer from deployment license; a small certificate, not the model, decides what may run.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-prog">in progress</span><span class="tag t-new">new</span></div><h4>On the Wire, Three LLMs</h4><p>Networks treat LLM traffic as one workload. Measured at packet level, it is three, and designs tuned for chat mis-serve the agentic traffic growing fastest.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-prog">in progress</span><span class="tag t-new">new</span></div><h4>AgenticRAN</h4><p>RAN automation is adopting LLM agents with no effect contract and no plan-level accounting. The RIC is about to run agents blind.</p></div>
+  </div>
+</section>
+
+<footer>
+  The security and sensing line, MIRAGE, Cipher, Wi-Finger, two SoKs, and VIN2VICTIM at USENIX VehicleSec, runs as a separate track; see <a href="index.html#publications">publications</a>.
+  <div class="fineprint">© Hannah B. Pasandi</div>
+</footer>
+
+</body>
+</html>
