@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Separatrix: Separating Real from Decoy Keystrokes in Virtual Reality | Hannah B. Pasandi</title>
+<meta name="description" content="Separatrix is a decoy-aware adversary for virtual reality typing. A prompted decoy is a cued action, so it lands slower and its reach bends off the fluent path. Separatrix scores each press on timing, reach geometry, and language, then decodes with one beam search, and recovers the secret in its top twenty guesses where a decoy-unaware attacker recovers nothing." />
+<meta name="author" content="Hannah B. Pasandi" />
+<style>
+:root{
+  --bg:#0a0e14; --bg-soft:#0e131c; --bg-card:#111722; --bg-card-hi:#16202e;
+  --line:#1e2734; --line-soft:#2a3646;
+  --ink:#eef2f7; --head:#ffffff; --mute:#8fb1e6;
+  --blue:#6ea8ff; --blue-soft:#9cc0ff;
+  --green:#5fd17a; --amber:#f0c25a; --purple:#c79bff; --rose:#ff9a8f;
+  --max:960px; --pad:clamp(16px,4vw,34px);
+  --mono:"JetBrains Mono","Fira Code","SF Mono","Menlo",monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-size:15px;line-height:1.65;color:var(--ink);background:var(--bg);
+  background-image:radial-gradient(circle at 88% -5%,rgba(110,168,255,0.10),transparent 55%);
+  -webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:var(--blue);text-decoration:none;transition:color .12s}
+a:hover{color:var(--blue-soft);text-decoration:underline;text-underline-offset:3px}
+
+nav.topbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:22px;
+  padding:12px var(--pad);background:rgba(10,14,20,0.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav.topbar .mark{font-family:var(--mono);font-weight:700;font-size:17px;letter-spacing:-.03em;color:var(--head)}
+nav.topbar .mark .dot{color:var(--blue)}
+nav.topbar .links{display:flex;flex-wrap:wrap;gap:8px 18px;overflow:visible;font-family:var(--mono);font-size:12.5px;scrollbar-width:thin}
+nav.topbar .links::-webkit-scrollbar{height:0}
+nav.topbar .links a{color:var(--blue-soft);white-space:nowrap}
+nav.topbar .links a:hover{color:var(--head);text-decoration:none}
+nav.topbar .home{margin-left:auto;color:var(--mute)}
+
+header.hero{padding:48px var(--pad) 20px;max-width:var(--max);margin:0 auto;text-align:center}
+.brand{font-family:Cambria,Georgia,'Times New Roman',serif;font-size:clamp(36px,8vw,50px);font-weight:700;letter-spacing:-.045em;line-height:1;color:var(--head);margin-bottom:8px}
+.brand .dot{color:var(--blue)}
+.tagline{font-family:var(--mono);font-size:13.5px;color:var(--blue-soft);margin-bottom:8px}
+.byline{font-size:14px;color:var(--ink)} .byline b{color:var(--head)}
+.hlinks{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px;font-family:var(--mono);font-size:12.5px;justify-content:center}
+.hlinks a{color:var(--blue);border:1px solid var(--line-soft);border-radius:7px;padding:5px 11px}
+.hlinks a:hover{color:var(--head);border-color:var(--blue);text-decoration:none}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;font-family:var(--mono);font-size:11px;justify-content:center}
+.tags span{color:var(--blue-soft);border:1px solid var(--line);border-radius:5px;padding:2px 8px}
+
+.thesis{margin-top:26px;border:1px solid var(--line-soft);border-left:3px solid var(--blue);border-radius:0 14px 14px 0;background:var(--bg-card);padding:22px 24px;text-align:left}
+.thesis .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--blue);margin-bottom:9px}
+.thesis h2{font-size:clamp(18px,3vw,24px);line-height:1.34;font-weight:600;color:var(--head)}
+.thesis p{margin-top:11px;color:var(--ink);max-width:74ch}
+.thesis .one{font-family:var(--mono);color:var(--amber);font-size:13.5px;margin-top:13px}
+
+section{padding:42px var(--pad);max-width:var(--max);margin:0 auto;border-top:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-bottom:10px}
+h2.s{font-size:clamp(20px,3vw,27px);font-weight:600;letter-spacing:-.02em;margin-bottom:6px;color:var(--head)}
+p{margin:9px 0;color:var(--ink);max-width:74ch}
+p strong{color:var(--head)}
+figure{margin:22px 0}
+figcaption{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin-top:8px}
+.b{display:block;padding-left:18px;position:relative;margin:8px 0;color:var(--ink);font-size:14px;max-width:74ch}
+.b:before{content:"\2022";position:absolute;left:0;color:var(--blue)}
+.note{border:1px solid var(--line-soft);border-radius:12px;background:var(--bg-card);padding:15px 18px;margin-top:16px}
+.note .h{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.api{margin-top:16px;border:1px solid var(--line);border-radius:12px;background:#06090e;padding:14px 18px}
+.api pre{margin:0;font-family:var(--mono);font-size:12.5px;line-height:1.7;white-space:pre-wrap;color:var(--ink)}
+.api .k{color:var(--blue)} .api .s{color:var(--green)} .api .c{color:var(--blue-soft)}
+table.cal{width:100%;border-collapse:collapse;margin-top:16px;font-family:var(--mono);font-size:12px}
+table.cal th,table.cal td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink)}
+table.cal th{color:var(--mute);text-transform:uppercase;letter-spacing:.06em;font-size:10.5px}
+table.cal td.v{color:var(--blue-soft)}
+footer{padding:44px var(--pad) 80px;max-width:var(--max);margin:0 auto;border-top:1px solid var(--line);font-size:13px;color:var(--ink)}
+footer a{color:var(--blue)}
+.fineprint{margin-top:14px;color:var(--mute);font-size:12px}
+</style>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Separatrix: Separating Real from Decoy Keystrokes in Virtual Reality | Hannah B. Pasandi" />
+<meta property="og:description" content="A prompted decoy is a cued action, so it lands slow and its reach bends. Separatrix reads that tell and pulls the real secret out of a padded VR typing stream." />
+<meta property="og:image" content="https://hanabhp.github.io/assets/og-card.png" />
+<meta name="twitter:card" content="summary_large_image" />
+</head>
+<body>
+
+<nav class="topbar">
+  <span class="mark"><span class="pglogo" title="Separatrix" style="display:inline-flex;width:22px;height:22px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separatrix logo" style="width:100%;height:100%"><title>Separatrix</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#6ea8ff" fill-opacity="0.10" stroke="#6ea8ff" stroke-width="1.6"/><path d="M8 22 h10" fill="none" stroke="#6ea8ff" stroke-width="2.4"/><path d="M18 22 q5 0 8 -6 t8 -6" fill="none" stroke="#5fd17a" stroke-width="2.4"/><path d="M18 22 q5 0 8 6 t8 6" fill="none" stroke="#ff9a8f" stroke-width="2.4" stroke-dasharray="3 3"/><circle cx="18" cy="22" r="3" fill="#6ea8ff"/></svg></span>Separatrix<span class="dot">.</span></span>
+  <span class="links">
+    <a href="#idea">the idea</a>
+    <a href="#problem">the problem</a>
+    <a href="#tell">the tell</a>
+    <a href="#attack">the attack</a>
+    <a href="#calibration">calibration</a>
+    <a href="#results">results</a>
+    <a href="#fix">the fix</a>
+  </span>
+  <a class="home" href="thrusts/human_centered_ai_accessibility.html">&larr; Human Centered AI</a>
+  <a class="home" href="index.html">Hannah B. Pasandi</a>
+</nav>
+
+<header class="hero">
+  <div class="brand"><span class="pglogo" title="Separatrix" style="display:inline-flex;width:40px;height:40px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separatrix logo" style="width:100%;height:100%"><title>Separatrix</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#6ea8ff" fill-opacity="0.10" stroke="#6ea8ff" stroke-width="1.6"/><path d="M8 22 h10" fill="none" stroke="#6ea8ff" stroke-width="2.4"/><path d="M18 22 q5 0 8 -6 t8 -6" fill="none" stroke="#5fd17a" stroke-width="2.4"/><path d="M18 22 q5 0 8 6 t8 6" fill="none" stroke="#ff9a8f" stroke-width="2.4" stroke-dasharray="3 3"/><circle cx="18" cy="22" r="3" fill="#6ea8ff"/></svg></span>Separatrix<span class="dot">.</span></div>
+  <div class="tagline">separating real from decoy keystrokes in virtual reality</div>
+  <div class="byline">a project in the <a href="thrusts/human_centered_ai_accessibility.html">Human Centered and Accessible AI</a> line &middot; led by <b>Hannah B. Pasandi</b>, with Haniyeh B. Pasandi</div>
+  <div class="hlinks">
+    <a href="thrusts/human_centered_ai_accessibility.html">Human Centered AI</a>
+    <a href="thrusts/cellular_and_wireless_privacy.html">Wireless Privacy</a>
+    <a href="index.html">home</a>
+  </div>
+  <div class="tags"><span>VR keystroke inference</span><span>decoy injection</span><span>cued action</span><span>timing side channel</span><span>reach geometry</span><span>beam search</span><span>USENIX Security (in submission)</span></div>
+
+  <div class="thesis" id="idea">
+    <div class="eyebrow">the idea</div>
+    <h2>A decoy password is a string. A decoy keystroke is an act. In virtual reality the act of producing a prompted decoy, reading a prompt and reaching for a key the wearer did not expect, takes longer and travels farther than practiced typing, and that difference is enough to strip the decoys out.</h2>
+    <p>A VR headset renders the wearer's hands so they can aim, and that same rendered motion, read from a shared view or a malicious app, spells the secret. The defense that has taken hold hides the message rather than the hand: the keyboard prompts extra ghost presses, forwards the real keys, and drops the ghosts, so the attacker sees one unlabeled stream. Its whole security rests on the ghost being indistinguishable from a real press. Separatrix shows it is not, because a prompted press is a cued action and a fluent press is not.</p>
+    <div class="one">a decoy is only cover while it passes for the real thing.</div>
+  </div>
+</header>
+
+<section id="problem">
+  <div class="eyebrow">the problem</div>
+  <h2 class="s">Typing in VR is loud, and the room can listen</h2>
+  <p>A VR keyboard has no keys to feel. The wearer aims a ray or a fingertip at a floating layout and commits a press with a pinch, a trigger, or a dwell. To let the wearer aim, the platform renders the hands and exposes their pose to applications at high rate. That rendered, exposed motion is the leak: mapped to the nearest key, it recovers the right key on a commodity headset most of the time, and related attacks work from head pose, from the shared avatar in a multiplayer session, and from the eye signal behind a gaze keyboard.</p>
+  <p>Because the platform cannot hide the hand, a second line of work hides the message. A decoy-injecting keyboard interleaves meaningless presses with the real ones, forwards the genuine keys, and discards the ghosts, so the application behaves as if no decoys were typed while the attacker reads a padded stream. The move is old and trusted elsewhere: honeywords place fake passwords beside the real one, and cover traffic pads a flow with dummy packets. In every case the security rests on one property, that the decoy is drawn from the same distribution as the real item.</p>
+  <span class="b"><strong>Load-bearing assumption.</strong> A ghost press is only cover if the attacker cannot separate it from a genuine press.</span>
+  <span class="b"><strong>Where VR is different.</strong> A decoy password and a real password differ only in content, which the defense controls. A decoy keystroke and a real keystroke differ in how they are produced, which the defense cannot fully control.</span>
+  <span class="b"><strong>What breaks.</strong> Resemblance has to hold in every dimension the attacker can measure, not just the one the designer had in mind. In VR the manner of production is such a dimension.</span>
+</section>
+
+<section id="tell">
+  <div class="eyebrow">the tell</div>
+  <h2 class="s">A cued press lands late, and its reach bends</h2>
+  <p>Fluent typing is overlearned. The typist is not searching for keys, the motor system runs a practiced program, and successive presses come fast, near a 0.26 second median in mid-air VR typing. A decoy press cannot be overlearned, because the wearer does not know in advance which key the keyboard will demand. The keyboard issues a prompt, the wearer reads it, finds the key on the layout, and reaches for it. Each of those steps has a cost that reaction-time work has measured for decades, and even the simplest cued response cannot beat a floor near two tenths of a second. A prompted press clears a read, locate, reach penalty that a fluent press never pays, and it lands late, near a 0.46 second median.</p>
+  <p>Timing is the loudest signal, but not the only one. A fluent reach follows a smooth, direct path to the key. A cued reach, launched after a search, bends and corrects mid-flight, so the straightness of the motion is a second, independent signal that does not depend on timing at all. Neither signal needs a single ground-truth label, because both are properties of how a press was made, not what it was.</p>
+  <figure>
+    <svg viewBox="0 0 940 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:var(--mono)">
+      <defs><marker id="a-sx" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8fb1e6"/></marker></defs>
+      <text x="30" y="30" fill="#8fb1e6" font-size="12">the defense hands the attacker one interleaved stream, and the cued ghost runs slow</text>
+      <!-- left: the defense flow -->
+      <circle cx="70" cy="150" r="18" fill="#6ea8ff" fill-opacity="0.9"/>
+      <text x="70" y="186" fill="#6ea8ff" font-size="11" text-anchor="middle">wearer</text>
+      <rect x="130" y="118" width="150" height="64" rx="10" fill="#f0c25a" fill-opacity="0.06" stroke="#f0c25a"/>
+      <text x="205" y="146" fill="#eef2f7" font-size="12" text-anchor="middle">decoy keyboard</text>
+      <text x="205" y="164" fill="#8fb1e6" font-size="10" text-anchor="middle">prompts ghosts</text>
+      <rect x="330" y="96" width="150" height="40" rx="9" fill="#5fd17a" fill-opacity="0.10" stroke="#2ea043"/>
+      <text x="405" y="121" fill="#eef2f7" font-size="11.5" text-anchor="middle">app gets real</text>
+      <rect x="330" y="164" width="150" height="40" rx="9" fill="#ff9a8f" fill-opacity="0.09" stroke="#ff6a5a"/>
+      <text x="405" y="189" fill="#eef2f7" font-size="11.5" text-anchor="middle">ghost dropped</text>
+      <line x1="88" y1="150" x2="128" y2="150" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#a-sx)"/>
+      <line x1="280" y1="140" x2="328" y2="116" stroke="#5fd17a" stroke-width="1.6" marker-end="url(#a-sx)"/>
+      <line x1="280" y1="160" x2="328" y2="184" stroke="#ff9a8f" stroke-width="1.6" marker-end="url(#a-sx)"/>
+      <rect x="118" y="82" width="374" height="140" rx="12" fill="none" stroke="#2a3646" stroke-dasharray="5 4"/>
+      <text x="126" y="238" fill="#8fb1e6" font-size="10">trust boundary (device / platform)</text>
+      <text x="126" y="300" fill="#8fb1e6" font-size="11">attacker sees one unlabeled stream (x, t), real and ghost mixed</text>
+      <!-- right: the timing tell -->
+      <line x1="560" y1="250" x2="900" y2="250" stroke="#2a3646" stroke-width="1.2"/>
+      <path d="M580 250 Q650 110 720 250 Z" fill="#6ea8ff" fill-opacity="0.14" stroke="#6ea8ff" stroke-width="1.8"/>
+      <path d="M690 250 Q790 150 890 250 Z" fill="#ff9a8f" fill-opacity="0.12" stroke="#ff9a8f" stroke-width="1.8"/>
+      <line x1="650" y1="250" x2="650" y2="118" stroke="#6ea8ff" stroke-width="1" stroke-dasharray="3 3"/>
+      <line x1="790" y1="250" x2="790" y2="158" stroke="#ff9a8f" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="650" y="268" fill="#9cc0ff" font-size="11" text-anchor="middle">0.26 s</text>
+      <text x="790" y="268" fill="#ffb3aa" font-size="11" text-anchor="middle">0.46 s</text>
+      <text x="628" y="104" fill="#6ea8ff" font-size="11" text-anchor="middle">real</text>
+      <text x="818" y="144" fill="#ff9a8f" font-size="11" text-anchor="middle">ghost</text>
+      <text x="820" y="300" fill="#f0c25a" font-size="12" text-anchor="middle">AUC 0.93</text>
+      <text x="560" y="300" fill="#8fb1e6" font-size="11">inter-key interval</text>
+    </svg>
+    <figcaption>Fig 1 - The keyboard forwards real presses and drops ghosts inside the trust boundary; the attacker sees the interleaved stream, where the cued ghost sits late in the timing distribution.</figcaption>
+  </figure>
+</section>
+
+<section id="attack">
+  <div class="eyebrow">the attack</div>
+  <h2 class="s">Detect, score, decode, in one pass</h2>
+  <p>Separatrix runs in three phases. It cannot safely assume decoys are present, because stripping presses from a stream that was never padded destroys a secret it could have read directly. So it first asks a yes or no question about the timing of the stream with a sequential test, and only then separates. It scores every press with three label-free features, and it decodes the secret with one beam search that folds keep-or-drop and spelling into a single choice rather than thresholding, deleting, and then decoding.</p>
+  <figure>
+    <svg viewBox="0 0 940 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:var(--mono)">
+      <defs><marker id="b-sx" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8fb1e6"/></marker></defs>
+      <rect x="24" y="96" width="150" height="70" rx="11" fill="#6ea8ff" fill-opacity="0.07" stroke="#1f6feb"/>
+      <text x="99" y="126" fill="#eef2f7" font-size="12" text-anchor="middle">observed stream</text>
+      <text x="99" y="144" fill="#8fb1e6" font-size="10" text-anchor="middle">(x, t) unlabeled</text>
+      <rect x="204" y="96" width="170" height="70" rx="11" fill="#f0c25a" fill-opacity="0.07" stroke="#bb8009"/>
+      <text x="289" y="120" fill="#f0c25a" font-size="11.5" text-anchor="middle" font-weight="700">0 &middot; detect</text>
+      <text x="289" y="138" fill="#eef2f7" font-size="10" text-anchor="middle">sequential test:</text>
+      <text x="289" y="152" fill="#8fb1e6" font-size="10" text-anchor="middle">is injection on?</text>
+      <rect x="404" y="86" width="210" height="90" rx="12" fill="#5fd17a" fill-opacity="0.07" stroke="#2ea043"/>
+      <text x="509" y="110" fill="#5fd17a" font-size="11.5" text-anchor="middle" font-weight="700">1 &middot; score</text>
+      <text x="509" y="130" fill="#eef2f7" font-size="10" text-anchor="middle">timing z &middot; detour z</text>
+      <text x="509" y="146" fill="#eef2f7" font-size="10" text-anchor="middle">LM skip-gain</text>
+      <text x="509" y="164" fill="#9cc0ff" font-size="10" text-anchor="middle">logistic to p(real)</text>
+      <rect x="644" y="86" width="200" height="90" rx="12" fill="#c79bff" fill-opacity="0.07" stroke="#8957e5"/>
+      <text x="744" y="110" fill="#c79bff" font-size="11.5" text-anchor="middle" font-weight="700">2 &middot; decode</text>
+      <text x="744" y="130" fill="#eef2f7" font-size="10" text-anchor="middle">joint beam search</text>
+      <text x="744" y="146" fill="#eef2f7" font-size="10" text-anchor="middle">keep (top-3 keys)</text>
+      <text x="744" y="162" fill="#eef2f7" font-size="10" text-anchor="middle">or drop as ghost</text>
+      <text x="890" y="126" fill="#eef2f7" font-size="11" text-anchor="middle">ranked</text>
+      <text x="890" y="142" fill="#eef2f7" font-size="11" text-anchor="middle">secrets</text>
+      <line x1="174" y1="131" x2="202" y2="131" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#b-sx)"/>
+      <line x1="374" y1="131" x2="402" y2="131" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#b-sx)"/>
+      <line x1="614" y1="131" x2="642" y2="131" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#b-sx)"/>
+      <line x1="844" y1="131" x2="866" y2="131" stroke="#8fb1e6" stroke-width="1.6" marker-end="url(#b-sx)"/>
+      <text x="509" y="212" fill="#8fb1e6" font-size="10.5" text-anchor="middle">timing, geometry, and language vote together, so a late signal can override an early one</text>
+    </svg>
+    <figcaption>Fig 2 - The Separatrix pipeline: detect whether the defense is on, score every press with three label-free signals, then jointly decide which presses to drop and how to spell the survivors.</figcaption>
+  </figure>
+  <p>The three signals are chosen to be properties of how a press was produced. <strong>Timing</strong> is the gap to the previous committed press, standardized in log space against the fluent population, so a large positive score marks a slow, likely cued press. <strong>Reach geometry</strong> is the detour of the reach, the ratio of the path the hand travels to the straight-line distance, which is high for a cued reach and independent of timing. <strong>Language skip gain</strong> asks a character language model a counterfactual: does the most probable string improve if this press is dropped as a decoy? A press whose removal makes the string more word-like is more likely a ghost.</p>
+  <div class="api"><pre><span class="c"># each press gets a soft score, not a hard label</span>
+p_real = logistic(w0 + w1&middot;z_timing + w2&middot;z_detour + w3&middot;skip_gain)
+
+<span class="c"># the decoder folds keep-or-drop and spelling into one search</span>
+<span class="k">for</span> each press <span class="k">in</span> beam:
+    keep(press)  <span class="c"># commit to one of its top-3 keys by landing position</span>
+    <span class="k">or</span> drop(press)  <span class="c"># treat as ghost</span>
+score(hypothesis) = &Sigma; kept  [ log p_real + &lambda;&middot;log P_key ]
+                  + &Sigma; dropped log(1 - p_real)
+                  + &beta;&middot;log P_language(spelled string)</pre></div>
+  <p>None of the three signals is sufficient on its own. Timing does most of the work but mislabels a fast ghost and a slow real press. Geometry catches some fast ghosts, because a quick cued reach still bends. Language catches the rest, because a fast ghost that survives usually leaves the string less word-like, and the decoder can then drop it. The joint decode is what lets them cover each other.</p>
+</section>
+
+<section id="calibration">
+  <div class="eyebrow">calibration</div>
+  <h2 class="s">Every human number comes from someone else's measurement</h2>
+  <p>The attack turns on a claim about human timing, so the claim does not rest on numbers we assert. The harness draws a secret from a credential-like corpus, lays it on a mid-air layout, generates a committed-press stream, and injects decoys at a chosen ratio, and every behavioral parameter is fixed from a prior published measurement before any attack is run. Building it this way is deliberate: a first-party user study would let us tune the very timing gap the attack exploits, which is the last thing a skeptical reader should trust.</p>
+  <table class="cal">
+    <tr><th>parameter</th><th>value</th><th>calibrated to</th></tr>
+    <tr><td>real inter-key median</td><td class="v">0.26 s</td><td>136M-keystroke typing study</td></tr>
+    <tr><td>cued slowdown</td><td class="v">about 1.8x</td><td>choice cost, visual search, reaction-time floor</td></tr>
+    <tr><td>corroborating slowdown</td><td class="v">3.4x</td><td>prose vs unpredictable typing, EMG keylogging</td></tr>
+    <tr><td>key pitch</td><td class="v">2 cm</td><td>mid-air VR keyboards</td></tr>
+    <tr><td>base nearest-key accuracy</td><td class="v">0.88</td><td>fielded 86 to 98% pose attacks</td></tr>
+    <tr><td>landing jitter</td><td class="v">Gaussian</td><td>Quest hand tracking</td></tr>
+    <tr><td>language model</td><td class="v">char trigram</td><td>password guessing</td></tr>
+    <tr><td>beam width</td><td class="v">24</td><td>tractable, holds near-ties</td></tr>
+  </table>
+  <p>The cued median is where the attack lives, so we do not pick it, we bound it from components measured separately and then report results across a sweep of the slowdown rather than banking on one value. The 1.8x we use sits near the low end of a bracket set by scrambled keypads (about 1.4x) and fully randomized layouts (about 3.7x), since a VR prompt names the target key rather than forcing a blind search.</p>
+</section>
+
+<section id="results">
+  <div class="eyebrow">results</div>
+  <h2 class="s">Recovery where a decoy-unaware attacker gets nothing</h2>
+  <p>With no defense, both attackers read the clean stream and recover nearly every secret. The moment injection turns on, they part ways completely. A decoy-unaware attacker, which reads the padded stream as if every press were real, is length-exact, so a single inserted ghost makes its guess the wrong length and its top-20 recovery falls to near zero. Separatrix, reading the same stream, recovers the secret in its top twenty for 83 percent of trials at a low injection ratio, easing to 57 percent at the strongest setting. The defense is not weak against a naive adversary, it does exactly what it was built to do. It is the wrong defense against an adversary that knows to look at timing.</p>
+  <figure>
+    <svg viewBox="0 0 940 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:var(--mono)">
+      <!-- axes -->
+      <line x1="120" y1="60" x2="120" y2="300" stroke="#2a3646" stroke-width="1.4"/>
+      <line x1="120" y1="300" x2="880" y2="300" stroke="#2a3646" stroke-width="1.4"/>
+      <line x1="120" y1="180" x2="880" y2="180" stroke="#161f2c" stroke-width="1"/>
+      <line x1="120" y1="60" x2="880" y2="60" stroke="#161f2c" stroke-width="1"/>
+      <text x="112" y="304" fill="#8fb1e6" font-size="10" text-anchor="end">0</text>
+      <text x="112" y="184" fill="#8fb1e6" font-size="10" text-anchor="end">0.5</text>
+      <text x="112" y="64" fill="#8fb1e6" font-size="10" text-anchor="end">1.0</text>
+      <text x="60" y="184" fill="#8fb1e6" font-size="10.5" transform="rotate(-90 60 184)" text-anchor="middle">top-20 recovery</text>
+      <text x="120" y="322" fill="#8fb1e6" font-size="10" text-anchor="middle">0</text>
+      <text x="268" y="322" fill="#8fb1e6" font-size="10" text-anchor="middle">0.1</text>
+      <text x="416" y="322" fill="#8fb1e6" font-size="10" text-anchor="middle">0.2</text>
+      <text x="564" y="322" fill="#8fb1e6" font-size="10" text-anchor="middle">0.3</text>
+      <text x="712" y="322" fill="#8fb1e6" font-size="10" text-anchor="middle">0.4</text>
+      <text x="860" y="322" fill="#8fb1e6" font-size="10" text-anchor="middle">0.5</text>
+      <text x="500" y="344" fill="#8fb1e6" font-size="10.5" text-anchor="middle">injection ratio r</text>
+      <!-- no defense -->
+      <line x1="120" y1="68" x2="880" y2="68" stroke="#8fb1e6" stroke-width="1.6" stroke-dasharray="6 5"/>
+      <text x="700" y="60" fill="#8fb1e6" font-size="10.5">no defense</text>
+      <!-- decoy-unaware -->
+      <polyline points="120,70 268,295 416,297 564,299 712,299 860,299" fill="none" stroke="#ff9a8f" stroke-width="2.2"/>
+      <text x="300" y="290" fill="#ff9a8f" font-size="10.5">decoy-unaware</text>
+      <!-- separatrix -->
+      <polyline points="120,84 268,101 416,130 564,146 712,154 860,163" fill="none" stroke="#5fd17a" stroke-width="2.6"/>
+      <circle cx="268" cy="101" r="3.4" fill="#5fd17a"/><circle cx="416" cy="130" r="3.4" fill="#5fd17a"/><circle cx="564" cy="146" r="3.4" fill="#5fd17a"/><circle cx="712" cy="154" r="3.4" fill="#5fd17a"/><circle cx="860" cy="163" r="3.4" fill="#5fd17a"/>
+      <text x="292" y="96" fill="#5fd17a" font-size="11" font-weight="700">Separatrix</text>
+      <text x="628" y="140" fill="#5fd17a" font-size="10">0.83 to 0.57 across r</text>
+    </svg>
+    <figcaption>Fig 3 - Top-20 recovery against injection ratio. A decoy-unaware attacker collapses to near zero the moment any decoys are injected; Separatrix declines only gently, from 0.83 to 0.57, because every added ghost is another slow cued press for the classifier to read.</figcaption>
+  </figure>
+  <p>Three readings sharpen the result, and none of them let the attack off the hook.</p>
+  <span class="b"><strong>Where recovery comes from.</strong> In an ablation, the timing feature alone matches the full attack and removing timing collapses recovery to zero. Geometry and language are not idle, they add real but secondary lift, most where timing is ambiguous. Any defense that leaves the timing gap open leaves the attack most of its power.</span>
+  <span class="b"><strong>Timing is sufficient, not necessary.</strong> Turning the tell fully off, modeling ghosts timed exactly like real presses, Separatrix still recovers just over half of secrets, 0.54, from geometry and language alone. The attack does not stand or fall on the one modeled quantity.</span>
+  <span class="b"><strong>Length does not buy safety.</strong> Recovery falls from 0.81 for short secrets to 0.55 for ten to twelve character ones, because a longer secret gives the decoder more presses to mislabel but also more presses to score. Long secrets stay well within reach.</span>
+  <span class="b"><strong>Detecting the defense is cheap.</strong> A single press separates real from ghost at an area under the ROC curve near 0.93, steady across the injection range, so a sequential detector flags the defense within about three presses at a strict false-alarm rate. Detection is the first step of the attack, not a leap of faith.</span>
+</section>
+
+<section id="fix">
+  <div class="eyebrow">the fix</div>
+  <h2 class="s">Not more decoys, quieter ones</h2>
+  <p>If prompting is what gives a decoy away, the fix is to stop the prompt from showing. We study the most direct version, matching the cadence of ghost presses to real typing, against an attacker that retrains at each setting so the defender gets no credit for a stale classifier. Pulling ghost cadence toward fluent typing works, and it works because it starves the loudest feature: recovery falls from 0.64, where ghosts run at the full cued delay, to 0.54 once ghost timing matches fluent typing. That lands right where the timing-off analysis predicted, which is the consistency check we want.</p>
+  <figure>
+    <svg viewBox="0 0 940 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:var(--mono)">
+      <line x1="120" y1="40" x2="120" y2="190" stroke="#2a3646" stroke-width="1.4"/>
+      <line x1="120" y1="190" x2="860" y2="190" stroke="#2a3646" stroke-width="1.4"/>
+      <text x="112" y="194" fill="#8fb1e6" font-size="10" text-anchor="end">0.4</text>
+      <text x="112" y="70" fill="#8fb1e6" font-size="10" text-anchor="end">0.7</text>
+      <text x="500" y="214" fill="#8fb1e6" font-size="10.5" text-anchor="middle">ghost inter-key median, pulled toward real typing &rarr;</text>
+      <polyline points="150,84 300,96 450,110 600,124 750,140 830,150" fill="none" stroke="#6ea8ff" stroke-width="2.6"/>
+      <circle cx="150" cy="84" r="3.4" fill="#6ea8ff"/><circle cx="830" cy="150" r="3.4" fill="#6ea8ff"/>
+      <text x="150" y="72" fill="#6ea8ff" font-size="10.5" text-anchor="middle">0.64</text>
+      <text x="830" y="138" fill="#6ea8ff" font-size="10.5" text-anchor="middle">0.54</text>
+      <text x="150" y="176" fill="#8fb1e6" font-size="9.5" text-anchor="middle">cued delay</text>
+      <text x="830" y="176" fill="#5fd17a" font-size="9.5" text-anchor="middle">cadence matched</text>
+      <text x="470" y="60" fill="#f0c25a" font-size="10.5" text-anchor="middle">recovery falls, but not to zero: reach and text still leak</text>
+    </svg>
+    <figcaption>Fig 4 - Matching ghost cadence to real typing suppresses recovery to the level geometry and language alone can reach, no more and no less.</figcaption>
+  </figure>
+  <p>Here is the tension the defender cannot escape. A ghost is fast only if the wearer does not have to search for it. To make a ghost as fast as fluent typing, the keyboard has to let the wearer press it without reading a prompt, which means the ghost has to be predictable, which is exactly the property that lets a shoulder surfer tell it apart. The defender trades a timing tell for a predictability tell. We do not resolve that trade, we name it, because it tells a keyboard designer where the real work is: shaping the reach as well, which is harder, since the wearer's hand, not the keyboard, draws the path.</p>
+  <div class="note">
+    <div class="h">scope and disclosure</div>
+    <p style="margin:0">Separatrix is evaluated as a trace-driven attack in simulation, calibrated entirely from previously published, already-IRB-approved measurements of typing and hand tracking; it reports no new user study, and the released artifact operates on synthetic and published traces only. We do not claim decoy injection is worthless. We claim something narrower: that a decoy generated by prompting is not free cover, because prompting leaves a trace in the motion. We are notifying the authors of the VR decoy defenses we evaluate ahead of publication, sharing both the attack and the cadence-matching countermeasure.</p>
+  </div>
+</section>
+
+<section id="line">
+  <div class="eyebrow">in the line</div>
+  <h2 class="s">Part of Human Centered and Accessible AI</h2>
+  <p>Separatrix sits in the <a href="thrusts/human_centered_ai_accessibility.html">Human Centered and Accessible AI</a> line, where sensitive interaction should stay protected on the device, and it shares a boundary with <a href="thrusts/cellular_and_wireless_privacy.html">Cellular and Wireless Privacy</a>, since the leak is a cross-layer side channel the platform is forced to expose. It is the full version of <a href="index.html#publications">Winnow</a>, the workshop paper accepted at XR Security '26, and it is in submission to USENIX Security. The lesson is meant to travel past this one keyboard: every deception defense rests on a resemblance, and it fails at whatever dimension the designer forgot to match. In VR, that dimension was the wearer's own hand.</p>
+  <p style="font-style:italic;color:#9fb2c9">A decoy keeps a secret only while it passes for the real thing. In virtual reality a decoy is not a string but an act, and the act gives it away.</p>
+  <p><a href="thrusts/human_centered_ai_accessibility.html">&larr; back to Human Centered and Accessible AI</a></p>
+</section>
+
+<footer>
+  <div class="org">Separatrix is part of the <b>Human Centered and Accessible AI</b> line, led by <b>Hannah B. Pasandi</b>, with Haniyeh B. Pasandi.</div>
+  <p style="margin-top:6px">Scientist, UC Berkeley Sky Computing Lab &middot; <a href="mailto:h.pasandi@berkeley.edu">h.pasandi@berkeley.edu</a> &middot; <a href="thrusts/human_centered_ai_accessibility.html">Human Centered AI</a> &middot; <a href="index.html">home</a></p>
+  <p class="fineprint">This page describes a system in submission to USENIX Security; specific measurements appear in the paper. Figures are inline vector graphics that summarize published results.</p>
+</footer>
+
+</body>
+</html>
