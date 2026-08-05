@@ -3,11 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Human Centered and Accessible AI: Research Projects and Systems | Hannah B. Pasandi</title>
+<title>Human-Centered Computing: Research Projects and Systems | Hannah B. Pasandi</title>
 <meta name="description" content="Accessible and relational AI systems that keep sensitive interaction local, support communication, and reason about human-AI relationships beyond tool use." />
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Human Centered and Accessible AI | Hannah B. Pasandi" />
+<meta property="og:title" content="Human-Centered Computing | Hannah B. Pasandi" />
 <meta property="og:description" content="Accessible and relational AI systems that keep sensitive interaction local, support communication, and reason about human-AI relationships beyond tool use." />
 <meta property="og:image" content="https://hanabhp.github.io/assets/og-card.png" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -66,11 +68,23 @@ footer{border-top:1px solid #1e2734;padding:26px 0;color:#7e93ad;font-size:.85re
   <a href="../index.html" class="brand">Hannah B. Pasandi</a>
   <nav><a href="../index.html">Home</a><a href="../index.html#research">Research</a><a href="../index.html#publications">Publications</a><a href="../index.html#contact">Contact</a></nav>
 </div></div></header>
-<section class="intro"><div class="wrap"><h1>Human Centered and Accessible AI</h1><p>Accessible and relational AI systems that keep sensitive interaction local, support communication, and reason about human-AI relationships beyond tool use.</p></div></section>
+<section class="intro"><div class="wrap"><h1>Human-Centered Computing</h1><p>Accessible and relational AI systems that keep sensitive interaction local, support communication, and reason about human-AI relationships beyond tool use.</p></div></section>
 <main class="wrap">
   <div class="pgrid">
     <article class="pcard">
-      <div class="pc-tag">Human Centered and Accessible AI</div>
+      <div class="pc-tag">Human-Centered Computing &#183; Privacy</div>
+      <div class="pc-titlerow"><span class="plogo" title="Separatrix"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separatrix logo"><title>Separatrix</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#6ea8ff" fill-opacity="0.10" stroke="#6ea8ff" stroke-width="1.4"/><path d="M8 22 h10" fill="none" stroke="#6ea8ff" stroke-width="2"/><path d="M18 22 q5 0 8 -6 t8 -6" fill="none" stroke="#5fd17a" stroke-width="2"/><path d="M18 22 q5 0 8 6 t8 6" fill="none" stroke="#ff9a8f" stroke-width="2" stroke-dasharray="3 3"/><circle cx="18" cy="22" r="2.4" fill="#6ea8ff"/></svg></span><h3 class="pc-title"><a href="../separatrix.html">Separatrix</a></h3></div>
+      <div class="pc-tagline">Stripping decoy keystrokes back out of a padded VR typing stream.</div>
+      <div class="pc-metrics"><span>57 to 83% top-20 recovery</span><span>AUC 0.93 per press</span><span>0.54 with timing off</span></div>
+      <details class="pc-more"><summary aria-label="Read more about Separatrix"></summary>
+        <div class="pc-body">
+          <p class="pc-desc">A VR headset renders the wearer's hands, so anything watching can read what they type. The leading defense injects decoy keystrokes to bury the real ones. Separatrix shows a prompted decoy is a cued action: it is read, located, and reached for, so it lands slower and bends off the smooth path a fluent press follows. Scoring each press on timing, reach geometry, and language, then decoding with one beam search, Separatrix recovers the secret in its top twenty guesses for most trials where a decoy-unaware attacker recovers nothing. It is the full version of <a href="../index.html#publications">Winnow</a> (XR Security '26), in submission to USENIX Security. Full write-up on the <a href="../separatrix.html">Separatrix project page</a>.</p>
+          <div class="pc-fig"><svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg" role="img"><style>.flowsx{stroke-dasharray:8 6;animation:flsx 1.05s linear infinite}@keyframes flsx{to{stroke-dashoffset:-14}}@media(prefers-reduced-motion:reduce){.flowsx{animation:none}}</style><text x="28" y="24" fill="#7e93ad" font-size="12" text-anchor="start" font-family="JetBrains Mono,SF Mono,Menlo,monospace">a cued ghost runs slow, and the reach bends</text><line x1="46" y1="196" x2="300" y2="196" stroke="#2a3646" stroke-width="1.2"/><path d="M60 196 Q110 104 160 196 Z" fill="#6ea8ff" fill-opacity="0.14" stroke="#6ea8ff" stroke-width="1.8"/><path d="M138 196 Q212 128 286 196 Z" fill="#ff9a8f" fill-opacity="0.12" stroke="#ff9a8f" stroke-width="1.8"/><line x1="110" y1="196" x2="110" y2="112" stroke="#6ea8ff" stroke-width="1" stroke-dasharray="3 3"/><line x1="212" y1="196" x2="212" y2="136" stroke="#ff9a8f" stroke-width="1" stroke-dasharray="3 3"/><text x="110" y="212" fill="#9cc0ff" font-size="10.5" text-anchor="middle" font-family="JetBrains Mono,SF Mono,Menlo,monospace">0.26s</text><text x="212" y="212" fill="#ffb3aa" font-size="10.5" text-anchor="middle" font-family="JetBrains Mono,SF Mono,Menlo,monospace">0.46s</text><text x="96" y="100" fill="#6ea8ff" font-size="10.5" text-anchor="middle" font-family="JetBrains Mono,SF Mono,Menlo,monospace">real</text><text x="238" y="124" fill="#ff9a8f" font-size="10.5" text-anchor="middle" font-family="JetBrains Mono,SF Mono,Menlo,monospace">ghost</text><text x="228" y="66" fill="#f0c25a" font-size="11" text-anchor="start" font-family="JetBrains Mono,SF Mono,Menlo,monospace">AUC 0.93</text><text x="356" y="70" fill="#7e93ad" font-size="10.5" text-anchor="start" font-family="JetBrains Mono,SF Mono,Menlo,monospace">top-20 recovery</text><rect x="356" y="86" width="128" height="16" rx="4" fill="#1e2734"/><rect x="356" y="86" width="3" height="16" rx="1.5" fill="#ff9a8f"/><text x="356" y="118" fill="#ff9a8f" font-size="10" text-anchor="start" font-family="JetBrains Mono,SF Mono,Menlo,monospace">decoy-unaware ~0</text><rect x="356" y="138" width="128" height="16" rx="4" fill="#1e2734"/><rect x="356" y="138" width="73" height="16" rx="4" fill="#5fd17a" fill-opacity="0.55"/><rect x="356" y="138" width="106" height="16" rx="4" fill="#5fd17a" fill-opacity="0.28"/><text x="356" y="170" fill="#5fd17a" font-size="10" text-anchor="start" font-family="JetBrains Mono,SF Mono,Menlo,monospace">separatrix 0.57 to 0.83</text><line x1="356" y1="250" x2="484" y2="250" stroke="#8fb1e6" stroke-width="1.4" marker-end="" class="flowsx"/><text x="356" y="268" fill="#7e93ad" font-size="9" text-anchor="start" font-family="JetBrains Mono,SF Mono,Menlo,monospace">timing, reach, language vote together</text></svg></div>
+        </div>
+      </details>
+    </article>
+    <article class="pcard">
+      <div class="pc-tag">Human-Centered Computing</div>
       <div class="pc-titlerow"><span class="plogo" title="SignSense"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SignSense logo"><title>SignSense</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#6ea8ff" fill-opacity="0.10" stroke="#6ea8ff" stroke-width="1.4"/><path d="M14 34 v-12 q0 -3 3 -3 t3 3 M20 22 v-8 q0 -3 3 -3 t3 3 v8 M26 22 v-5 q0 -3 3 -3 t3 3 v10 q0 8 -9 10 h-3 q-5 0 -6 -5" fill="none" stroke="#6ea8ff" stroke-width="2"/></svg></span><h3 class="pc-title">SignSense</h3></div>
       <div class="pc-tagline">Private edge sign language translation.</div>
       <div class="pc-metrics"><span>92.5% sign to gloss accuracy</span><span>80.4 ms latency</span><span>local processing</span></div>
@@ -82,7 +96,7 @@ footer{border-top:1px solid #1e2734;padding:26px 0;color:#7e93ad;font-size:.85re
       </details>
     </article>
     <article class="pcard">
-      <div class="pc-tag">Human Centered and Accessible AI</div>
+      <div class="pc-tag">Human-Centered Computing</div>
       <div class="pc-titlerow"><span class="plogo" title="Sign Language Atlas"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sign Language Atlas logo"><title>Sign Language Atlas</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#6ea8ff" fill-opacity="0.10" stroke="#6ea8ff" stroke-width="1.4"/><circle cx="22" cy="22" r="13" fill="none" stroke="#6ea8ff" stroke-width="2"/><path d="M9 22 h26 M22 9 c-6 7 -6 19 0 26 M22 9 c6 7 6 19 0 26" fill="none" stroke="#6ea8ff" stroke-width="1.4"/><circle cx="28" cy="16" r="3" fill="#6ea8ff"/></svg></span><h3 class="pc-title">Sign Language Atlas</h3></div>
       <div class="pc-tagline">A system map for real time sign language translation.</div>
       <div class="pc-metrics"><span>30 year map</span><span>edge privacy lens</span><span>AR research gaps</span></div>
@@ -94,7 +108,7 @@ footer{border-top:1px solid #1e2734;padding:26px 0;color:#7e93ad;font-size:.85re
       </details>
     </article>
     <article class="pcard">
-      <div class="pc-tag">Human Centered and Accessible AI</div>
+      <div class="pc-tag">Human-Centered Computing</div>
       <div class="pc-titlerow"><span class="plogo" title="Relate"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Relate logo"><title>Relate</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#6ea8ff" fill-opacity="0.10" stroke="#6ea8ff" stroke-width="1.4"/><path d="M8 12 h16 v10 h-9 l-5 5 v-5 h-2 z" fill="none" stroke="#6ea8ff" stroke-width="2"/><path d="M20 20 h16 v10 h-2 v5 l-5 -5 h-9 z" fill="none" stroke="#6ea8ff" stroke-width="2" opacity="0.55"/></svg></span><h3 class="pc-title">Relate</h3></div>
       <div class="pc-tagline">Relational ethics for human AI interaction.</div>
       <div class="pc-metrics"><span>relational impact assessment</span><span>companion AI cases</span><span>governance framework</span></div>

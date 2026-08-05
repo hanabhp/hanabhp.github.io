@@ -75,11 +75,15 @@ footer a{color:var(--blue)}
 .fineprint{margin-top:14px;color:var(--mute);font-size:12px}
 </style>
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Separatrix: Separating Real from Decoy Keystrokes in Virtual Reality | Hannah B. Pasandi" />
 <meta property="og:description" content="A prompted decoy is a cued action, so it lands slow and its reach bends. Separatrix reads that tell and pulls the real secret out of a padded VR typing stream." />
 <meta property="og:image" content="https://hanabhp.github.io/assets/og-card.png" />
 <meta name="twitter:card" content="summary_large_image" />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4M99RGCCZP"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4M99RGCCZP');</script>
 </head>
 <body>
 
@@ -101,7 +105,7 @@ footer a{color:var(--blue)}
 <header class="hero">
   <div class="brand"><span class="pglogo" title="Separatrix" style="display:inline-flex;width:40px;height:40px;vertical-align:-5px;margin-right:8px"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Separatrix logo" style="width:100%;height:100%"><title>Separatrix</title><rect x="1.5" y="1.5" width="41" height="41" rx="10" fill="#6ea8ff" fill-opacity="0.10" stroke="#6ea8ff" stroke-width="1.6"/><path d="M8 22 h10" fill="none" stroke="#6ea8ff" stroke-width="2.4"/><path d="M18 22 q5 0 8 -6 t8 -6" fill="none" stroke="#5fd17a" stroke-width="2.4"/><path d="M18 22 q5 0 8 6 t8 6" fill="none" stroke="#ff9a8f" stroke-width="2.4" stroke-dasharray="3 3"/><circle cx="18" cy="22" r="3" fill="#6ea8ff"/></svg></span>Separatrix<span class="dot">.</span></div>
   <div class="tagline">separating real from decoy keystrokes in virtual reality</div>
-  <div class="byline">a project in the <a href="thrusts/human_centered_ai_accessibility.html">Human Centered and Accessible AI</a> line &middot; led by <b>Hannah B. Pasandi</b>, with Haniyeh B. Pasandi</div>
+  <div class="byline">a project in the <a href="thrusts/human_centered_ai_accessibility.html">Human-Centered Computing</a> line &middot; led by <b>Hannah B. Pasandi</b>, with Haniyeh B. Pasandi</div>
   <div class="hlinks">
     <a href="thrusts/human_centered_ai_accessibility.html">Human Centered AI</a>
     <a href="thrusts/cellular_and_wireless_privacy.html">Wireless Privacy</a>
@@ -180,16 +184,16 @@ footer a{color:var(--blue)}
       <text x="99" y="126" fill="#eef2f7" font-size="12" text-anchor="middle">observed stream</text>
       <text x="99" y="144" fill="#8fb1e6" font-size="10" text-anchor="middle">(x, t) unlabeled</text>
       <rect x="204" y="96" width="170" height="70" rx="11" fill="#f0c25a" fill-opacity="0.07" stroke="#bb8009"/>
-      <text x="289" y="120" fill="#f0c25a" font-size="11.5" text-anchor="middle" font-weight="700">0 &middot; detect</text>
+      <text x="289" y="120" fill="#f0c25a" font-size="11.5" text-anchor="middle" font-weight="700">0 &#183; detect</text>
       <text x="289" y="138" fill="#eef2f7" font-size="10" text-anchor="middle">sequential test:</text>
       <text x="289" y="152" fill="#8fb1e6" font-size="10" text-anchor="middle">is injection on?</text>
       <rect x="404" y="86" width="210" height="90" rx="12" fill="#5fd17a" fill-opacity="0.07" stroke="#2ea043"/>
-      <text x="509" y="110" fill="#5fd17a" font-size="11.5" text-anchor="middle" font-weight="700">1 &middot; score</text>
-      <text x="509" y="130" fill="#eef2f7" font-size="10" text-anchor="middle">timing z &middot; detour z</text>
+      <text x="509" y="110" fill="#5fd17a" font-size="11.5" text-anchor="middle" font-weight="700">1 &#183; score</text>
+      <text x="509" y="130" fill="#eef2f7" font-size="10" text-anchor="middle">timing z &#183; detour z</text>
       <text x="509" y="146" fill="#eef2f7" font-size="10" text-anchor="middle">LM skip-gain</text>
       <text x="509" y="164" fill="#9cc0ff" font-size="10" text-anchor="middle">logistic to p(real)</text>
       <rect x="644" y="86" width="200" height="90" rx="12" fill="#c79bff" fill-opacity="0.07" stroke="#8957e5"/>
-      <text x="744" y="110" fill="#c79bff" font-size="11.5" text-anchor="middle" font-weight="700">2 &middot; decode</text>
+      <text x="744" y="110" fill="#c79bff" font-size="11.5" text-anchor="middle" font-weight="700">2 &#183; decode</text>
       <text x="744" y="130" fill="#eef2f7" font-size="10" text-anchor="middle">joint beam search</text>
       <text x="744" y="146" fill="#eef2f7" font-size="10" text-anchor="middle">keep (top-3 keys)</text>
       <text x="744" y="162" fill="#eef2f7" font-size="10" text-anchor="middle">or drop as ghost</text>
@@ -288,7 +292,7 @@ score(hypothesis) = &Sigma; kept  [ log p_real + &lambda;&middot;log P_key ]
       <line x1="120" y1="190" x2="860" y2="190" stroke="#2a3646" stroke-width="1.4"/>
       <text x="112" y="194" fill="#8fb1e6" font-size="10" text-anchor="end">0.4</text>
       <text x="112" y="70" fill="#8fb1e6" font-size="10" text-anchor="end">0.7</text>
-      <text x="500" y="214" fill="#8fb1e6" font-size="10.5" text-anchor="middle">ghost inter-key median, pulled toward real typing &rarr;</text>
+      <text x="500" y="214" fill="#8fb1e6" font-size="10.5" text-anchor="middle">ghost inter-key median, pulled toward real typing &#8594;</text>
       <polyline points="150,84 300,96 450,110 600,124 750,140 830,150" fill="none" stroke="#6ea8ff" stroke-width="2.6"/>
       <circle cx="150" cy="84" r="3.4" fill="#6ea8ff"/><circle cx="830" cy="150" r="3.4" fill="#6ea8ff"/>
       <text x="150" y="72" fill="#6ea8ff" font-size="10.5" text-anchor="middle">0.64</text>
@@ -308,14 +312,14 @@ score(hypothesis) = &Sigma; kept  [ log p_real + &lambda;&middot;log P_key ]
 
 <section id="line">
   <div class="eyebrow">in the line</div>
-  <h2 class="s">Part of Human Centered and Accessible AI</h2>
-  <p>Separatrix sits in the <a href="thrusts/human_centered_ai_accessibility.html">Human Centered and Accessible AI</a> line, where sensitive interaction should stay protected on the device, and it shares a boundary with <a href="thrusts/cellular_and_wireless_privacy.html">Cellular and Wireless Privacy</a>, since the leak is a cross-layer side channel the platform is forced to expose. It is the full version of <a href="index.html#publications">Winnow</a>, the workshop paper accepted at XR Security '26, and it is in submission to USENIX Security. The lesson is meant to travel past this one keyboard: every deception defense rests on a resemblance, and it fails at whatever dimension the designer forgot to match. In VR, that dimension was the wearer's own hand.</p>
+  <h2 class="s">Part of Human-Centered Computing</h2>
+  <p>Separatrix sits in the <a href="thrusts/human_centered_ai_accessibility.html">Human-Centered Computing</a> line, where sensitive interaction should stay protected on the device, and it shares a boundary with <a href="thrusts/cellular_and_wireless_privacy.html">Cellular and Wireless Privacy</a>, since the leak is a cross-layer side channel the platform is forced to expose. It is the full version of <a href="index.html#publications">Winnow</a>, the workshop paper accepted at XR Security '26, and it is in submission to USENIX Security. The lesson is meant to travel past this one keyboard: every deception defense rests on a resemblance, and it fails at whatever dimension the designer forgot to match. In VR, that dimension was the wearer's own hand.</p>
   <p style="font-style:italic;color:#9fb2c9">A decoy keeps a secret only while it passes for the real thing. In virtual reality a decoy is not a string but an act, and the act gives it away.</p>
-  <p><a href="thrusts/human_centered_ai_accessibility.html">&larr; back to Human Centered and Accessible AI</a></p>
+  <p><a href="thrusts/human_centered_ai_accessibility.html">&larr; back to Human-Centered Computing</a></p>
 </section>
 
 <footer>
-  <div class="org">Separatrix is part of the <b>Human Centered and Accessible AI</b> line, led by <b>Hannah B. Pasandi</b>, with Haniyeh B. Pasandi.</div>
+  <div class="org">Separatrix is part of the <b>Human-Centered Computing</b> line, led by <b>Hannah B. Pasandi</b>, with Haniyeh B. Pasandi.</div>
   <p style="margin-top:6px">Scientist, UC Berkeley Sky Computing Lab &middot; <a href="mailto:h.pasandi@berkeley.edu">h.pasandi@berkeley.edu</a> &middot; <a href="thrusts/human_centered_ai_accessibility.html">Human Centered AI</a> &middot; <a href="index.html">home</a></p>
   <p class="fineprint">This page describes a system in submission to USENIX Security; specific measurements appear in the paper. Figures are inline vector graphics that summarize published results.</p>
 </footer>

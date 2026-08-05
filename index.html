@@ -322,6 +322,8 @@
 {"@context":"https://schema.org","@type":"Person","name":"Hannah B. Pasandi","alternateName":["Hannaneh B. Pasandi","Hannaneh Barahouei Pasandi","Hana Pasandi"],"jobTitle":"Research Scholar Fellow","affiliation":{"@type":"Organization","name":"UC Berkeley Sky Computing Lab"},"url":"https://hanabhp.github.io/","email":"mailto:h.pasandi@berkeley.edu","sameAs":["https://github.com/hanabhp","https://scholar.google.com/citations?user=8B25UksAAAAJ"],"knowsAbout":["agentic AI systems","LLM serving","network protocols","wireless privacy","autonomous vehicles","satellite networks"]}
 </script>
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Hannah B. Pasandi | Networked Systems, Agentic AI, Wireless Privacy" />
 <meta property="og:description" content="Research Scholar Fellow at UC Berkeley Sky Computing Lab: agentic AI systems, LLM serving, network protocols, wireless privacy, autonomous vehicles, satellite networks." />
@@ -345,7 +347,6 @@
             <a href="#research" class="nav-link-custom">Research</a>
             <a href="#research" class="nav-link-custom">Projects</a>
             <a href="#publications" class="nav-link-custom">Publications</a>
-            <a class="nav-link" href="people.html">People</a>
             <a href="people.html" class="nav-link-custom">Collaborators</a>
             <a href="#contact" class="nav-link-custom">Contact</a>
           </div>
@@ -397,6 +398,12 @@
           I am a wireless and networked systems researcher currently serving as a Research Scholar Fellow at <a href="https://sky.cs.berkeley.edu/" target="_blank" class="name-link">UC Berkeley's Sky Computing Lab</a>, where I contribute to the SkyPilot project with <a href="https://people.eecs.berkeley.edu/~istoica/" target="_blank" class="name-link">Professor Ion Stoica</a>. I have been fortunate to work with exceptional researchers throughout my journey: <a href="https://music.lab.vcu.edu/" target="_blank" class="name-link">Prof. Tamer Nadeem</a> at <a href="https://www.vcu.edu/" target="_blank" class="name-link">Virginia Commonwealth University</a> during my PhD, <a href="https://people.eecs.berkeley.edu/~sylvia/" target="_blank" class="name-link">Prof. Sylvia Ratnasamy</a> and <a href="https://www.icsi.berkeley.edu/icsi/people/shenker" target="_blank" class="name-link">Prof. Scott Shenker</a> at <a href="https://netsys.cs.berkeley.edu/" target="_blank" class="name-link">UC Berkeley's NetSys Lab</a>, <a href="https://scholar.google.com/citations?user=YXq56tgAAAAJ" target="_blank" class="name-link">Dr. Juan A. Fraire</a> and <a href="https://perso.citi-lab.fr/hrivano/" target="_blank" class="name-link">Prof. Hervé Rivano</a> at <a href="https://team.inria.fr/agora/" target="_blank" class="name-link">INRIA Lyon</a>, <a href="https://lig-membres.imag.fr/rousseau/" target="_blank" class="name-link">Prof. Franck Rousseau</a> at <a href="https://www.liglab.fr/" target="_blank" class="name-link">LIG Lab (Université Grenoble Alpes)</a>, <a href="https://wimnet.ee.columbia.edu/people/gil-zussman/" target="_blank" class="name-link">Prof. Gil Zussman</a> at <a href="https://www.columbia.edu/" target="_blank" class="name-link">Columbia University's</a> Wireless and Mobile Networking Lab, and industry leaders at <a href="https://www.qualcomm.com/" target="_blank" class="name-link">Qualcomm</a>, <a href="https://skylarkwireless.com/" target="_blank" class="name-link">Skylark Wireless LLC</a>, and <a href="https://www.bell-labs.com/" target="_blank" class="name-link">Bell Labs</a>.
         </p>
 
+        <div class="mb-4" style="border:1px solid #e6cccc;background:#fdf7f7;border-left:4px solid var(--red-primary);border-radius:10px;padding:18px 20px;">
+          <p class="mb-0">
+            I build systems that hold a property they were never designed to guarantee. The trick is finding the invariant that property secretly depends on. Every complex deployed system runs on hidden regularities it never documents. An identifier that never rotates, and so quietly links a person across every dataset (see <a href="av.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">VIN2VICTIM</a>). An interference threshold that separates a stable network from a cascading one (see <a href="tenet.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">teNET</a>). A set of failure modes an agent's own judges can never quite agree on, yet that stays fixed no matter which cases you check (see <a href="confine.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Confine</a>). I find these invariants using whatever the system will give up, whether mined from production traces, derived by hand, grounded in orbital physics, or learned and then checked. Then I turn each one into something the system can act on, a privacy boundary, a safety certificate, a reliability contract, a prediction that arrives in time to matter. A growing part of this is agentic AI. We now trust agents to check their own work, so I measure when that trust is earned (see <a href="gauge.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Gauge</a>), and I hold an agent's actions to a contract it cannot quietly break (see <a href="vouch.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Vouch</a>). That is runtime verification, done as the agent acts. It comes before formal verification, which assumes the invariant is already known and written down. I work the other end, finding the invariant in a system that never told anyone it was there.
+          </p>
+        </div>
+
         <p class="mb-3">
           Our everyday life increasingly runs on two intertwined infrastructures. Networks carry our calls, our work, and our payments; AI agents are beginning to act across them on our behalf. I design and build systems that keep both trustworthy, predictable, accountable, and safe by design. Such an objective is fascinatingly challenging and complex, since real deployments are chains of layers, radio schedulers, satellite links, serving stacks, agent plans, that look independent yet carry hidden dependencies that must be understood, captured, and acted on; otherwise a guarantee that holds at one layer quietly collapses at the next, and in these systems a quiet collapse is a safety event, a dropped emergency call, a drone flying on a stale plan, an agent committing an unverified action. My research draws from networking, distributed systems, machine learning, security, and formal methods, model checking, SMT-based verification, and runtime certificates, a toolkit I first trained in during my master's in Grenoble.
         </p>
@@ -413,7 +420,7 @@
           One principle, two arenas. In <span style="font-weight: bold; color: var(--red-primary);">networks</span>, <a href="tenet.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">teNET</a> deploys only protocol compositions that carry a certificate they cannot collapse, and <a href="agentic_ai.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">OrbitMesh</a> turns direct-to-cell satellite into a first-class serving tier for LLM requests. In <a href="agentic_ai.html" style="font-weight: bold; color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">AI agents</a>, where the unit of work is now the <span style="font-weight: bold; color: var(--red-primary);">plan</span> rather than the single call, <a href="patient.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Patient</a>, <a href="confine.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Confine</a>, and <a href="gauge.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Gauge</a> schedule, route, and evaluate at the plan level. <a href="agentic_ai.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Loom</a> is both arenas in one system: an LLM agent held inside a safety certificate while it composes a live wireless MAC layer.
         </p>
         <p class="mb-3">
-          The same discipline extends to connected vehicles and smart farming through the students I advise; meet them, and everyone I am lucky to work with, on the <a href="people.html">People</a> page.
+          The same discipline extends to connected vehicles and smart farming through the students I advise; meet them, and everyone I am lucky to work with, on the <a href="people.html">Collaborators</a> page.
         </p>
 
         <div class="mb-3" style="border:1px solid #d7e3f4;background:#f4f8fd;border-left:4px solid #1f4e79;border-radius:10px;padding:14px 16px;font-style:italic;color:#1f4e79;">
@@ -446,6 +453,18 @@
         <div class="card-custom mt-4">
           <h2 class="h4 fw-bold mb-3" style="color: var(--red-primary);">New Highlights</h2>
           <div class="news-scroll">
+            <div class="news-item news-item-green mb-3">
+              <h3 class="h6 fw-semibold">[August 2026] SANS Cloud Summit 2026 Scholarship</h3>
+              <p class="small text-muted mb-0">Winner of the SANS Cloud Summit 2026 Scholarship!</p>
+            </div>
+            <div class="news-item news-item-green mb-3">
+              <h3 class="h6 fw-semibold">[Aug 2026] Winnow Accepted at XR Security '26</h3>
+              <p class="small text-muted mb-0">Our paper "Winnow: A Decoy-Aware Adversary Defeats Ghost-Keystroke Defenses in Virtual Reality", with Haniyeh B. Pasandi, is accepted to XR Security '26.</p>
+            </div>
+            <div class="news-item news-item-emerald mb-3">
+              <h3 class="h6 fw-semibold">[Jul 2026] Privacy in Agentic Voice Assistants Accepted at SPSC '26</h3>
+              <p class="small text-muted mb-0">Our paper "Privacy in Agentic Voice Assistants" is accepted to SPSC '26.</p>
+            </div>
             <div class="news-item news-item-green mb-3">
               <h3 class="h6 fw-semibold">[2026] Nominated to Sigma Xi</h3>
               <p class="small text-muted mb-0">Nominated to join Sigma Xi, the research honor society whose members since 1886 have included Albert Einstein, Richard Feynman, and more than 200 Nobel laureates.</p>
@@ -529,8 +548,8 @@
         <a class="thrust-tile" href="tenet.html" aria-label="Self-Driving Protocols">
           <img src="assets/thrusts/self_driving_protocols.svg" alt="Self-Driving Protocols. Compositional wireless protocol design with learned synthesis and formal certificates; the teNET project." loading="lazy">
         </a>
-        <a class="thrust-tile" href="thrusts/human_centered_ai_accessibility.html" aria-label="Human Centered and Accessible AI">
-          <img src="assets/thrusts/human_centered_ai_accessibility.svg" alt="Human Centered and Accessible AI. Accessible and relational AI that keeps sensitive interaction local." loading="lazy">
+        <a class="thrust-tile" href="thrusts/human_centered_ai_accessibility.html" aria-label="Human-Centered Computing">
+          <img src="assets/thrusts/human_centered_ai_accessibility.svg" alt="Human-Centered Computing. Accessible and relational AI that keeps sensitive interaction local." loading="lazy">
         </a>
         <a class="thrust-tile" href="av.html" aria-label="Autonomous Vehicles and UAVs">
           <img src="assets/thrusts/av.svg" alt="Autonomous Vehicles and UAVs. Security, privacy, and connectivity for autonomous ground vehicles and UAVs: CAN-bus intrusion detection, GPS spoofing limits, vehicle privacy, rural V2X, and agentic UAV control." loading="lazy">
@@ -551,7 +570,7 @@
 <div class="rp-grid">
     <div class="rp-card"><div class="rp-tags"><span class="tag t-acc">accepted · nsdi</span></div><h4>CacheCatalyst</h4><p>Serving recomputes overlapping context across requests instead of reusing it; the cache that could carry the load is thrown away.</p></div>
     <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · pacmi</span></div><h4>The Single-Call Fallacy</h4><p>Per-call metrics grade agentic systems healthy while whole plans fail. Nothing in the stack accounts at the level of the plan the user asked for.</p></div>
-    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · pacmi</span></div><h4>EffectLog, the Crash at Step Thirteen</h4><p>An agent that dies mid-plan cannot tell which external effects already landed, so restart means redo or double-do.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">in submission · aaai</span></div><h4>STELE, the Crash at Step Thirteen</h4><p>An agent that crashes mid-plan cannot retry, since retry re-executes against a world its earlier steps already changed, and cannot restart, since no durable record says which effects landed. STELE is the effect contract that answers what it already did.</p></div><div class="rp-card"><div class="rp-tags"><span class="tag t-sub">in submission &#183; aaai</span></div><h4>TwinPages</h4><p>Ask a web agent for five facts from the Farsi edition of a page, then from its English twin: same site, same facts, and the Farsi run bills more before the agent acts differently. Across 23 languages, the language tax of an English-centric tokenizer compounds through context, truncation, and retries.</p></div><div class="rp-card"><div class="rp-tags"><span class="tag t-sub">in submission &#183; aaai</span></div><h4>Tyto</h4><p>Every agent step waits on prefill, retrieval, and tool calls before the first token. Tyto speculates at the action level with no draft model and no trained predictor, prefetching what the plan already declared in the trace.</p></div><div class="rp-card"><div class="rp-tags"><span class="tag t-sub">in submission · infocom</span></div><h4>Harbinger</h4><p>Spot instances cut cloud GPU prices 3 to 6x, but the provider can reclaim them at will, and today's orchestrators only react to the 30-second notice. Harbinger forecasts preemptions ahead of the notice, so multi-cloud orchestration acts before the loss is decided.</p></div><div class="rp-card"><div class="rp-tags"><span class="tag t-sub">in submission · infocom</span></div><h4>OutReach</h4><p>Edge-cloud LLM cascades verify one token per wide-area round trip: stop-and-wait, and on a 50 ms path the response spends more time in flight than in compute. OutReach lets the edge commit a window of tokens into a hidden buffer, ships it in one message, and writes down exactly when windowing wins.</p></div>
     <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · pacmi</span><span class="tag t-new">new</span></div><h4>GPU Fleet Contract</h4><p>Learned systems assume datacenter-grade GPUs. The commodity fleet the world actually owns fails in ways training loops do not survive, priced with production failure data from Meta's Llama 3 Herd report.</p></div>
     <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · agenticos @ sosp</span></div><h4>Patient Bytes</h4><p>Agent plans are scheduled one call at a time. A plan-level budget covers the retries, verification, and waste that single-call scheduling never sees. Full version in progress.</p></div>
     <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · hotnets</span></div><h4>Confine</h4><p>Failure labels for agents assume annotators agree on what broke. Measured agreement varies by failure mode, and routing needs reliability contracts that survive the disagreement.</p></div>
@@ -562,7 +581,7 @@
 <div class="rp-gtitle">Learning that systems can afford to trust</div>
 <div class="rp-grid">
     <div class="rp-card"><div class="rp-tags"><span class="tag t-acc">accepted + presented · hotcarbon</span></div><h4>The Reasoning Tax</h4><p>Reasoning tokens never appear in carbon accounting; test-time thinking is off the books.</p></div>
-    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">in submission · aaai</span></div><h4>VETO</h4><p>Safe RL still learns by violating. Systems that cannot afford a single violation cannot use it. VETO acts only when a verified ensemble agrees the action is safe.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">in submission · aaai</span></div><h4>VETO</h4><p>Safe RL still learns by violating. Systems that cannot afford a single violation cannot use it. VETO acts only when a verified ensemble agrees the action is safe.</p></div><div class="rp-card"><div class="rp-tags"><span class="tag t-sub">in submission &#183; aaai</span></div><h4>Specification to Certified Action Spaces</h4><p>Safe RL presumes the constraint already exists in formal form; the gap is upstream, in the written rules. From specification text to certified action spaces, so agents are safe while they learn, not only after.</p></div>
     <div class="rp-card"><div class="rp-tags"><span class="tag t-prog">in progress</span></div><h4>INTACT</h4><p>No theory predicts when cooperating learned agents snap under distribution shift; operators discover the phase transition by outage.</p></div>
     <div class="rp-card"><div class="rp-tags"><span class="tag t-prog">in progress</span></div><h4>SPECTRA</h4><p>Multi-tier LLM serving reacts to 5G handovers and thermal throttling after they hit. At mobile timescales reaction is too late; prediction has a thirty-second window.</p></div>
     <div class="rp-card"><div class="rp-tags"><span class="tag t-prog">in progress</span></div><h4>BlackWidow</h4><p>RL for rate and power control learns by violating the limits the RAN exists to hold. A decision-time mask removes violating actions from play, so it learns clean.</p></div>
@@ -678,6 +697,48 @@
         <div class="small" style="color: var(--red-primary);">In submission</div>
       </div>
       <div class="pub-item">
+        <div class="fw-semibold">How the Language Tax Compounds Inside Web Agents</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">AAAI 2027 (in submission)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">STELE: An Effect Contract for Agents to Answer What They Already Did</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">AAAI 2027 (in submission)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">Tyto: Speculative Execution for Language Model Agents Without a Draft Model</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">AAAI 2027 (in submission)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">From Specification Text to Certified Action Spaces for Reinforcement Learning</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">AAAI 2027 (in submission)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">Harbinger: Forecasting Spot Preemptions for Proactive Multi-Cloud Orchestration</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">IEEE INFOCOM 2027 (in submission)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">The Edge Should Commit: Windowed Verification for Wide-Area LLM Inference</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">IEEE INFOCOM 2027 (in submission)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">Beyond Critical Distance: How Many Bits a Room Gives You About Who Is Speaking, and Why It Is Not Enough</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">IEEE INFOCOM 2027 (in submission)</div>
+      </div>
+
+      <div class="pub-item">
         <div class="fw-semibold">Contextual-Integrity Admission Control for Persistent Memory in LLM Agents</div>
         <div class="small text-muted">H. B. Pasandi et al.</div>
         <div class="small" style="color: var(--red-primary);">PETs (in submission)</div>
@@ -692,7 +753,19 @@
       <div class="pub-item">
         <div class="fw-semibold">Winnow: A Decoy-Aware Adversary Defeats Ghost-Keystroke Defenses in Virtual Reality</div>
         <div class="small text-muted">H. B. Pasandi, Haniyeh B. Pasandi</div>
-        <div class="small" style="color: var(--red-primary);">XR Security '26 (in submission)</div>
+        <div class="small" style="color: var(--red-primary);">XR Security '26 (accepted)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold"><a href="separatrix.html">Separatrix: Separating Real from Decoy Keystrokes in Virtual Reality</a></div>
+        <div class="small text-muted">H. B. Pasandi, Haniyeh B. Pasandi</div>
+        <div class="small" style="color: var(--red-primary);">USENIX Security (in submission) &middot; full version of Winnow</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold">Privacy in Agentic Voice Assistants</div>
+        <div class="small text-muted">H. B. Pasandi et al.</div>
+        <div class="small" style="color: var(--red-primary);">SPSC '26 (accepted)</div>
       </div>
 
       <h3 class="pub-year mt-4">2025</h3><div class="pub-item">
