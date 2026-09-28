@@ -100,6 +100,7 @@
 
     .news-item { padding-left: 1rem; margin-bottom: 1rem; }
     .news-item-rose { border-left: 4px solid #f43f5e; }
+    .news-item-pink { border-left: 4px solid #D6336C; }
     .news-item-emerald { border-left: 4px solid #059669; }
     .news-item-cyan { border-left: 4px solid #06b6d4; }
     .news-item-orange { border-left: 4px solid #f97316; }
@@ -329,6 +330,15 @@
 <meta property="og:description" content="Research Scholar Fellow at UC Berkeley Sky Computing Lab: agentic AI systems, LLM serving, network protocols, wireless privacy, autonomous vehicles, satellite networks." />
 <meta property="og:image" content="https://hanabhp.github.io/assets/og-card.png" />
 <meta name="twitter:card" content="summary_large_image" />
+<style>/* pink links */
+a:not([class]),a.plink,a.nl,a.home,a.homelink,a.brand,a.nav-link-custom{color:#D6336C !important;}
+a:not([class]):hover,a.plink:hover,a.nl:hover,a.home:hover,a.homelink:hover,a.brand:hover,a.nav-link-custom:hover{color:#A61E4D !important;}
+a:not([class]){text-decoration-color:#EFA7C6;}
+.plink{font-weight:600;text-decoration:none;border-bottom:1.5px solid #F1B7D1;}
+.plink:hover{border-bottom-color:#A61E4D;}
+a.btn,a.btn-white{background:#D6336C !important;border-color:#D6336C !important;color:#fff !important;}
+a.btn:hover,a.btn-white:hover{background:#A61E4D !important;border-color:#A61E4D !important;color:#fff !important;}
+</style>
 </head>
 
 <body>
@@ -453,6 +463,17 @@
         <div class="card-custom mt-4">
           <h2 class="h4 fw-bold mb-3" style="color: var(--red-primary);">New Highlights</h2>
           <div class="news-scroll">
+            <div class="news-item news-item-pink mb-3">
+              <h3 class="h6 fw-semibold">[Sep 2026] Five Papers at AgenticOS '26 and PACMI '26 @ SOSP 2026</h3>
+              <p class="small text-muted mb-1">This week I will be presenting our five papers at AgenticOS and PACMI @ SOSP 2026:</p>
+              <p class="small fw-semibold mb-1">AgenticOS '26</p>
+              <p class="small text-muted mb-1">1. Patient Bytes: A Reliability-Budgeted Scheduler for Agentic LLM Workflows</p>
+              <p class="small fw-semibold mb-1">PACMI '26</p>
+              <p class="small text-muted mb-0">2. PlanLayer: Making the Plan the Unit of Accounting for Agentic AI<br>
+                 3. Crash-Safe Effects for Agents in Operational Systems<br>
+                 4. Learning on the GPUs the World Owns: A Fleet Contract for Learned Systems on Commodity Hardware<br>
+                 5. The Monolingual Assumption: What Web Agents Pay to Work Beyond English (short)</p>
+            </div>
             <div class="news-item news-item-green mb-3">
               <h3 class="h6 fw-semibold">[August 2026] SANS Cloud Summit 2026 Scholarship</h3>
               <p class="small text-muted mb-0">Winner of the SANS Cloud Summit 2026 Scholarship!</p>
@@ -572,7 +593,7 @@
     <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · pacmi</span></div><h4>The Single-Call Fallacy</h4><p>Per-call metrics grade agentic systems healthy while whole plans fail. Nothing in the stack accounts at the level of the plan the user asked for.</p></div>
     <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">in submission · aaai</span></div><h4>STELE, the Crash at Step Thirteen</h4><p>An agent that crashes mid-plan cannot retry, since retry re-executes against a world its earlier steps already changed, and cannot restart, since no durable record says which effects landed. STELE is the effect contract that answers what it already did.</p></div><div class="rp-card"><div class="rp-tags"><span class="tag t-sub">in submission &#183; aaai</span></div><h4>TwinPages</h4><p>Ask a web agent for five facts from the Farsi edition of a page, then from its English twin: same site, same facts, and the Farsi run bills more before the agent acts differently. Across 23 languages, the language tax of an English-centric tokenizer compounds through context, truncation, and retries.</p></div><div class="rp-card"><div class="rp-tags"><span class="tag t-sub">in submission &#183; aaai</span></div><h4>Tyto</h4><p>Every agent step waits on prefill, retrieval, and tool calls before the first token. Tyto speculates at the action level with no draft model and no trained predictor, prefetching what the plan already declared in the trace.</p></div><div class="rp-card"><div class="rp-tags"><span class="tag t-sub">in submission · infocom</span></div><h4>Harbinger</h4><p>Spot instances cut cloud GPU prices 3 to 6x, but the provider can reclaim them at will, and today's orchestrators only react to the 30-second notice. Harbinger forecasts preemptions ahead of the notice, so multi-cloud orchestration acts before the loss is decided.</p></div><div class="rp-card"><div class="rp-tags"><span class="tag t-sub">in submission · infocom</span></div><h4>OutReach</h4><p>Edge-cloud LLM cascades verify one token per wide-area round trip: stop-and-wait, and on a 50 ms path the response spends more time in flight than in compute. OutReach lets the edge commit a window of tokens into a hidden buffer, ships it in one message, and writes down exactly when windowing wins.</p></div>
     <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · pacmi</span><span class="tag t-new">new</span></div><h4>GPU Fleet Contract</h4><p>Learned systems assume datacenter-grade GPUs. The commodity fleet the world actually owns fails in ways training loops do not survive, priced with production failure data from Meta's Llama 3 Herd report.</p></div>
-    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · agenticos @ sosp</span></div><h4>Patient Bytes</h4><p>Agent plans are scheduled one call at a time. A plan-level budget covers the retries, verification, and waste that single-call scheduling never sees. Full version in progress.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-new">accepted · agenticos @ sosp 2026</span></div><h4>Patient Bytes</h4><p>Agent plans are scheduled one call at a time. A plan-level budget covers the retries, verification, and waste that single-call scheduling never sees. Full version in progress.</p></div>
     <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · hotnets</span></div><h4>Confine</h4><p>Failure labels for agents assume annotators agree on what broke. Measured agreement varies by failure mode, and routing needs reliability contracts that survive the disagreement.</p></div>
     <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review · sec</span></div><h4>PALSE</h4><p>Agent steps stall waiting for state the plan already announced. PALSE reads the plan while generation is in flight and stages what the next step needs at the edge.</p></div>
     <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">under review</span></div><h4>OrbitMesh</h4><p>Inference serving stops at the cloud edge while direct-to-cell satellites sit overhead as compute nobody schedules. A four-tier serving path for agent workloads includes the satellite.</p></div>
@@ -614,6 +635,36 @@
       <h2 class="h3 fw-bold text-center mb-5">Selected Publications</h2>
 
       <h3 class="pub-year">2026 (in submission unless noted)</h3><div class="pub-item">
+        <div class="fw-semibold"><a class="plink" href="files/PatientBytes_AgenticOS26.pdf">Patient Bytes: A Reliability-Budgeted Scheduler for Agentic LLM Workflows</a> <a class="plink" href="files/PatientBytes_AgenticOS26.pdf">[Paper]</a> <a class="plink" href="https://github.com/hanabhp/patient-bytes">[Code]</a></div>
+        <div class="small text-muted">H. B. Pasandi, N. Arabzadeh, M. Pan, T. Xu, S. Darabi, M. Hosseini, H. Haddadi</div>
+        <div class="small" style="color: var(--red-primary);">AgenticOS '26, co-located with ACM SOSP 2026 (accepted)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold"><a class="plink" href="files/PlanLayer_PACMI26.pdf">PlanLayer: Making the Plan the Unit of Accounting for Agentic AI</a> <a class="plink" href="files/PlanLayer_PACMI26.pdf">[Paper]</a></div>
+        <div class="small text-muted">H. B. Pasandi, N. Arabzadeh, M. Pan</div>
+        <div class="small" style="color: var(--red-primary);">PACMI '26, co-located with ACM SOSP 2026 (accepted)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold"><a class="plink" href="files/CrashSafe_PACMI26.pdf">Crash-Safe Effects for Agents in Operational Systems</a> <a class="plink" href="files/CrashSafe_PACMI26.pdf">[Paper]</a></div>
+        <div class="small text-muted">H. B. Pasandi, M. Sepahi</div>
+        <div class="small" style="color: var(--red-primary);">PACMI '26, co-located with ACM SOSP 2026 (accepted)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold"><a class="plink" href="files/GPUFleet_PACMI26.pdf">Learning on the GPUs the World Owns: A Fleet Contract for Learned Systems on Commodity Hardware</a> <a class="plink" href="files/GPUFleet_PACMI26.pdf">[Paper]</a></div>
+        <div class="small text-muted">H. B. Pasandi, M. Hosseini, S. Darabi</div>
+        <div class="small" style="color: var(--red-primary);">PACMI '26, co-located with ACM SOSP 2026 (accepted)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold"><a class="plink" href="files/Monolingual_PACMI26.pdf">The Monolingual Assumption: What Web Agents Pay to Work Beyond English (short)</a> <a class="plink" href="files/Monolingual_PACMI26.pdf">[Paper]</a></div>
+        <div class="small text-muted">H. B. Pasandi, Haniyeh B. Pasandi</div>
+        <div class="small" style="color: var(--red-primary);">PACMI '26, co-located with ACM SOSP 2026 (accepted)</div>
+      </div>
+
+      <div class="pub-item">
         <div class="fw-semibold">CacheCatalyst: Cooperative Web Cache Coordination</div>
         <div class="small text-muted">Co-author</div>
         <div class="small" style="color: var(--red-primary);">USENIX NSDI 2026 (accepted)</div>
