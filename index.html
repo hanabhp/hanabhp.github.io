@@ -101,6 +101,7 @@
     .news-item { padding-left: 1rem; margin-bottom: 1rem; }
     .news-item-rose { border-left: 4px solid #f43f5e; }
     .news-item-pink { border-left: 4px solid #D6336C; }
+    .news-item-yellow { border-left: 4px solid #EAB308; }
     .news-item-emerald { border-left: 4px solid #059669; }
     .news-item-cyan { border-left: 4px solid #06b6d4; }
     .news-item-orange { border-left: 4px solid #f97316; }
@@ -331,8 +332,8 @@
 <meta property="og:image" content="https://hanabhp.github.io/assets/og-card.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>/* pink links */
-a:not([class]),a.plink,a.nl,a.home,a.homelink,a.brand,a.nav-link-custom{color:#D6336C !important;}
-a:not([class]):hover,a.plink:hover,a.nl:hover,a.home:hover,a.homelink:hover,a.brand:hover,a.nav-link-custom:hover{color:#A61E4D !important;}
+a:not([class]),a.plink,a.nl,a.home,a.homelink,a.brand,a.nav-link-custom,a.name-link{color:#D6336C !important;}
+a:not([class]):hover,a.plink:hover,a.nl:hover,a.home:hover,a.homelink:hover,a.brand:hover,a.nav-link-custom:hover,a.name-link:hover{color:#A61E4D !important;}
 a:not([class]){text-decoration-color:#EFA7C6;}
 .plink{font-weight:600;text-decoration:none;border-bottom:1.5px solid #F1B7D1;}
 .plink:hover{border-bottom-color:#A61E4D;}
@@ -405,32 +406,26 @@ a.btn:hover,a.btn-white:hover{background:#A61E4D !important;border-color:#A61E4D
         <h2 class="h3 fw-bold mb-4" style="color: var(--red-primary);">Bienvenue!</h2>
 
         <p class="mb-3">
-          I am a wireless and networked systems researcher currently serving as a Research Scholar Fellow at <a href="https://sky.cs.berkeley.edu/" target="_blank" class="name-link">UC Berkeley's Sky Computing Lab</a>, where I contribute to the SkyPilot project with <a href="https://people.eecs.berkeley.edu/~istoica/" target="_blank" class="name-link">Professor Ion Stoica</a>. I have been fortunate to work with exceptional researchers throughout my journey: <a href="https://music.lab.vcu.edu/" target="_blank" class="name-link">Prof. Tamer Nadeem</a> at <a href="https://www.vcu.edu/" target="_blank" class="name-link">Virginia Commonwealth University</a> during my PhD, <a href="https://people.eecs.berkeley.edu/~sylvia/" target="_blank" class="name-link">Prof. Sylvia Ratnasamy</a> and <a href="https://www.icsi.berkeley.edu/icsi/people/shenker" target="_blank" class="name-link">Prof. Scott Shenker</a> at <a href="https://netsys.cs.berkeley.edu/" target="_blank" class="name-link">UC Berkeley's NetSys Lab</a>, <a href="https://scholar.google.com/citations?user=YXq56tgAAAAJ" target="_blank" class="name-link">Dr. Juan A. Fraire</a> and <a href="https://perso.citi-lab.fr/hrivano/" target="_blank" class="name-link">Prof. Hervé Rivano</a> at <a href="https://team.inria.fr/agora/" target="_blank" class="name-link">INRIA Lyon</a>, <a href="https://lig-membres.imag.fr/rousseau/" target="_blank" class="name-link">Prof. Franck Rousseau</a> at <a href="https://www.liglab.fr/" target="_blank" class="name-link">LIG Lab (Université Grenoble Alpes)</a>, <a href="https://wimnet.ee.columbia.edu/people/gil-zussman/" target="_blank" class="name-link">Prof. Gil Zussman</a> at <a href="https://www.columbia.edu/" target="_blank" class="name-link">Columbia University's</a> Wireless and Mobile Networking Lab, and industry leaders at <a href="https://www.qualcomm.com/" target="_blank" class="name-link">Qualcomm</a>, <a href="https://skylarkwireless.com/" target="_blank" class="name-link">Skylark Wireless LLC</a>, and <a href="https://www.bell-labs.com/" target="_blank" class="name-link">Bell Labs</a>.
+          I am a systems researcher currently at <a href="https://sky.cs.berkeley.edu/" target="_blank" class="name-link">UC Berkeley's Sky Computing Lab</a>, working with <a href="https://people.eecs.berkeley.edu/~istoica/" target="_blank" class="name-link">Professor Ion Stoica</a>. I am an active open-source contributor to <a href="https://github.com/skypilot-org/skypilot" target="_blank">SkyPilot</a>, the lab's framework for running AI workloads across clouds and clusters, and I build on and routinely patch <a href="https://github.com/vllm-project/vllm" target="_blank">vLLM</a>; my HotCarbon '26 paper instruments vLLM with a 90-line patch that measures the carbon cost of hidden reasoning tokens in agent workloads.
         </p>
+
+        <p class="mb-2">
+          I design and build networked and AI systems that keep their guarantees after deployment, by finding the hidden invariants those systems depend on and making them enforceable. Broadly, I'm interested in:
+        </p>
+        <ol class="mb-4" style="padding-left:1.4rem;">
+          <li class="mb-2"><b>Reliable and verifiable agentic AI systems</b>, with reliability and verifiability as first-order objectives of the agent workflow rather than afterthoughts of the model call.</li>
+          <li class="mb-2"><b>Safe, predictive control for wireless and satellite networks</b>, where learned controllers and LLM agents act on the network's predicted future state under certificates guaranteeing they cannot push it into collapse.</li>
+          <li class="mb-2"><b>Privacy and security of connected systems</b>, from vehicles and cellular networks to voice and XR assistants.</li>
+        </ol>
 
         <div class="mb-4" style="border:1px solid #e6cccc;background:#fdf7f7;border-left:4px solid var(--red-primary);border-radius:10px;padding:18px 20px;">
           <p class="mb-0">
-            I build systems that hold a property they were never designed to guarantee. The trick is finding the invariant that property secretly depends on. Every complex deployed system runs on hidden regularities it never documents. An identifier that never rotates, and so quietly links a person across every dataset (see <a href="av.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">VIN2VICTIM</a>). An interference threshold that separates a stable network from a cascading one (see <a href="tenet.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">teNET</a>). A set of failure modes an agent's own judges can never quite agree on, yet that stays fixed no matter which cases you check (see <a href="confine.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Confine</a>). I find these invariants using whatever the system will give up, whether mined from production traces, derived by hand, grounded in orbital physics, or learned and then checked. Then I turn each one into something the system can act on, a privacy boundary, a safety certificate, a reliability contract, a prediction that arrives in time to matter. A growing part of this is agentic AI. We now trust agents to check their own work, so I measure when that trust is earned (see <a href="gauge.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Gauge</a>), and I hold an agent's actions to a contract it cannot quietly break (see <a href="vouch.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Vouch</a>). That is runtime verification, done as the agent acts. It comes before formal verification, which assumes the invariant is already known and written down. I work the other end, finding the invariant in a system that never told anyone it was there.
+            Underneath all three is one method. Every deployed system depends on regularities nobody wrote down: failure modes an agent's own judges never agree on, an interference threshold that separates a stable network from a cascading one, an identifier that never rotates and so links a person across every dataset. I find these invariants from production traces, by derivation, from orbital physics, or by learning them and then checking, and I turn each into something the system can enforce: a reliability contract for agents, a safety certificate for networks, a privacy boundary for people. For agents this is runtime verification, done as the agent acts; it comes before formal verification, which assumes the invariant is already written down.
           </p>
         </div>
 
         <p class="mb-3">
-          Our everyday life increasingly runs on two intertwined infrastructures. Networks carry our calls, our work, and our payments; AI agents are beginning to act across them on our behalf. I design and build systems that keep both trustworthy, predictable, accountable, and safe by design. Such an objective is fascinatingly challenging and complex, since real deployments are chains of layers, radio schedulers, satellite links, serving stacks, agent plans, that look independent yet carry hidden dependencies that must be understood, captured, and acted on; otherwise a guarantee that holds at one layer quietly collapses at the next, and in these systems a quiet collapse is a safety event, a dropped emergency call, a drone flying on a stale plan, an agent committing an unverified action. My research draws from networking, distributed systems, machine learning, security, and formal methods, model checking, SMT-based verification, and runtime certificates, a toolkit I first trained in during my master's in Grenoble.
-        </p>
-
-        <p class="mb-3">
-          My research interests are network protocol synthesis and certification, LLM serving and scheduling across device, edge, cloud, and direct-to-cell satellite tiers, plan-level accounting and reliability for agentic AI, cellular and voice privacy, and the security of connected vehicles and UAVs.
-        </p>
-
-        <p class="mb-3" style="font-style: italic; color: #4a4a4a;">
-          The commitment underneath the work is that systems should make decisions on predicted future state and prove bounds against the prediction error, rather than react to measured present state and bound average-case performance.
-        </p>
-
-        <p class="mb-3">
-          One principle, two arenas. In <span style="font-weight: bold; color: var(--red-primary);">networks</span>, <a href="tenet.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">teNET</a> deploys only protocol compositions that carry a certificate they cannot collapse, and <a href="agentic_ai.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">OrbitMesh</a> turns direct-to-cell satellite into a first-class serving tier for LLM requests. In <a href="agentic_ai.html" style="font-weight: bold; color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">AI agents</a>, where the unit of work is now the <span style="font-weight: bold; color: var(--red-primary);">plan</span> rather than the single call, <a href="patient.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Patient</a>, <a href="confine.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Confine</a>, and <a href="gauge.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Gauge</a> schedule, route, and evaluate at the plan level. <a href="agentic_ai.html" class="fw-semibold" style="color: var(--red-primary); text-decoration: underline dotted; text-underline-offset: 3px;">Loom</a> is both arenas in one system: an LLM agent held inside a safety certificate while it composes a live wireless MAC layer.
-        </p>
-        <p class="mb-3">
-          The same discipline extends to connected vehicles and smart farming through the students I advise; meet them, and everyone I am lucky to work with, on the <a href="people.html">Collaborators</a> page.
+          Meet the students I advise, and everyone I am lucky to work with, on the <a href="people.html">Collaborators</a> page.
         </p>
 
         <div class="mb-3" style="border:1px solid #d7e3f4;background:#f4f8fd;border-left:4px solid #1f4e79;border-radius:10px;padding:14px 16px;font-style:italic;color:#1f4e79;">
@@ -463,6 +458,10 @@ a.btn:hover,a.btn-white:hover{background:#A61E4D !important;border-color:#A61E4D
         <div class="card-custom mt-4">
           <h2 class="h4 fw-bold mb-3" style="color: var(--red-primary);">New Highlights</h2>
           <div class="news-scroll">
+            <div class="news-item news-item-yellow mb-3">
+              <h3 class="h6 fw-semibold">[Oct 2026] The Predictability Tax of LEO Handover Predictors</h3>
+              <p class="small text-muted mb-0">My solo-author paper, "The Predictability Tax of LEO Handover Predictors," is now available: here is the <a class="plink" href="files/PredictabilityTax_2026.pdf">paper</a> and the <a class="plink" href="https://github.com/hanabhp/TaxMeter">code</a>.</p>
+            </div>
             <div class="news-item news-item-pink mb-3">
               <h3 class="h6 fw-semibold">[Sep 2026] Five Papers at AgenticOS '26 and PACMI '26 @ SOSP 2026</h3>
               <p class="small text-muted mb-1">This week I will be presenting our five papers at AgenticOS and PACMI @ SOSP 2026:</p>
@@ -610,6 +609,7 @@ a.btn:hover,a.btn-white:hover{background:#A61E4D !important;border-color:#A61E4D
 <div class="rp-gtitle">The roots, now pointed at orbit</div>
 <div class="rp-grid">
     <div class="rp-card"><div class="rp-tags"><span class="tag t-prog">in progress</span></div><h4>SpaceHandover</h4><p>Direct-to-cell LEO handovers strike mid-session with no warning, at orbital cadence. An O-RAN Near-RT RIC rApp predicts them with a GBM and LLM pair.</p></div>
+    <div class="rp-card"><div class="rp-tags"><span class="tag t-sub">in submission</span><span class="tag t-new">solo paper</span></div><h4>Predictability Tax</h4><p>Operators can compare LEO handover predictors on published accuracy but not on running cost, because no handover paper reports it. TaxMeter reads a five-axis cost vector against the deployment's budgets: across eight predictors and the live Starlink constellation, accuracy spans 0.29 to 0.38 while per-decision energy spans 289x to 1,460x. <a class="plink" href="files/PredictabilityTax_2026.pdf">[Paper]</a> <a class="plink" href="https://github.com/hanabhp/TaxMeter">[Code]</a></p></div>
     <div class="rp-card"><div class="rp-tags"><span class="tag t-prog">in progress</span></div><h4>SpaceWindow</h4><p>Satellite IoT uplinks transmit blind into poor passes, spending the scarcest link budget there is. Pass-aware deferral waits for the right window across two orbits.</p></div>
     <div class="rp-card"><div class="rp-tags"><span class="tag t-prog">in progress</span></div><h4>SpaceREGULATE</h4><p>A LEO constellation crosses jurisdictions every few minutes. No mechanism keeps data flows legal while they move.</p></div>
     <div class="rp-card"><div class="rp-tags"><span class="tag t-prog">in progress</span></div><h4>SkyCascade</h4><p>Mobile LLM requests route on latency alone while carbon differs by an order of magnitude across device, edge, and cloud. Full version in progress.</p></div>
@@ -662,6 +662,12 @@ a.btn:hover,a.btn-white:hover{background:#A61E4D !important;border-color:#A61E4D
         <div class="fw-semibold"><a class="plink" href="files/Monolingual_PACMI26.pdf">The Monolingual Assumption: What Web Agents Pay to Work Beyond English (short)</a> <a class="plink" href="files/Monolingual_PACMI26.pdf">[Paper]</a></div>
         <div class="small text-muted">H. B. Pasandi, Haniyeh B. Pasandi</div>
         <div class="small" style="color: var(--red-primary);">PACMI '26, co-located with ACM SOSP 2026 (accepted)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="fw-semibold"><a class="plink" href="files/PredictabilityTax_2026.pdf">The Predictability Tax of LEO Handover Predictors</a> <a class="plink" href="files/PredictabilityTax_2026.pdf">[Paper]</a> <a class="plink" href="https://github.com/hanabhp/TaxMeter">[Code]</a></div>
+        <div class="small text-muted">H. B. Pasandi (solo author)</div>
+        <div class="small" style="color: var(--red-primary);">Under submission, 2026</div>
       </div>
 
       <div class="pub-item">

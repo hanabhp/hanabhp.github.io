@@ -85,8 +85,8 @@ footer a{color:var(--blue)}
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-4M99RGCCZP"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4M99RGCCZP');</script>
 <style>/* pink links */
-a:not([class]),a.plink,a.nl,a.home,a.homelink,a.brand,a.nav-link-custom{color:#FF8FB8 !important;}
-a:not([class]):hover,a.plink:hover,a.nl:hover,a.home:hover,a.homelink:hover,a.brand:hover,a.nav-link-custom:hover{color:#FFC1D9 !important;}
+a:not([class]),a.plink,a.nl,a.home,a.homelink,a.brand,a.nav-link-custom,a.name-link{color:#FF8FB8 !important;}
+a:not([class]):hover,a.plink:hover,a.nl:hover,a.home:hover,a.homelink:hover,a.brand:hover,a.nav-link-custom:hover,a.name-link:hover{color:#FFC1D9 !important;}
 a:not([class]){text-decoration-color:#7E3A57;}
 .plink{font-weight:600;text-decoration:none;border-bottom:1.5px solid #7E3A57;}
 .plink:hover{border-bottom-color:#FFC1D9;}
@@ -165,6 +165,7 @@ a.btn:hover,a.btn-white:hover{background:#A61E4D !important;border-color:#A61E4D
   <h2 class="s">The roots, now pointed at orbit</h2>
   <div class="prims">
     <div class="prim"><div class="tags"><span class="tag t-prog">in progress</span></div><h4>SpaceHandover</h4><p>Direct-to-cell LEO handovers strike mid-session with no warning, at orbital cadence. An O-RAN Near-RT RIC rApp predicts them with a GBM and LLM pair.</p></div>
+    <div class="prim"><div class="tags"><span class="tag t-sub">in submission</span><span class="tag t-new">solo paper</span></div><h4>Predictability Tax</h4><p>Operators can compare LEO handover predictors on published accuracy but not on running cost, because no handover paper reports it. TaxMeter reads a five-axis cost vector against the deployment's budgets: across eight predictors and the live Starlink constellation, accuracy spans 0.29 to 0.38 while per-decision energy spans 289x to 1,460x. <a class="plink" href="files/PredictabilityTax_2026.pdf">[Paper]</a> <a class="plink" href="https://github.com/hanabhp/TaxMeter">[Code]</a></p></div>
     <div class="prim"><div class="tags"><span class="tag t-prog">in progress</span></div><h4>SpaceWindow</h4><p>Satellite IoT uplinks transmit blind into poor passes, spending the scarcest link budget there is. Pass-aware deferral waits for the right window across two orbits.</p></div>
     <div class="prim"><div class="tags"><span class="tag t-prog">in progress</span></div><h4>SpaceREGULATE</h4><p>A LEO constellation crosses jurisdictions every few minutes. No mechanism keeps data flows legal while they move.</p></div>
     <div class="prim"><div class="tags"><span class="tag t-prog">in progress</span></div><h4>SkyCascade</h4><p>Mobile LLM requests route on latency alone while carbon differs by an order of magnitude across device, edge, and cloud. Full version in progress.</p></div>
